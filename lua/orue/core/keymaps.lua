@@ -25,3 +25,9 @@ keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) 
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
 vim.api.nvim_set_keymap("n", "<leader>q", ":wq<CR>", { noremap = true })
+
+-- Fugitive
+keymap.set("n", "<leader>g", ":vertical Git <cr>", opts)
+
+-- Markdown Preview
+keymap.set("n", "<leader>md", ":MarkdownPreviewToggle<cr>", opts)

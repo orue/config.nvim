@@ -1,11 +1,5 @@
 # Orue's config
 
-## To install clone this repository
-
-```sh
-git clone git@github.com:orue/config.nvim.git ~/.config/nvim
-```
-
 ##  🧩 Plugins List
 
 | Plugin | Description |
@@ -18,6 +12,7 @@ git clone git@github.com:orue/config.nvim.git ~/.config/nvim
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Tree-sitter parser | 
 | [which-key.nvim](https://github.com/folke/which-key.nvim) | Display Keymap |
 | [vim-fugitive](https://github.com/tpope/vim-fugitive) | Git integration |
+| [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | Markdown preview in browser |
 | fzflua | |
 | telescope | Fuzzy finder |
 | preject.nvim | Control Nvim top project directory |
@@ -26,4 +21,13 @@ git clone git@github.com:orue/config.nvim.git ~/.config/nvim
 | conform.nvim | |
 | blink-cmp | |
 | snacks.indent | |
+
+---
+## To install clone this repository
+
+```sh
+git clone git@github.com:orue/config.nvim.git ~/.config/nvim
+```
+
+
 
