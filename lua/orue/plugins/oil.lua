@@ -1,3 +1,12 @@
+-- file explorer as buffer
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "oil",
+	callback = function()
+		vim.opt_local.number = false
+		vim.opt_local.relativenumber = false
+	end,
+})
+
 return {
   {
     "stevearc/oil.nvim",
@@ -15,17 +24,26 @@ return {
         delete_to_trash = true,
         columns = { "icon" },
         keymaps = {
-          ["<C-h>"] = false,
-          ["<C-l>"] = false,
-          ["<C-k>"] = false,
-          ["<C-j>"] = false,
-          ["<M-h>"] = "actions.select_split",
+          ["g?"] = "actions.show_help",
+          ["<CR>"] = "actions.select",
+          ["<C-\\>"] = "actions.select_vsplit",
+          ["<C-enter>"] = "actions.select_split", -- this is used to navigate left
+          ["<C-t>"] = "actions.select_tab",
+          ["<C-p>"] = "actions.preview",
+          ["<C-c>"] = "actions.close",
+          ["<C-r>"] = "actions.refresh",
+          ["-"] = "actions.parent",
+          ["_"] = "actions.open_cwd",
+          ["`"] = "actions.cd",
+          ["~"] = "actions.tcd",
+          ["gs"] = "actions.change_sort",
+          ["gx"] = "actions.open_external",
+          ["g."] = "actions.toggle_hidden",
           ["q"] = "actions.close",
         },
         float = {
-          padding = 2,
-          max_width = 120,
-          max_height = 60,
+          max_width = 80,
+          max_height = 20,
         },
         win_options = {
           winbar = "%{v:lua.CustomOilBar()}",

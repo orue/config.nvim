@@ -5,10 +5,13 @@ opt.relativenumber = true
 opt.number = true
 
 -- tabs & indentation
-opt.tabstop = 2 -- 2 spaces for tabs
-opt.shiftwidth = 2 -- 2 spaces for indent width
-opt.expandtab = true -- expand tab to spaces
-opt.autoindent = true -- copy indent from current line when starting new one
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+vim.opt.smartindent = true
+
 
 -- line wrapping
 opt.wrap = false -- disable line wrapping
@@ -19,6 +22,7 @@ opt.smartcase = true
 
 -- cursor line
 opt.cursorline = true -- highlight the current cursor line
+opt.colorcolumn = "120"
 
 -- appearance
 
@@ -39,3 +43,9 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
+
+opt.showmode = false -- Don't show the mode, since it's already in the status linie
+
+opt.undofile = true -- file recovery
+
+opt.updatetime = 250 -- interval for writing swap file to disk, also used by gitsigns

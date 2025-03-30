@@ -4,7 +4,7 @@ return {
     config=function()
         require('kanagawa').setup({
             compile = true,             -- enable compiling the colorscheme
-            transparent = true,         -- do not set background color
+            -- transparent = true,         -- do not set background color
             overrides=function(colors)
                 return {
                     ["@markup.link.url.markdown_inline"] = { link = "Special" }, -- (url)
@@ -15,9 +15,11 @@ return {
                     ["@markup.quote.markdown"] = { link = "Error" }, -- > blockcode
                     ["@markup.list.checked.markdown"] = {link = "WarningMsg" } -- -[x] check list
                 }
-            end
+            end,
         });
-        vim.cmd("colorscheme kanagawa")
+        vim.cmd("colorscheme kanagawa-wave")
+        -- vim.cmd("colorscheme kanagawa-dragon")
+        -- vim.cmd("colorscheme kanagawa-lotus")
     end,
     build = function()
         vim.cmd("KanagawaCompile");

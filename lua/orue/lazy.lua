@@ -17,6 +17,12 @@ require("lazy").setup({
     { import = "orue.plugins" },
   },
   install = { colorscheme = { "kanagawa" } },
-  checker = { enabled = true },
+  checker = { 
+    enabled = true,
+    notify =false,
+  },
+  change_detection = {
+    notify = false,
+  },
 })
 
