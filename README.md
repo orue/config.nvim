@@ -12,7 +12,6 @@ git clone git@github.com:orue/config.nvim.git ~/.config/nvim
 |--------|-------------|
 | [lazy.nvim](https://github.com/folke/lazy.nvim) | Plugin Manager |
 | [kanagawa.nvim](https://github.com/rebelot/kanagawa.nvim) | Kanagawa color Scheme | 
-| Basic options | nvim options |
 | [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | Customizable statusline | 
 | [oil.nvom](https://github.com/stevearc/oil.nvim) | File explorer as a buffer | 
 | [vim-sleuth](https://github.com/tpope/vim-sleuth) | For adjust indentation base on config files | 
