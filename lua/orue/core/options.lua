@@ -5,16 +5,22 @@ opt.relativenumber = true
 opt.number = true
 
 -- tabs & indentation
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+opt.tabstop = 4
+opt.softtabstop = 4
+opt.shiftwidth = 4
+opt.expandtab = true
+opt.smartindent = true
+opt.autoindent = true
 
-vim.opt.smartindent = true
-
+-- Spell Checking
+opt.spell = true
+opt.spelllang = "en_us"
 
 -- line wrapping
 opt.wrap = false -- disable line wrapping
+
+opt.laststatus = 3 -- Global Status Line
+
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 opt.ignorecase = true
@@ -23,6 +29,7 @@ opt.smartcase = true
 -- cursor line
 opt.cursorline = true -- highlight the current cursor line
 opt.colorcolumn = "120"
+opt.textwidth = 120
 
 -- appearance
 
@@ -49,3 +56,5 @@ opt.showmode = false -- Don't show the mode, since it's already in the status li
 opt.undofile = true -- file recovery
 
 opt.updatetime = 250 -- interval for writing swap file to disk, also used by gitsigns
+
+ 

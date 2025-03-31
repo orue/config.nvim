@@ -1,7 +1,9 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    event = { "BufReadPre", "BufNewFile" },
     build = ":TSUpdate",
     dependencies = {
+        { "windwp/nvim-ts-autotag", commit = "e239a560f338be31337e7abc3ee42515daf23f5e" },
         { "nvim-treesitter/nvim-treesitter-textobjects" }, -- Syntax aware text-objects
         {
             "nvim-treesitter/nvim-treesitter-context",       -- Show code context
@@ -19,7 +21,18 @@ return {
             end
         })
 
+
         configs.setup({
+            -- enable syntax highlighting
+            highlight = { 
+                enable = true,
+                disable = { "csv" }
+            },
+
+            -- enable indentation
+            indent = { enable = true },
+
+            -- ensure these language parsers are installed
             ensure_installed = {
                 "lua",
                 "python",
@@ -57,11 +70,8 @@ return {
                 "html",
                 "css",
             },
-            highlight = { 
-                enable = true,
-                disable = { "csv" }
-            },
-            indent = {enable = true},
+
+
             auto_install = true,
             sync_install = false,
             textobjects = {select = {enable = true, lookahead = true}},
@@ -71,11 +81,27 @@ return {
                     init_selection = "<Enter>",
                     node_incremental = "<Enter>",
                     scope_incremental = false,
-                    node_decremental = "<Backspace>",
+                    node_decremental = "<bs>",
                 },
             },
             textobjects = {select = {enable = true, lookahead = true}}
         })
+        require("nvim-ts-autotag").setup({
+			opts = {
+				-- Defaults
+				enable_close = true, -- Auto close tags
+				enable_rename = true, -- Auto rename pairs of tags
+				enable_close_on_slash = false, -- Auto close on trailing </
+			},
+			-- Also override individual filetype configs, these take priority.
+			-- Empty by default, useful if one of the "opts" global settings
+			-- doesn't work well in a specific filetype
+			per_filetype = {
+				["html"] = {
+					enable_close = false,
+				},
+			},
+		})
     end
 }
 

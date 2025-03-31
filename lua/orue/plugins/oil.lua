@@ -42,19 +42,11 @@ return {
           ["q"] = "actions.close",
         },
         float = {
-          max_width = 80,
-          max_height = 20,
-        },
-        win_options = {
-          winbar = "%{v:lua.CustomOilBar()}",
-          wrap = true,
-        },
-        view_options = {
-          show_hidden = true,
-          is_always_hidden = function(name, _)
-            local folder_skip = { ".git", ".pytest_cache", ".DS_Store"  }
-            return vim.tbl_contains(folder_skip, name)
-          end,
+          border = "rounded",
+          max_width = 30,
+          max_height = 50,
+          padding = 0,
+          win_options = { winblend = 0, },
         },
       }
 

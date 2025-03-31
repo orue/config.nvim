@@ -18,12 +18,6 @@ keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) 
 keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
 
-keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
-keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
-keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
-keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
-keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
-
 vim.api.nvim_set_keymap("n", "<leader>q", ":wq<CR>", { noremap = true })
 
 -- Fugitive
@@ -31,3 +25,8 @@ keymap.set("n", "<leader>g", ":vertical Git <cr>", opts)
 
 -- Markdown Preview
 keymap.set("n", "<leader>md", ":MarkdownPreviewToggle<cr>", opts)
+
+-- bufferline
+keymap.set("n", "<leader>bl", ":BufferLinePick<CR>", {desc = "Buffer Pick"},  opts)
+keymap.set("n", "<leader>bc", ":BufferLinePickClose<CR>", {desc = "Close Buffer"},  opts)
+

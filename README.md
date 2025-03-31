@@ -7,14 +7,13 @@
 | [lazy.nvim](https://github.com/folke/lazy.nvim) | Plugin Manager |
 | [kanagawa.nvim](https://github.com/rebelot/kanagawa.nvim) | Kanagawa color Scheme | 
 | [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | Customizable statusline | 
-| [oil.nvom](https://github.com/stevearc/oil.nvim) | File explorer as a buffer | 
+| [oil.nvim](https://github.com/stevearc/oil.nvim) | File explorer as a buffer | 
 | [vim-sleuth](https://github.com/tpope/vim-sleuth) | For adjust indentation base on config files | 
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Tree-sitter parser | 
 | [which-key.nvim](https://github.com/folke/which-key.nvim) | Display Keymap |
 | [vim-fugitive](https://github.com/tpope/vim-fugitive) | Git integration |
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | Markdown preview in browser |
-| fzflua | |
-| telescope | Fuzzy finder |
+| [telescope](https://github.com/nvim-telescope/telescope.nvim) | Fuzzy finder |
 | preject.nvim | Control Nvim top project directory |
 | LSP | Language Server Protocole |
 | Mason | |
