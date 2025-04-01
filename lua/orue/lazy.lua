@@ -11,18 +11,30 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
-require("lazy").setup({
-  spec = {
-    { import = "orue.plugins" },
-  },
-  install = { colorscheme = { "kanagawa" } },
-  checker = { 
+require("lazy").setup({{import = "orue.plugins"},{import = "orue.plugins.lsp"}}, {
+  checker = {
     enabled = true,
-    notify =false,
-  },
-  change_detection = {
     notify = false,
   },
+  install = { colorscheme = { "kanagawa" } },
+  change_detection = {
+    notify = false,
+  }
 })
+
+
+
+-- require("lazy").setup({
+--   spec = {
+--     { import = "orue.plugins" },
+--   },
+--   install = { colorscheme = { "kanagawa" } },
+--   checker = { 
+--     enabled = true,
+--     notify =false,
+--   },
+--   change_detection = {
+--     notify = false,
+--   },
+-- })
 
