@@ -17,10 +17,6 @@ opt.sidescrolloff = 10                              -- Makes sure there are alwa
 opt.breakindent = true                              -- wrap lines with indent
 opt.wrap = false                                    -- display lines as one long line
 
--- Spell Checking
-opt.spell = true                                    
-opt.spelllang = "en_us"
-
 -- Appearance
 opt.termguicolors = true                            -- set term gui colors
 opt.guifont = "monospace:h17"                       -- the font used in graphical neovim applications
