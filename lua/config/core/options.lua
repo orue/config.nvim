@@ -1,6 +1,10 @@
 vim.g.mapleader = " "                               -- change leader to a space
 vim.g.maplocalleader = " "                          -- change localleader to a space
 
+-- disable netrw
+vim.g.loaded_netrw = 1                              
+vim.g.loaded_netrwPlugin = 1                        
+
 local opt = vim.opt
 
 -- line numbers
