@@ -17,12 +17,19 @@ opt.signcolumn = "yes"
 opt.scrolloff = 8
 
 -- search settings
-opt.ignorecase = true
-opt.smartcase = true
+-- opt.ignorecase = true
+-- opt.smartcase = true
 
 -- split windows
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
-
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '●', -- or any symbol you like
+    format = function(diagnostic)
+      return string.format("%s", diagnostic.message)
+    end,
+  },
+})
 
