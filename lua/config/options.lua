@@ -15,11 +15,16 @@ opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
 opt.scrolloff = 8
-opt.wrap = true
+opt.title = true
+opt.showmode = false
+
 
 -- search settings
 -- opt.ignorecase = true
 -- opt.smartcase = true
+
+-- backspace
+opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
 
 -- split windows
 opt.splitright = true -- split vertical window to the right
