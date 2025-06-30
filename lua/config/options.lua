@@ -15,6 +15,7 @@ opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
 opt.scrolloff = 8
+opt.wrap = true
 
 -- search settings
 -- opt.ignorecase = true
@@ -32,4 +33,3 @@ vim.diagnostic.config({
     end,
   },
 })
-
