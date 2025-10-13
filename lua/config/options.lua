@@ -7,7 +7,7 @@ opt.number = true
 opt.relativenumber = true
 
 opt.shiftwidth = 2
-opt.wrap = false
+opt.wrap = true
 opt.clipboard = "unnamedplus"
 
 opt.cursorline = true
