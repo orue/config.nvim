@@ -13,6 +13,15 @@ return {
       },
     },
     config = function()
+      -- Suppress lspconfig deprecation warning
+      local original_deprecate = vim.deprecate
+      vim.deprecate = function(name, alternative, version, plugin, backtrace)
+        if name and name:match("lspconfig") then
+          return
+        end
+        return original_deprecate(name, alternative, version, plugin, backtrace)
+      end
+      
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       require("lspconfig").lua_ls.setup { capabilities = capabilities }
       require("lspconfig").pyright.setup { 
