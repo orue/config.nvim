@@ -21,17 +21,19 @@ return {
         end
         return original_deprecate(name, alternative, version, plugin, backtrace)
       end
-      
+
+      local utils = require('config.utils')
       local capabilities = require('blink.cmp').get_lsp_capabilities()
+
       require("lspconfig").lua_ls.setup { capabilities = capabilities }
-      require("lspconfig").pyright.setup { 
+      require("lspconfig").pyright.setup {
         capabilities = capabilities,
         settings = {
           pyright = {
             disableOrganizeImports = true,
           },
           python = {
-            pythonPath = ".venv/bin/python",
+            pythonPath = utils.get_python_path(),
             analysis = {
               typeCheckingMode = "basic",
               autoSearchPaths = true,
@@ -60,13 +62,21 @@ return {
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 
+      -- Create augroup for LSP autocommands to prevent duplicates
+      local lsp_group = vim.api.nvim_create_augroup('lsp-attach', { clear = true })
+
       vim.api.nvim_create_autocmd('LspAttach', {
+        group = lsp_group,
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           if not client then return end
 
+          -- Create buffer-specific augroup to prevent duplicate format-on-save
+          local bufgroup = vim.api.nvim_create_augroup('lsp-format-' .. args.buf, { clear = true })
+
           if vim.bo.filetype == "lua" then
             vim.api.nvim_create_autocmd('BufWritePre', {
+              group = bufgroup,
               buffer = args.buf,
               callback = function()
                 vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
@@ -74,6 +84,7 @@ return {
             })
           elseif vim.bo.filetype == "python" and client.name == "ruff" then
             vim.api.nvim_create_autocmd('BufWritePre', {
+              group = bufgroup,
               buffer = args.buf,
               callback = function()
                 vim.lsp.buf.format({ bufnr = args.buf, id = client.id })

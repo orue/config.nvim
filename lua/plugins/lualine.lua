@@ -2,6 +2,8 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
+    local utils = require('config.utils')
+
     require("lualine").setup {
       options = {
         theme = "tokyonight-storm",
@@ -25,11 +27,8 @@ return {
         lualine_x = {
           {
             function()
-              if vim.bo.filetype == "python" then
-                local venv_path = vim.fn.getcwd() .. "/.venv"
-                if vim.fn.isdirectory(venv_path) == 1 then
-                  return "(.venv)"
-                end
+              if vim.bo.filetype == "python" and utils.has_venv() then
+                return "(.venv)"
               end
               return ""
             end,
