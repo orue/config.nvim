@@ -8,6 +8,9 @@ vim.keymap.set("v", "<space>x", ":lua<CR>")
 -- Oil
 vim.keymap.set("n", "<space>-", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory in Oil" })
 
+-- Alpha Dashboard
+vim.keymap.set("n", "<leader>h", "<cmd>Alpha<CR>", { desc = "Open Dashboard" })
+
 -- LSP keymaps
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Go to references" })
