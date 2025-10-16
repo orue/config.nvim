@@ -8,7 +8,8 @@ return {
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
-      
+      local utils = require('config.utils')
+
       -- Set breakpoint signs
       vim.fn.sign_define('DapBreakpoint', {
         text = '🔴',
@@ -45,7 +46,7 @@ return {
         else
           cb({
             type = 'executable',
-            command = vim.fn.getcwd() .. '/.venv/bin/python',
+            command = utils.get_python_path(),
             args = { '-m', 'debugpy.adapter' },
             options = {
               source_filetype = 'python',
@@ -53,7 +54,7 @@ return {
           })
         end
       end
-      
+
       dap.configurations.python = {
         {
           type = 'python',
@@ -62,7 +63,7 @@ return {
           program = "${file}",
           console = "integratedTerminal",
           pythonPath = function()
-            return vim.fn.getcwd() .. '/.venv/bin/python'
+            return utils.get_python_path()
           end,
         },
       }
