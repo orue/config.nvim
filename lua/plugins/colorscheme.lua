@@ -28,5 +28,11 @@ return {
 
     -- Apply the colorscheme
     vim.cmd([[colorscheme tokyonight-storm]])
+
+    -- Override diagnostic virtual text to remove background
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#db4b4b", bold = true, bg = "NONE" })
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#e0af68", bold = true, bg = "NONE" })
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#0db9d7", bold = true, bg = "NONE" })
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#1abc9c", bold = true, bg = "NONE" })
   end,
 }
