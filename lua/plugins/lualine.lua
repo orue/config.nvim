@@ -24,9 +24,21 @@ return {
         },
         lualine_x = {
           {
+            function()
+              if vim.bo.filetype == "python" then
+                local venv_path = vim.fn.getcwd() .. "/.venv"
+                if vim.fn.isdirectory(venv_path) == 1 then
+                  return "(.venv)"
+                end
+              end
+              return ""
+            end,
+            color = { fg = "#7aa2f7" }
+          },
+          {
             "filetype",
             icon_only = false, -- Show both icon and filetype name
-            colored = true, -- Color the icon based on filetype
+            colored = true,    -- Color the icon based on filetype
             icon = { align = "left" }
           },
           "encoding",

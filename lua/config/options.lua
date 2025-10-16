@@ -18,10 +18,9 @@ opt.scrolloff = 8
 opt.title = true
 opt.showmode = false
 
-
 -- search settings
--- opt.ignorecase = true
--- opt.smartcase = true
+opt.ignorecase = true
+opt.smartcase = true
 
 -- backspace
 opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
@@ -30,11 +29,20 @@ opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or 
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
+-- Python-friendly settings
+opt.updatetime = 250
+opt.timeoutlen = 300
+
 vim.diagnostic.config({
   virtual_text = {
-    prefix = '●', -- or any symbol you like
+    prefix = '●',
     format = function(diagnostic)
       return string.format("%s", diagnostic.message)
     end,
   },
+  float = {
+    source = "always",
+    border = "rounded",
+  },
+  severity_sort = true,
 })
