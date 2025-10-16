@@ -31,8 +31,12 @@ return {
             disableOrganizeImports = true,
           },
           python = {
+            pythonPath = ".venv/bin/python",
             analysis = {
-              ignore = { '*' },
+              typeCheckingMode = "basic",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              autoImportCompletions = true,
             },
           },
         },
@@ -41,7 +45,9 @@ return {
         capabilities = capabilities,
         init_options = {
           settings = {
-            args = {},
+            args = {
+              "--line-length=120",
+            },
           }
         },
         on_attach = function(client, bufnr)
