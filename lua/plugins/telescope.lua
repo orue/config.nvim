@@ -18,13 +18,17 @@ return {
     }
     require('telescope').load_extension('fzf')
 
-    vim.keymap.set("n", "<space>fd", require('telescope.builtin').find_files)
-    -- vim.keymap.set("n", "<space>fh", require('telescope.builtin').help_tags)
+    vim.keymap.set("n", "<space>fd", require('telescope.builtin').find_files, { desc = "Find files" })
+    vim.keymap.set("n", "<space>fb", require('telescope.builtin').buffers, { desc = "Find buffers" })
+    vim.keymap.set("n", "<space>fh", require('telescope.builtin').help_tags, { desc = "Help tags" })
+    vim.keymap.set("n", "<space>fr", require('telescope.builtin').lsp_references, { desc = "LSP references" })
+    vim.keymap.set("n", "<space>fs", require('telescope.builtin').lsp_document_symbols, { desc = "Document symbols" })
+    vim.keymap.set("n", "<space>fo", require('telescope.builtin').oldfiles, { desc = "Recent files" })
     vim.keymap.set("n", "<space>en", function()
       require('telescope.builtin').find_files {
         cwd = vim.fn.stdpath("config")
       }
-    end)
+    end, { desc = "Edit neovim config" })
     require "plugins.telescope.multigrep".setup()
   end
 }
