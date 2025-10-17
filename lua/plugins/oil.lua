@@ -4,7 +4,7 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {
     -- Oil will take over directory buffers (e.g. `nvim .`)
-    default_file_explorer = false,
+    default_file_explorer = true,
     keymaps = {
       ["<C-h>"] = false,
       ["<C-c>"] = false, -- prevent from closing Oil as <C-c> is esc key
