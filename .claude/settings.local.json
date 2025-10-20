@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nvim:*)",
+      "Bash(git checkout -b go-language-setup)",
+      "Bash(git checkout main)",
+      "Bash(git stash)",
+      "Bash(git add .claude/settings.local.json -f)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
