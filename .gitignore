@@ -1,0 +1,27 @@
+# Claude Code local settings
+.claude/*.local.json
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Neovim
+*.swp
+*.swo
+*.swn
+.netrwhist
+
+# Lazy.nvim plugin directory (if installed locally)
+# Uncomment if you install plugins in this directory
+# lazy/
+
+# LSP logs
+lsp.log
+
+# Debug files
+*.log
