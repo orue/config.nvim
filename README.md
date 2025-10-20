@@ -65,12 +65,13 @@ A modern, well-organized Neovim configuration focused on Python development with
 │   │   ├── telescope.lua     # Fuzzy finder
 │   │   ├── treesitter.lua    # Syntax highlighting
 │   │   ├── debug.lua         # DAP debugging
-│   │   ├── python.lua        # Python testing
+│   │   ├── neotest.lua       # Testing (Python & Go)
 │   │   └── ...               # Other plugins
 │   └── alpha_custom.lua       # Custom dashboard functions
 ├── after/
 │   └── ftplugin/             # Language-specific settings
 │       ├── python.lua        # Python config
+│       ├── go.lua            # Go config
 │       └── lua.lua           # Lua config
 └── README.md
 ```

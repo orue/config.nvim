@@ -26,6 +26,29 @@ return {
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       require("lspconfig").lua_ls.setup { capabilities = capabilities }
+
+      require("lspconfig").gopls.setup {
+        capabilities = capabilities,
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+              shadow = true,
+            },
+            staticcheck = true,
+            gofumpt = true,  -- Use gofumpt formatting (stricter than gofmt)
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+          },
+        },
+      }
+
       require("lspconfig").pyright.setup {
         capabilities = capabilities,
         settings = {
@@ -87,6 +110,26 @@ return {
               group = bufgroup,
               buffer = args.buf,
               callback = function()
+                vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+              end,
+            })
+          elseif vim.bo.filetype == "go" and client.name == "gopls" then
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              group = bufgroup,
+              buffer = args.buf,
+              callback = function()
+                -- Organize imports first
+                local params = vim.lsp.util.make_range_params()
+                params.context = {only = {"source.organizeImports"}}
+                local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
+                for _, res in pairs(result or {}) do
+                  for _, action in pairs(res.result or {}) do
+                    if action.edit then
+                      vim.lsp.util.apply_workspace_edit(action.edit, "utf-8")
+                    end
+                  end
+                end
+                -- Then format
                 vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
               end,
             })

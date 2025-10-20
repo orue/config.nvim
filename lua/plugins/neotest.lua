@@ -5,6 +5,7 @@ return {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
       "nvim-neotest/neotest-python",
+      "nvim-neotest/neotest-go",
     },
     config = function()
       require("neotest").setup({
@@ -14,6 +15,7 @@ return {
             runner = "pytest",
             python = ".venv/bin/python",
           }),
+          require("neotest-go"),
         },
       })
     end,
