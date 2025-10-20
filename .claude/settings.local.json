@@ -4,8 +4,14 @@
       "Bash(nvim:*)",
       "Bash(git checkout -b go-language-setup)",
       "Bash(git checkout main)",
+<<<<<<< Updated upstream
       "Bash(git stash)",
       "Bash(git add .claude/settings.local.json -f)"
+||||||| Stash base
+      "Bash(nvim:*)"
+=======
+      "Bash(git stash)"
+>>>>>>> Stashed changes
     ],
     "deny": [],
     "ask": []
