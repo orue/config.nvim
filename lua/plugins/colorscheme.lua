@@ -6,9 +6,9 @@ return {
   priority = 1000, -- Load before other plugins
   config = function()
     require("tokyonight").setup({
-      style = "storm",     -- Available: storm, moon, night, day
+      style = "storm",    -- Available: storm, moon, night, day
       light_style = "day",
-      transparent = false, -- Set to true for transparent background
+      transparent = true, -- Set to true for transparent background
       terminal_colors = true,
       styles = {
         comments = { italic = true },
