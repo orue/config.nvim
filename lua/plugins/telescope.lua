@@ -42,7 +42,8 @@ return {
         sorting_strategy = "ascending",
         -- Performance settings
         cache_picker = {
-          num_pickers = 10,
+          num_pickers = 25,
+          limit_entries = 1000,
         },
       },
       pickers = {

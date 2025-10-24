@@ -21,12 +21,17 @@ function M.create_new_project()
       -- Create full path
       local project_path = location .. "/" .. project_name
 
-      -- Create the directory
-      vim.fn.mkdir(project_path, "p")
+      -- Create the directory with error handling
+      local ok, err = pcall(vim.fn.mkdir, project_path, "p")
+      if not ok then
+        vim.notify("Failed to create project: " .. tostring(err), vim.log.levels.ERROR)
+        return
+      end
 
       -- Change to the new directory and open Oil
       vim.cmd("cd " .. project_path)
       vim.cmd("Oil")
+      vim.notify("Created project: " .. project_name, vim.log.levels.INFO)
     end)
   end)
 end

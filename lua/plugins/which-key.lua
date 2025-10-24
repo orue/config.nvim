@@ -10,6 +10,7 @@ return {
       { "<leader>h", group = "Git Hunk" },
       { "<leader>c", group = "Code" },
       { "<leader>b", group = "Buffer" },
+      { "<leader>w", group = "Workspace" },
     },
   },
   keys = {

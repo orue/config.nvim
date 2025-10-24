@@ -88,6 +88,9 @@ return {
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+      vim.keymap.set("n", "<leader>wd", function()
+        vim.diagnostic.setloclist()
+      end, { desc = "Workspace diagnostics" })
 
       -- Create augroup for LSP autocommands to prevent duplicates
       local lsp_group = vim.api.nvim_create_augroup('lsp-attach', { clear = true })
