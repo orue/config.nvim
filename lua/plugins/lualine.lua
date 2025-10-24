@@ -6,7 +6,7 @@ return {
 
     require("lualine").setup {
       options = {
-        theme = "tokyonight-storm",
+        theme = "catppuccin",
         icons_enabled = true,
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
@@ -32,7 +32,7 @@ return {
               end
               return ""
             end,
-            color = { fg = "#7aa2f7" }
+            color = { fg = "#8caaee" }
           },
           {
             "filetype",
