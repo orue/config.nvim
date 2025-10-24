@@ -58,6 +58,13 @@ return {
           indentscope_color = "",
         },
       },
+      custom_highlights = function(colors)
+        return {
+          -- Disable italic for imported module/library names in Python
+          ["@variable.member.python"] = { fg = colors.sky, style = {} },
+          ["@module.python"] = { fg = colors.sky, style = {} },
+        }
+      end,
     })
 
     -- Apply the colorscheme
