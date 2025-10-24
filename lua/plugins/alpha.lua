@@ -20,8 +20,21 @@ return {
       "                                                                                        ",
     }
 
-    -- Function to get recent directories
+    -- Cache for recent projects (memoization)
+    local recent_projects_cache = nil
+    local cache_timestamp = 0
+    local cache_ttl = 300  -- 5 minutes in seconds
+
+    -- Function to get recent directories with caching
     local function get_recent_projects()
+      local current_time = os.time()
+
+      -- Return cached result if still valid
+      if recent_projects_cache and (current_time - cache_timestamp) < cache_ttl then
+        return recent_projects_cache
+      end
+
+      -- Recalculate projects
       local oldfiles = vim.v.oldfiles or {}
       local seen_dirs = {}
       local projects = {}
@@ -53,6 +66,10 @@ return {
           })
         end
       end
+
+      -- Update cache
+      recent_projects_cache = projects
+      cache_timestamp = current_time
 
       return projects
     end

@@ -84,6 +84,10 @@ return {
         cwd = vim.fn.stdpath("config")
       }
     end, { desc = "Edit neovim config" })
-    require "plugins.telescope.multigrep".setup()
+
+    -- Multi-grep with custom picker
+    vim.keymap.set("n", "<leader>fg", function()
+      require("plugins.telescope.multigrep").live_multigrep()
+    end, { desc = "Multi grep" })
   end
 }

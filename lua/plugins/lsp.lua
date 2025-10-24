@@ -13,21 +13,17 @@ return {
       },
     },
     config = function()
-      -- Suppress lspconfig deprecation warning
-      local original_deprecate = vim.deprecate
-      vim.deprecate = function(name, alternative, version, plugin, backtrace)
-        if name and name:match("lspconfig") then
-          return
-        end
-        return original_deprecate(name, alternative, version, plugin, backtrace)
-      end
-
+      -- Migrated to new vim.lsp.config API (Neovim 0.11+)
       local utils = require('config.utils')
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      require("lspconfig").lua_ls.setup { capabilities = capabilities }
+      -- Lua LSP
+      vim.lsp.config('lua_ls', {
+        capabilities = capabilities,
+      })
 
-      require("lspconfig").gopls.setup {
+      -- Go LSP
+      vim.lsp.config('gopls', {
         capabilities = capabilities,
         settings = {
           gopls = {
@@ -47,9 +43,10 @@ return {
             },
           },
         },
-      }
+      })
 
-      require("lspconfig").pyright.setup {
+      -- Python LSP (Pyright)
+      vim.lsp.config('pyright', {
         capabilities = capabilities,
         settings = {
           pyright = {
@@ -65,8 +62,10 @@ return {
             },
           },
         },
-      }
-      require("lspconfig").ruff.setup {
+      })
+
+      -- Python LSP (Ruff)
+      vim.lsp.config('ruff', {
         capabilities = capabilities,
         init_options = {
           settings = {
@@ -78,11 +77,19 @@ return {
         on_attach = function(client, bufnr)
           client.server_capabilities.hoverProvider = false
         end,
-      }
+      })
 
-      require("lspconfig").marksman.setup {
+      -- Markdown LSP
+      vim.lsp.config('marksman', {
         capabilities = capabilities,
-      }
+      })
+
+      -- Enable all configured LSP servers
+      vim.lsp.enable('lua_ls')
+      vim.lsp.enable('gopls')
+      vim.lsp.enable('pyright')
+      vim.lsp.enable('ruff')
+      vim.lsp.enable('marksman')
 
       -- Diagnostic keymaps
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })
