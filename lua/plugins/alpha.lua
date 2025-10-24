@@ -147,16 +147,15 @@ return {
     }
 
     -- Disable folding on alpha buffer
-    vim.cmd([[
-      autocmd FileType alpha setlocal nofoldenable
-    ]])
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "alpha",
+      callback = function()
+        vim.opt_local.foldenable = false
+      end,
+    })
 
     -- Send config to alpha
     alpha.setup(dashboard.config)
-
-    -- Disable netrw
-    vim.g.loaded_netrw = 1
-    vim.g.loaded_netrwPlugin = 1
 
     -- Auto open alpha when last buffer is closed
     vim.api.nvim_create_autocmd("User", {
