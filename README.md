@@ -5,7 +5,7 @@ A modern, well-organized Neovim configuration focused on Python development with
 ## Features
 
 - **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) for fast, lazy-loaded plugins
-- **Colorscheme**: Tokyo Night Storm with custom diagnostic colors
+- **Colorscheme**: Catppuccin Frappe with transparent background
 - **LSP**: Fully configured Language Server Protocol for Lua and Python
 - **Completion**: Modern completion engine with [blink.cmp](https://github.com/Saghen/blink.cmp)
 - **File Navigation**: Oil.nvim for intuitive file browsing, Telescope for fuzzy finding
@@ -80,7 +80,7 @@ A modern, well-organized Neovim configuration focused on Python development with
 
 | Plugin | Purpose |
 |--------|---------|
-| [tokyonight.nvim](https://github.com/folke/tokyonight.nvim) | Colorscheme |
+| [catppuccin/nvim](https://github.com/catppuccin/nvim) | Colorscheme |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP configuration |
 | [blink.cmp](https://github.com/Saghen/blink.cmp) | Completion engine |
@@ -229,9 +229,14 @@ This configuration is optimized for Python development with the following featur
 Edit `lua/plugins/colorscheme.lua`:
 ```lua
 return {
-  "folke/tokyonight.nvim",
+  "catppuccin/nvim",
+  name = "catppuccin",
   config = function()
-    vim.cmd.colorscheme("tokyonight-storm")
+    require("catppuccin").setup({
+      flavour = "frappe",  -- latte, frappe, macchiato, mocha
+      transparent_background = true,
+    })
+    vim.cmd.colorscheme("catppuccin-frappe")
   end,
 }
 ```
@@ -321,7 +326,8 @@ MIT License - Feel free to use and modify this configuration.
 ## Acknowledgments
 
 This configuration was built using excellent plugins from the Neovim community. Special thanks to:
-- [folke](https://github.com/folke) for lazy.nvim, which-key, noice, flash, and tokyonight
+- [folke](https://github.com/folke) for lazy.nvim, which-key, noice, and flash
+- [Catppuccin](https://github.com/catppuccin) for the beautiful colorscheme
 - [nvim-lua](https://github.com/nvim-lua) for the foundation of modern Neovim configs
 - [nvim-treesitter](https://github.com/nvim-treesitter) for amazing syntax highlighting
 - All plugin authors whose work made this configuration possible
