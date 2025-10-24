@@ -11,6 +11,7 @@ return {
       { "<leader>c", group = "Code" },
       { "<leader>b", group = "Buffer" },
       { "<leader>w", group = "Workspace" },
+      { "<leader>g", group = "Git" },
     },
   },
   keys = {
