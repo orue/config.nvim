@@ -66,7 +66,7 @@ return {
           },
         },
       }
-      require("lspconfig").ruff.setup { 
+      require("lspconfig").ruff.setup {
         capabilities = capabilities,
         init_options = {
           settings = {
@@ -78,6 +78,10 @@ return {
         on_attach = function(client, bufnr)
           client.server_capabilities.hoverProvider = false
         end,
+      }
+
+      require("lspconfig").marksman.setup {
+        capabilities = capabilities,
       }
 
       -- Diagnostic keymaps
