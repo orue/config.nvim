@@ -3,6 +3,7 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local utils = require('config.utils')
+    local colors = require("catppuccin.palettes").get_palette("frappe")
 
     require("lualine").setup {
       options = {
@@ -32,7 +33,7 @@ return {
               end
               return ""
             end,
-            color = { fg = "#8caaee" }
+            color = { fg = colors.blue }
           },
           {
             "filetype",

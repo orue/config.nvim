@@ -41,14 +41,12 @@ return {
         alpha = true,
         cmp = true,
         gitsigns = true,
-        nvimtree = true,
         treesitter = true,
         notify = true,
         noice = true,
         native_lsp = {
           enabled = true,
         },
-        lsp_trouble = true,
         which_key = true,
         telescope = {
           enabled = true,

@@ -13,21 +13,17 @@ return {
       },
     },
     config = function()
-      -- Suppress lspconfig deprecation warning
-      local original_deprecate = vim.deprecate
-      vim.deprecate = function(name, alternative, version, plugin, backtrace)
-        if name and name:match("lspconfig") then
-          return
-        end
-        return original_deprecate(name, alternative, version, plugin, backtrace)
-      end
-
+      -- Migrated to new vim.lsp.config API (Neovim 0.11+)
       local utils = require('config.utils')
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      require("lspconfig").lua_ls.setup { capabilities = capabilities }
+      -- Lua LSP
+      vim.lsp.config('lua_ls', {
+        capabilities = capabilities,
+      })
 
-      require("lspconfig").gopls.setup {
+      -- Go LSP
+      vim.lsp.config('gopls', {
         capabilities = capabilities,
         settings = {
           gopls = {
@@ -47,9 +43,10 @@ return {
             },
           },
         },
-      }
+      })
 
-      require("lspconfig").pyright.setup {
+      -- Python LSP (Pyright)
+      vim.lsp.config('pyright', {
         capabilities = capabilities,
         settings = {
           pyright = {
@@ -65,8 +62,10 @@ return {
             },
           },
         },
-      }
-      require("lspconfig").ruff.setup {
+      })
+
+      -- Python LSP (Ruff)
+      vim.lsp.config('ruff', {
         capabilities = capabilities,
         init_options = {
           settings = {
@@ -78,16 +77,27 @@ return {
         on_attach = function(client, bufnr)
           client.server_capabilities.hoverProvider = false
         end,
-      }
+      })
 
-      require("lspconfig").marksman.setup {
+      -- Markdown LSP
+      vim.lsp.config('marksman', {
         capabilities = capabilities,
-      }
+      })
+
+      -- Enable all configured LSP servers
+      vim.lsp.enable('lua_ls')
+      vim.lsp.enable('gopls')
+      vim.lsp.enable('pyright')
+      vim.lsp.enable('ruff')
+      vim.lsp.enable('marksman')
 
       -- Diagnostic keymaps
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+      vim.keymap.set("n", "<leader>wd", function()
+        vim.diagnostic.setloclist()
+      end, { desc = "Workspace diagnostics" })
 
       -- Create augroup for LSP autocommands to prevent duplicates
       local lsp_group = vim.api.nvim_create_augroup('lsp-attach', { clear = true })
@@ -123,13 +133,13 @@ return {
               buffer = args.buf,
               callback = function()
                 -- Organize imports first
-                local params = vim.lsp.util.make_range_params()
+                local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
                 params.context = {only = {"source.organizeImports"}}
                 local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
                 for _, res in pairs(result or {}) do
                   for _, action in pairs(res.result or {}) do
                     if action.edit then
-                      vim.lsp.util.apply_workspace_edit(action.edit, "utf-8")
+                      vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
                     end
                   end
                 end

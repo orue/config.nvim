@@ -20,7 +20,8 @@ function M.get_python_path()
     return vim.fn.exepath('python')
   end
 
-  -- Last resort fallback
+  -- Last resort fallback with warning
+  vim.notify("Python executable not found, using 'python3'", vim.log.levels.WARN)
   return 'python3'
 end
 

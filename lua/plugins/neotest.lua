@@ -8,12 +8,14 @@ return {
       "nvim-neotest/neotest-go",
     },
     config = function()
+      local utils = require('config.utils')
+
       require("neotest").setup({
         adapters = {
           require("neotest-python")({
             dap = { justMyCode = false },
             runner = "pytest",
-            python = ".venv/bin/python",
+            python = utils.get_python_path(),
           }),
           require("neotest-go"),
         },
