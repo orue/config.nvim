@@ -60,15 +60,6 @@ brew bundle
 
 This will install all required tools automatically.
 
-### Alternative: Manual Installation
-
-You can also use the installation script:
-
-```bash
-cd ~/.config/nvim
-./install-dependencies.sh
-```
-
 ### What Gets Installed
 
 #### Core Dependencies
@@ -141,7 +132,7 @@ After installing dependencies, you can verify everything is working:
 
 ### Other Operating Systems
 
-For Linux or other systems, you'll need to install the equivalent packages using your system's package manager. Refer to `install-dependencies.sh` for the list of required tools.
+For Linux or other systems, you'll need to install the equivalent packages using your system's package manager. Refer to the `Brewfile` for the complete list of required tools.
 
 ## Directory Structure
 
@@ -169,7 +160,6 @@ For Linux or other systems, you'll need to install the equivalent packages using
 │       ├── go.lua            # Go config
 │       └── lua.lua           # Lua config
 ├── Brewfile                   # macOS dependencies (Homebrew)
-├── install-dependencies.sh    # Dependency installation script
 └── README.md
 ```
 
@@ -407,7 +397,7 @@ When opening Neovim without a file:
 
 ### Missing Dependencies
 1. Run `brew bundle check --verbose` to see what's missing
-2. Install missing packages: `brew bundle` or `./install-dependencies.sh`
+2. Install missing packages: `brew bundle`
 3. Verify installation with `:checkhealth` in Neovim
 
 ## Performance
