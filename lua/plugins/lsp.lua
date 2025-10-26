@@ -84,12 +84,18 @@ return {
         capabilities = capabilities,
       })
 
+      -- Docker LSP
+      vim.lsp.config('dockerls', {
+        capabilities = capabilities,
+      })
+
       -- Enable all configured LSP servers
       vim.lsp.enable('lua_ls')
       vim.lsp.enable('gopls')
       vim.lsp.enable('pyright')
       vim.lsp.enable('ruff')
       vim.lsp.enable('marksman')
+      vim.lsp.enable('dockerls')
 
       -- Diagnostic keymaps
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })
