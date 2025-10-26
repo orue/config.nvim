@@ -18,11 +18,10 @@ A modern, well-organized Neovim configuration focused on Python development with
 
 - Neovim >= 0.9.0
 - Git
-- A [Nerd Font](https://www.nerdfonts.com/) for icons
-- [ripgrep](https://github.com/BurntSushi/ripgrep) for Telescope live grep
-- [fd](https://github.com/sharkdp/fd) (optional, for faster file finding)
-- [Node.js](https://nodejs.org/) (for some LSP servers)
-- Python 3.8+ (for Python development features)
+- A [Nerd Font](https://www.nerdfonts.com/) for icons (required for proper icon display)
+- [Homebrew](https://brew.sh) (macOS only, for dependency installation)
+
+For all other dependencies (LSP servers, formatters, tools), see the [Dependencies](#dependencies) section below.
 
 ## Installation
 
@@ -44,9 +43,105 @@ A modern, well-organized Neovim configuration focused on Python development with
 
    Lazy.nvim will automatically install all plugins on first launch.
 
-4. **Install language servers** (optional, for LSP):
-   - Lua: Included with `lua_ls`
-   - Python: `pip install pyright ruff`
+4. **Install dependencies** (see Dependencies section below)
+
+## Dependencies
+
+This configuration requires several external tools for full functionality. On **macOS**, all dependencies can be easily installed using Homebrew.
+
+### Quick Install (macOS)
+
+The easiest way to install all dependencies is using the included `Brewfile`:
+
+```bash
+cd ~/.config/nvim
+brew bundle
+```
+
+This will install all required tools automatically.
+
+### Alternative: Manual Installation
+
+You can also use the installation script:
+
+```bash
+cd ~/.config/nvim
+./install-dependencies.sh
+```
+
+### What Gets Installed
+
+#### Core Dependencies
+- **node** - JavaScript runtime (needed for some LSP servers)
+- **python3** - Python runtime
+
+#### Language Servers
+- **lua-language-server** - Lua LSP
+- **gopls** - Go LSP
+- **pyright** - Python type checking and IntelliSense
+- **ruff** - Fast Python linter and formatter
+- **marksman** - Markdown LSP
+- **dockerfile-language-server** - Dockerfile LSP
+- **bash-language-server** - Bash/shell script LSP
+- **taplo** - TOML LSP
+- **yaml-language-server** - YAML LSP
+- **terraform-ls** - Terraform LSP
+
+#### Debuggers
+- **delve** - Go debugger (dlv)
+
+#### Formatters & Linters
+- **prettier** - Multi-language code formatter
+
+#### Tools
+- **ripgrep** - Fast search tool (required for Telescope)
+- **lazygit** - Terminal UI for git commands
+- **make** - Build automation tool
+
+#### Python Packages (Per-Project)
+
+The following Python packages should be installed **per-project** in a virtual environment, NOT globally:
+
+```bash
+# Create a virtual environment
+python -m venv .venv
+
+# Activate it
+source .venv/bin/activate  # macOS/Linux
+
+# Install packages
+pip install debugpy pytest
+```
+
+**Required packages:**
+- **debugpy** - Python debugger adapter for nvim-dap
+- **pytest** - Testing framework for neotest-python
+
+**Why virtual environments?**
+- Avoids conflicts between project dependencies
+- Keeps system Python clean
+- Allows different versions per project
+- Better isolation and reproducibility
+
+### Verifying Installation
+
+After installing dependencies, you can verify everything is working:
+
+1. **Check Homebrew packages:**
+   ```bash
+   brew bundle check --verbose
+   ```
+
+2. **Check in Neovim:**
+   ```vim
+   :checkhealth
+   :LspInfo
+   :Mason
+   ```
+
+### Other Operating Systems
+
+For Linux or other systems, you'll need to install the equivalent packages using your system's package manager. Refer to `install-dependencies.sh` for the list of required tools.
 
 ## Directory Structure
 
@@ -73,6 +168,8 @@ A modern, well-organized Neovim configuration focused on Python development with
 │       ├── python.lua        # Python config
 │       ├── go.lua            # Go config
 │       └── lua.lua           # Lua config
+├── Brewfile                   # macOS dependencies (Homebrew)
+├── install-dependencies.sh    # Dependency installation script
 └── README.md
 ```
 
@@ -299,13 +396,19 @@ When opening Neovim without a file:
 3. Press `S` to sync (install missing plugins)
 
 ### Python Features Not Working
-1. Ensure you have Python 3.8+ installed
-2. Install required packages: `pip install pyright ruff debugpy pytest`
-3. Create a virtual environment: `python -m venv .venv`
+1. Ensure all dependencies are installed (see [Dependencies](#dependencies) section)
+2. Install Python packages in your project's virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   pip install debugpy pytest
+   ```
+3. Restart Neovim after activating the virtual environment
 
-### Telescope Errors
-1. Ensure `ripgrep` is installed: `brew install ripgrep` (macOS) or your package manager
-2. Install `fd` for better performance: `brew install fd`
+### Missing Dependencies
+1. Run `brew bundle check --verbose` to see what's missing
+2. Install missing packages: `brew bundle` or `./install-dependencies.sh`
+3. Verify installation with `:checkhealth` in Neovim
 
 ## Performance
 
