@@ -4,7 +4,26 @@ return {
   cmd = { "ConformInfo" },
   opts = {
     formatters_by_ft = {
+      -- JavaScript/TypeScript
+      javascript = { "prettier" },
+      javascriptreact = { "prettier" },
+      typescript = { "prettier" },
+      typescriptreact = { "prettier" },
+      -- CSS
+      css = { "prettier" },
+      scss = { "prettier" },
+      less = { "prettier" },
+      -- JSON
+      json = { "prettier" },
+      jsonc = { "prettier" },
+      -- GraphQL
+      graphql = { "prettier" },
+      gql = { "prettier" },
+      -- Markdown
       markdown = { "prettier" },
+      -- YAML
+      yaml = { "prettier" },
+      yml = { "prettier" },
     },
     format_on_save = {
       timeout_ms = 500,
