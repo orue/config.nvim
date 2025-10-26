@@ -130,9 +130,25 @@ After installing dependencies, you can verify everything is working:
    :Mason
    ```
 
-### Other Operating Systems
+### Ubuntu/Debian Installation
 
-For Linux or other systems, you'll need to install the equivalent packages using your system's package manager. Refer to the `Brewfile` for the complete list of required tools.
+For Ubuntu Server or Debian-based systems, use the provided installation script:
+
+```bash
+cd ~/.config/nvim
+chmod +x install-ubuntu.sh
+./install-ubuntu.sh
+```
+
+This script will install all dependencies using apt, npm, pipx, and direct downloads where necessary. After installation, you may need to restart your shell:
+
+```bash
+source ~/.bashrc
+```
+
+### Other Linux Distributions
+
+For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` for the complete list of required tools and install them using your distribution's package manager.
 
 ## Directory Structure
 
@@ -160,6 +176,7 @@ For Linux or other systems, you'll need to install the equivalent packages using
 │       ├── go.lua            # Go config
 │       └── lua.lua           # Lua config
 ├── Brewfile                   # macOS dependencies (Homebrew)
+├── install-ubuntu.sh          # Ubuntu/Debian installation script
 └── README.md
 ```
 
