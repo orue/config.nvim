@@ -89,6 +89,45 @@ return {
         capabilities = capabilities,
       })
 
+      -- Bash LSP
+      vim.lsp.config('bashls', {
+        capabilities = capabilities,
+      })
+
+      -- TOML LSP
+      vim.lsp.config('taplo', {
+        capabilities = capabilities,
+      })
+
+      -- YAML LSP (GitHub Actions, Kubernetes, Docker Compose)
+      vim.lsp.config('yamlls', {
+        capabilities = capabilities,
+        settings = {
+          yaml = {
+            schemaStore = {
+              enable = true,
+              url = "https://www.schemastore.org/api/json/catalog.json",
+            },
+            schemas = {
+              ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+              ["https://json.schemastore.org/github-action.json"] = "/.github/action.{yml,yaml}",
+              kubernetes = "/*.k8s.yaml",
+            },
+            format = {
+              enable = true,
+            },
+            validate = true,
+            hover = true,
+            completion = true,
+          },
+        },
+      })
+
+      -- Terraform LSP
+      vim.lsp.config('terraformls', {
+        capabilities = capabilities,
+      })
+
       -- Enable all configured LSP servers
       vim.lsp.enable('lua_ls')
       vim.lsp.enable('gopls')
@@ -96,6 +135,10 @@ return {
       vim.lsp.enable('ruff')
       vim.lsp.enable('marksman')
       vim.lsp.enable('dockerls')
+      vim.lsp.enable('bashls')
+      vim.lsp.enable('taplo')
+      vim.lsp.enable('yamlls')
+      vim.lsp.enable('terraformls')
 
       -- Diagnostic keymaps
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })

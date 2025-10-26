@@ -26,7 +26,10 @@ return {
           "vimdoc",
           "c",
           "python",
-          "go"
+          "go",
+          "toml",
+          "hcl",
+          "terraform"
         },
         auto_install = false,
         highlight = {
