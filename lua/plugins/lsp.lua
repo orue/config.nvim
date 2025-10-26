@@ -97,6 +97,7 @@ return {
       -- TOML LSP
       vim.lsp.config('taplo', {
         capabilities = capabilities,
+        cmd = { '/opt/homebrew/bin/taplo', 'lsp', 'stdio' },
       })
 
       -- YAML LSP (GitHub Actions, Kubernetes, Docker Compose)
