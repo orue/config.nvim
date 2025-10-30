@@ -25,6 +25,10 @@ For all other dependencies (LSP servers, formatters, tools), see the [Dependenci
 
 ## Installation
 
+### Quick Install (macOS)
+
+The easiest way to set up everything at once:
+
 1. **Backup your existing configuration** (if any):
    ```bash
    mv ~/.config/nvim ~/.config/nvim.backup
@@ -36,29 +40,56 @@ For all other dependencies (LSP servers, formatters, tools), see the [Dependenci
    git clone https://github.com/yourusername/nvim-config.git ~/.config/nvim
    ```
 
-3. **Start Neovim**:
+3. **Run the installation script**:
+   ```bash
+   cd ~/.config/nvim
+   chmod +x install.sh
+   ./install.sh
+   ```
+
+   This script will:
+   - Install/update Neovim
+   - Install all Homebrew dependencies (LSP servers, formatters, tools)
+   - Install all npm dependencies (emmet-ls)
+   - Prepare Neovim for first launch
+
+4. **Start Neovim**:
    ```bash
    nvim
    ```
 
    Lazy.nvim will automatically install all plugins on first launch.
 
-4. **Install dependencies** (see Dependencies section below)
+### Manual Installation
+
+If you prefer to install dependencies manually, follow the steps in the [Dependencies](#dependencies) section below.
 
 ## Dependencies
 
 This configuration requires several external tools for full functionality. On **macOS**, all dependencies can be easily installed using Homebrew.
 
-### Quick Install (macOS)
+### Quick Install (macOS) - Option 1: Automated Script
 
-The easiest way to install all dependencies is using the included `Brewfile`:
+The easiest way to install everything (Neovim + all dependencies) is using the installation script:
+
+```bash
+cd ~/.config/nvim
+./install.sh
+```
+
+This will install Neovim, all Homebrew dependencies, and npm packages automatically.
+
+### Quick Install (macOS) - Option 2: Brewfile Only
+
+If you already have Neovim installed and only need dependencies:
 
 ```bash
 cd ~/.config/nvim
 brew bundle
+npm install -g emmet-ls
 ```
 
-This will install all required tools automatically.
+This will install all Homebrew dependencies and npm packages.
 
 ### What Gets Installed
 
@@ -73,16 +104,18 @@ This will install all required tools automatically.
 - **ruff** - Fast Python linter and formatter
 - **typescript-language-server** - TypeScript/JavaScript LSP
 - **vue-language-server** - Vue.js LSP (Volar)
+- **vscode-langservers-extracted** - HTML, CSS, JSON, ESLint LSP servers
 - **marksman** - Markdown LSP
 - **dockerfile-language-server** - Dockerfile LSP
 - **bash-language-server** - Bash/shell script LSP
 - **taplo** - TOML LSP
 - **yaml-language-server** - YAML LSP
 - **terraform-ls** - Terraform LSP
-- **llvm** - Provides clangd for C/C++
+- **llvm** - Provides clangd (C/C++ LSP) and lldb (C/C++ debugger)
 
 #### Debuggers
 - **delve** - Go debugger (dlv)
+- **lldb** - C/C++ debugger (included with llvm, no separate install needed)
 
 #### Formatters & Linters
 - **prettier** - Multi-language code formatter
@@ -91,6 +124,17 @@ This will install all required tools automatically.
 - **ripgrep** - Fast search tool (required for Telescope)
 - **lazygit** - Terminal UI for git commands
 - **make** - Build automation tool
+
+#### NPM-based Language Servers
+
+The following language servers are installed via npm (not Homebrew):
+
+```bash
+npm install -g emmet-ls
+```
+
+**Required packages:**
+- **emmet-ls** - Emmet abbreviations for HTML/CSS/JSX/Vue
 
 #### Python Packages (Per-Project)
 
@@ -133,21 +177,45 @@ After installing dependencies, you can verify everything is working:
    :Mason
    ```
 
-### Ubuntu/Debian Installation
+### Quick Install (Ubuntu/Debian)
 
-For Ubuntu Server or Debian-based systems, use the provided installation script:
+For Ubuntu Server or Debian-based systems, use the comprehensive installation script:
 
-```bash
-cd ~/.config/nvim
-chmod +x install-ubuntu.sh
-./install-ubuntu.sh
-```
+1. **Backup your existing configuration** (if any):
+   ```bash
+   mv ~/.config/nvim ~/.config/nvim.backup
+   mv ~/.local/share/nvim ~/.local/share/nvim.backup
+   ```
 
-This script will install all dependencies using apt, npm, pipx, and direct downloads where necessary. After installation, you may need to restart your shell:
+2. **Clone this repository**:
+   ```bash
+   git clone https://github.com/yourusername/nvim-config.git ~/.config/nvim
+   ```
 
-```bash
-source ~/.bashrc
-```
+3. **Run the installation script**:
+   ```bash
+   cd ~/.config/nvim
+   chmod +x install-ubuntu.sh
+   ./install-ubuntu.sh
+   ```
+
+   This script will:
+   - Install/update Neovim (latest stable via PPA)
+   - Install all system dependencies (LSP servers, formatters, tools)
+   - Install all npm dependencies
+   - Prepare Neovim for first launch
+
+4. **Restart your shell**:
+   ```bash
+   source ~/.bashrc
+   ```
+
+5. **Start Neovim**:
+   ```bash
+   nvim
+   ```
+
+   Lazy.nvim will automatically install all plugins on first launch.
 
 ### Other Linux Distributions
 
@@ -183,8 +251,11 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 │       ├── javascriptreact.lua  # JSX config
 │       ├── typescriptreact.lua  # TSX config
 │       ├── vue.lua           # Vue.js config
+│       ├── html.lua          # HTML config
+│       ├── css.lua           # CSS config
 │       └── lua.lua           # Lua config
 ├── Brewfile                   # macOS dependencies (Homebrew)
+├── install.sh                 # Comprehensive installation script (macOS)
 ├── install-ubuntu.sh          # Ubuntu/Debian installation script
 └── README.md
 ```
@@ -207,6 +278,7 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 | [neotest](https://github.com/nvim-neotest/neotest) | Test runner |
 | [noice.nvim](https://github.com/folke/noice.nvim) | Enhanced UI |
 | [which-key.nvim](https://github.com/folke/which-key.nvim) | Keybinding help |
+| [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) | Auto-close/rename HTML tags |
 
 See the full plugin list in the [lua/plugins/](lua/plugins/) directory.
 
@@ -300,6 +372,34 @@ Full support for Vue 3 single-file components:
 - Auto-formatting keybindings (`<leader>rf`, `<leader>ri`)
 - Full TypeScript/JavaScript support in `<script>` tags
 - CSS/SCSS/Less support in `<style>` tags
+
+### HTML/CSS Development
+
+Full support for web development with HTML and CSS:
+
+#### LSP Configuration
+- **html**: HTML language server for validation, autocomplete, and IntelliSense
+- **cssls**: CSS/SCSS/Less language server with linting and validation
+- **emmet_ls**: Emmet abbreviations for rapid HTML/CSS authoring
+
+#### Features
+- Auto-close HTML tags: Type `<div>` and it becomes `<div></div>`
+- Auto-rename tags: Change opening tag and closing tag updates automatically
+- Emmet abbreviations: `div.container>ul>li*3` expands to full HTML structure
+- CSS property autocomplete with browser compatibility info
+- Auto-formatting on save (Prettier)
+
+#### Supported File Types
+- `.html` - HTML files
+- `.css` - CSS files
+- `.scss` - SCSS/Sass files
+- `.less` - Less files
+
+#### File-Specific Settings
+- 2-space indentation (web standard)
+- 120-character line length indicator
+- Auto-formatting keybindings (`<leader>rf`)
+- Emmet also works in JSX, TSX, and Vue files
 
 ### Go Development
 

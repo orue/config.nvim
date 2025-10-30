@@ -199,6 +199,44 @@ return {
         },
       })
 
+      -- HTML LSP
+      vim.lsp.config('html', {
+        capabilities = capabilities,
+        filetypes = { 'html' },
+      })
+
+      -- CSS LSP
+      vim.lsp.config('cssls', {
+        capabilities = capabilities,
+        filetypes = { 'css', 'scss', 'less' },
+        settings = {
+          css = {
+            validate = true,
+            lint = {
+              unknownAtRules = "ignore",
+            },
+          },
+          scss = {
+            validate = true,
+            lint = {
+              unknownAtRules = "ignore",
+            },
+          },
+          less = {
+            validate = true,
+            lint = {
+              unknownAtRules = "ignore",
+            },
+          },
+        },
+      })
+
+      -- Emmet LSP (HTML/CSS abbreviations)
+      vim.lsp.config('emmet_ls', {
+        capabilities = capabilities,
+        filetypes = { 'html', 'css', 'scss', 'javascriptreact', 'typescriptreact', 'vue' },
+      })
+
       -- Enable all configured LSP servers
       vim.lsp.enable('lua_ls')
       vim.lsp.enable('gopls')
@@ -213,6 +251,9 @@ return {
       vim.lsp.enable('clangd')
       vim.lsp.enable('ts_ls')
       vim.lsp.enable('vue_ls')
+      vim.lsp.enable('html')
+      vim.lsp.enable('cssls')
+      vim.lsp.enable('emmet_ls')
 
       -- Diagnostic keymaps
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })

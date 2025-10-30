@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# Comprehensive installation script for Neovim configuration (Ubuntu/Debian)
+# This script will:
+#   1. Install/update Neovim
+#   2. Install all system dependencies (LSP servers, formatters, tools)
+#   3. Install all npm dependencies
+#   4. Set up Neovim plugins
+#
+# Usage: ./install-ubuntu.sh
+
 set -e
 
 # Colors for output
@@ -9,38 +18,76 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo "=========================================="
-echo "Neovim Dependencies - Ubuntu Server"
-echo "=========================================="
+# Function to print colored output
+print_success() {
+    echo -e "${GREEN}✓${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}✗${NC} $1"
+}
+
+print_info() {
+    echo -e "${YELLOW}→${NC} $1"
+}
+
+echo "========================================"
+echo "Neovim Configuration Setup (Ubuntu/Debian)"
+echo "========================================"
 echo ""
 
 # Check if running on Ubuntu/Debian
 if ! command -v apt &> /dev/null; then
-  echo -e "${RED}Error: This script is designed for Ubuntu/Debian systems${NC}"
+  print_error "This script is designed for Ubuntu/Debian systems"
   exit 1
 fi
 
-echo -e "${GREEN}✓${NC} Running on Ubuntu/Debian"
+print_success "Running on Ubuntu/Debian"
 echo ""
 
 # Check for sudo privileges
 if [ "$EUID" -ne 0 ]; then
-  echo -e "${YELLOW}This script requires sudo privileges for some installations${NC}"
+  print_info "This script requires sudo privileges for some installations"
   echo "You may be prompted for your password..."
   echo ""
 fi
 
-echo "=========================================="
-echo "Updating Package Lists"
-echo "=========================================="
+# ============================================================
+# 1. Update Package Lists
+# ============================================================
 echo ""
+echo "Step 1: Updating Package Lists..."
+echo "----------------------------"
 sudo apt update
+print_success "Package lists updated"
 
+# ============================================================
+# 2. Install/Update Neovim
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing Core Dependencies"
-echo "=========================================="
+echo "Step 2: Installing/Updating Neovim..."
+echo "--------------------------------------"
+
+if command -v nvim &> /dev/null; then
+  CURRENT_VERSION=$(nvim --version | head -1)
+  print_info "Current Neovim version: $CURRENT_VERSION"
+fi
+
+print_info "Installing Neovim (latest stable)..."
+# Add Neovim PPA for latest version
+sudo apt install -y software-properties-common
+sudo add-apt-repository -y ppa:neovim-ppa/stable
+sudo apt update
+sudo apt install -y neovim
+
+print_success "Neovim installed: $(nvim --version | head -1)"
+
+# ============================================================
+# 3. Install Core Dependencies
+# ============================================================
 echo ""
+echo "Step 3: Installing Core Dependencies..."
+echo "----------------------------------------"
 
 # Core packages
 declare -a core_packages=(
@@ -53,40 +100,49 @@ declare -a core_packages=(
 
 for package in "${core_packages[@]}"; do
   if dpkg -l | grep -q "^ii  $package "; then
-    echo -e "${GREEN}✓${NC} $package (already installed)"
+    print_success "$package (already installed)"
   else
-    echo -e "${YELLOW}→${NC} Installing $package..."
+    print_info "Installing $package..."
     sudo apt install -y "$package"
   fi
 done
 
+# ============================================================
+# 4. Install Node.js and npm
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing Node.js"
-echo "=========================================="
-echo ""
+echo "Step 4: Installing Node.js and npm..."
+echo "--------------------------------------"
 
 if ! command -v node &> /dev/null; then
-  echo -e "${YELLOW}→${NC} Installing Node.js via NodeSource..."
+  print_info "Installing Node.js via NodeSource..."
   curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   sudo apt install -y nodejs
-  echo -e "${GREEN}✓${NC} Node.js installed"
+  print_success "Node.js installed"
 else
-  echo -e "${GREEN}✓${NC} Node.js is already installed ($(node --version))"
+  print_success "Node.js is already installed ($(node --version))"
 fi
 
+if ! command -v npm &> /dev/null; then
+  print_error "npm is not installed"
+  exit 1
+fi
+
+print_success "npm: $(npm --version)"
+
+# ============================================================
+# 5. Install Python 3
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing Python 3"
-echo "=========================================="
-echo ""
+echo "Step 5: Installing Python 3..."
+echo "-------------------------------"
 
 if ! command -v python3 &> /dev/null; then
-  echo -e "${YELLOW}→${NC} Installing Python3..."
+  print_info "Installing Python3..."
   sudo apt install -y python3 python3-pip python3-venv
-  echo -e "${GREEN}✓${NC} Python3 installed"
+  print_success "Python3 installed"
 else
-  echo -e "${GREEN}✓${NC} Python3 is already installed ($(python3 --version))"
+  print_success "Python3 is already installed ($(python3 --version))"
 fi
 
 # Ensure pip is installed
@@ -94,14 +150,15 @@ if ! command -v pip3 &> /dev/null; then
   sudo apt install -y python3-pip
 fi
 
+# ============================================================
+# 6. Install Go
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing Go (for Go tools)"
-echo "=========================================="
-echo ""
+echo "Step 6: Installing Go..."
+echo "------------------------"
 
 if ! command -v go &> /dev/null; then
-  echo -e "${YELLOW}→${NC} Installing Go..."
+  print_info "Installing Go..."
   # Get latest Go version
   GO_VERSION="1.21.5"
   wget "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz"
@@ -114,17 +171,18 @@ if ! command -v go &> /dev/null; then
     echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bashrc
   fi
   export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-  echo -e "${GREEN}✓${NC} Go installed"
+  print_success "Go installed"
 else
-  echo -e "${GREEN}✓${NC} Go is already installed ($(go version))"
+  print_success "Go is already installed ($(go version))"
   export PATH=$PATH:$HOME/go/bin
 fi
 
+# ============================================================
+# 7. Install APT Packages
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing APT Packages"
-echo "=========================================="
-echo ""
+echo "Step 7: Installing APT Packages..."
+echo "-----------------------------------"
 
 declare -a apt_packages=(
   "ripgrep"
@@ -133,44 +191,50 @@ declare -a apt_packages=(
 
 for package in "${apt_packages[@]}"; do
   if dpkg -l | grep -q "^ii  $package "; then
-    echo -e "${GREEN}✓${NC} $package (already installed)"
+    print_success "$package (already installed)"
   else
-    echo -e "${YELLOW}→${NC} Installing $package..."
+    print_info "Installing $package..."
     sudo apt install -y "$package"
   fi
 done
 
+# ============================================================
+# 8. Install Language Servers (NPM)
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing Language Servers (NPM)"
-echo "=========================================="
-echo ""
+echo "Step 8: Installing npm Language Servers..."
+echo "-------------------------------------------"
 
 declare -a npm_packages=(
   "bash-language-server"
   "dockerfile-language-server-nodejs"
   "yaml-language-server"
+  "typescript-language-server"
+  "@vue/language-server"
+  "vscode-langservers-extracted"
+  "emmet-ls"
   "prettier"
 )
 
 for package in "${npm_packages[@]}"; do
   if npm list -g "$package" &> /dev/null; then
-    echo -e "${GREEN}✓${NC} $package (already installed)"
+    print_success "$package (already installed)"
   else
-    echo -e "${YELLOW}→${NC} Installing $package globally..."
+    print_info "Installing $package globally..."
     sudo npm install -g "$package"
   fi
 done
 
+# ============================================================
+# 9. Install Language Servers (Python/pipx)
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing Language Servers (Python/pipx)"
-echo "=========================================="
-echo ""
+echo "Step 9: Installing Python Language Servers..."
+echo "----------------------------------------------"
 
 # Install pipx if not available
 if ! command -v pipx &> /dev/null; then
-  echo -e "${YELLOW}→${NC} Installing pipx..."
+  print_info "Installing pipx..."
   python3 -m pip install --user pipx
   python3 -m pipx ensurepath
   export PATH="$HOME/.local/bin:$PATH"
@@ -183,46 +247,48 @@ declare -a pipx_packages=(
 
 for package in "${pipx_packages[@]}"; do
   if pipx list | grep -q "$package"; then
-    echo -e "${GREEN}✓${NC} $package (already installed)"
+    print_success "$package (already installed)"
   else
-    echo -e "${YELLOW}→${NC} Installing $package via pipx..."
+    print_info "Installing $package via pipx..."
     pipx install "$package"
   fi
 done
 
+# ============================================================
+# 10. Install Language Servers (Go)
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing Language Servers (Go)"
-echo "=========================================="
-echo ""
+echo "Step 10: Installing Go Language Servers..."
+echo "-------------------------------------------"
 
 # gopls
 if command -v gopls &> /dev/null; then
-  echo -e "${GREEN}✓${NC} gopls (already installed)"
+  print_success "gopls (already installed)"
 else
-  echo -e "${YELLOW}→${NC} Installing gopls..."
+  print_info "Installing gopls..."
   go install golang.org/x/tools/gopls@latest
 fi
 
 # delve (Go debugger)
 if command -v dlv &> /dev/null; then
-  echo -e "${GREEN}✓${NC} delve (already installed)"
+  print_success "delve (already installed)"
 else
-  echo -e "${YELLOW}→${NC} Installing delve..."
+  print_info "Installing delve..."
   go install github.com/go-delve/delve/cmd/dlv@latest
 fi
 
+# ============================================================
+# 11. Install Additional Language Servers
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing Additional Language Servers"
-echo "=========================================="
-echo ""
+echo "Step 11: Installing Additional Language Servers..."
+echo "---------------------------------------------------"
 
 # lua-language-server
 if command -v lua-language-server &> /dev/null; then
-  echo -e "${GREEN}✓${NC} lua-language-server (already installed)"
+  print_success "lua-language-server (already installed)"
 else
-  echo -e "${YELLOW}→${NC} Installing lua-language-server..."
+  print_info "Installing lua-language-server..."
   cd /tmp
   wget https://github.com/LuaLS/lua-language-server/releases/download/3.7.4/lua-language-server-3.7.4-linux-x64.tar.gz
   mkdir -p ~/.local/share/lua-language-server
@@ -237,60 +303,61 @@ exec "$HOME/.local/share/lua-language-server/bin/lua-language-server" "$@"
 EOF
   chmod +x ~/.local/bin/lua-language-server
   export PATH="$HOME/.local/bin:$PATH"
-  echo -e "${GREEN}✓${NC} lua-language-server installed"
+  print_success "lua-language-server installed"
 fi
 
 # marksman (Markdown LSP)
 if command -v marksman &> /dev/null; then
-  echo -e "${GREEN}✓${NC} marksman (already installed)"
+  print_success "marksman (already installed)"
 else
-  echo -e "${YELLOW}→${NC} Installing marksman..."
+  print_info "Installing marksman..."
   cd /tmp
   wget https://github.com/artempyanykh/marksman/releases/download/2023-12-09/marksman-linux-x64
   chmod +x marksman-linux-x64
   mkdir -p ~/.local/bin
   mv marksman-linux-x64 ~/.local/bin/marksman
-  echo -e "${GREEN}✓${NC} marksman installed"
+  print_success "marksman installed"
 fi
 
 # taplo (TOML LSP)
 if command -v taplo &> /dev/null; then
-  echo -e "${GREEN}✓${NC} taplo (already installed)"
+  print_success "taplo (already installed)"
 else
-  echo -e "${YELLOW}→${NC} Installing taplo..."
+  print_info "Installing taplo..."
   cd /tmp
   wget https://github.com/tamasfe/taplo/releases/download/0.8.1/taplo-linux-x86_64.gz
   gunzip taplo-linux-x86_64.gz
   chmod +x taplo-linux-x86_64
   mkdir -p ~/.local/bin
   mv taplo-linux-x86_64 ~/.local/bin/taplo
-  echo -e "${GREEN}✓${NC} taplo installed"
+  print_success "taplo installed"
 fi
 
 # terraform-ls
 if command -v terraform-ls &> /dev/null; then
-  echo -e "${GREEN}✓${NC} terraform-ls (already installed)"
+  print_success "terraform-ls (already installed)"
 else
-  echo -e "${YELLOW}→${NC} Installing terraform-ls..."
+  print_info "Installing terraform-ls..."
   cd /tmp
   wget https://releases.hashicorp.com/terraform-ls/0.32.8/terraform-ls_0.32.8_linux_amd64.zip
   unzip terraform-ls_0.32.8_linux_amd64.zip
   mkdir -p ~/.local/bin
   mv terraform-ls ~/.local/bin/
   rm terraform-ls_0.32.8_linux_amd64.zip
-  echo -e "${GREEN}✓${NC} terraform-ls installed"
+  print_success "terraform-ls installed"
 fi
 
+# ============================================================
+# 12. Install lazygit
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installing lazygit"
-echo "=========================================="
-echo ""
+echo "Step 12: Installing lazygit..."
+echo "-------------------------------"
 
 if command -v lazygit &> /dev/null; then
-  echo -e "${GREEN}✓${NC} lazygit (already installed)"
+  print_success "lazygit (already installed)"
 else
-  echo -e "${YELLOW}→${NC} Installing lazygit..."
+  print_info "Installing lazygit..."
   LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
   cd /tmp
   curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
@@ -298,47 +365,90 @@ else
   mkdir -p ~/.local/bin
   mv lazygit ~/.local/bin/
   rm lazygit.tar.gz
-  echo -e "${GREEN}✓${NC} lazygit installed"
+  print_success "lazygit installed"
 fi
 
+# ============================================================
+# 13. Verify Installations
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Python Packages (Per-Project)"
-echo "=========================================="
-echo ""
-
-echo -e "${BLUE}Note:${NC} Python packages for debugging and testing should be installed"
-echo "in your project's virtual environment, NOT globally:"
-echo ""
-echo -e "${YELLOW}  python3 -m venv .venv${NC}"
-echo -e "${YELLOW}  source .venv/bin/activate${NC}"
-echo -e "${YELLOW}  pip install debugpy pytest${NC}"
-echo ""
-echo "Required packages:"
-echo "  - debugpy: Python debugger adapter for nvim-dap"
-echo "  - pytest: Testing framework for neotest-python"
+echo "Step 13: Verifying Installations..."
+echo "------------------------------------"
 echo ""
 
+# Check critical LSP servers
+LSP_SERVERS=(
+  "lua-language-server"
+  "gopls"
+  "pyright"
+  "ruff"
+  "typescript-language-server"
+  "vscode-html-language-server"
+  "emmet-ls"
+  "prettier"
+)
+
+echo "Checking installed tools:"
+for cmd in "${LSP_SERVERS[@]}"; do
+  if command -v "$cmd" &> /dev/null; then
+    print_success "$cmd"
+  else
+    print_error "$cmd (not found)"
+  fi
+done
+
+# ============================================================
+# 14. Setup Neovim Plugins
+# ============================================================
 echo ""
-echo "=========================================="
-echo "Installation Complete!"
-echo "=========================================="
+echo "Step 14: Setting up Neovim Plugins..."
+echo "--------------------------------------"
+print_info "Neovim will install plugins on first launch"
 echo ""
 
-echo -e "${GREEN}All dependencies have been installed!${NC}"
+# Create backup of existing Neovim data if it exists
+if [ -d "$HOME/.local/share/nvim" ]; then
+  print_info "Backing up existing Neovim data..."
+  BACKUP_DIR="$HOME/.local/share/nvim.backup.$(date +%Y%m%d_%H%M%S)"
+  mv "$HOME/.local/share/nvim" "$BACKUP_DIR"
+  print_success "Backup created at: $BACKUP_DIR"
+fi
+
+# ============================================================
+# 15. Final Instructions
+# ============================================================
 echo ""
-echo "Summary:"
-echo "  - Language Servers: 10"
-echo "  - Formatters: 1 (prettier)"
-echo "  - Debuggers: 2 (delve, debugpy)"
-echo "  - Search Tools: 1 (ripgrep)"
-echo "  - Git Tools: 1 (lazygit)"
-echo "  - Build Tools: 1 (make)"
+echo "========================================"
+echo "✓ Installation Complete!"
+echo "========================================"
 echo ""
-echo -e "${YELLOW}Important:${NC} You may need to restart your shell or run:"
-echo -e "  ${BLUE}source ~/.bashrc${NC}"
+echo "Next steps:"
 echo ""
-echo "To ensure all tools are in your PATH."
+echo "1. Restart your shell or run:"
+echo "   source ~/.bashrc"
 echo ""
-echo -e "${GREEN}You're all set! Start Neovim to use the new tools.${NC}"
+echo "2. Start Neovim:"
+echo "   nvim"
+echo ""
+echo "3. Plugins will install automatically (via lazy.nvim)"
+echo "   Wait for all plugins to finish installing"
+echo ""
+echo "4. Restart Neovim after plugins are installed"
+echo ""
+echo "5. Verify everything works:"
+echo "   :checkhealth"
+echo "   :LspInfo"
+echo ""
+echo "6. For Python projects, create a virtual environment:"
+echo "   python3 -m venv .venv"
+echo "   source .venv/bin/activate"
+echo "   pip install debugpy pytest"
+echo ""
+echo "Installed LSP Servers:"
+echo "  • Lua, Python, Go, C/C++"
+echo "  • TypeScript/JavaScript, Vue.js"
+echo "  • HTML, CSS, Emmet"
+echo "  • Markdown, Docker, Bash, YAML, TOML, Terraform"
+echo ""
+echo "For detailed usage, see MANUAL.md"
 echo ""
