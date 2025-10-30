@@ -267,8 +267,8 @@ This configuration includes comprehensive Python support with full LSP, testing,
 **File-specific settings:**
 - 4-space indentation (PEP 8 compliant)
 - 120-character line length indicator
-- Auto-format on save (using Ruff)
-- Auto-organize imports on save
+- Auto-format on save using **Ruff** (fast Python formatter)
+- Auto-organize imports on save using **Ruff**
 
 | Keybinding | Mode | Action | Description |
 |------------|------|--------|-------------|
@@ -321,8 +321,8 @@ Full Go language support with LSP, testing, and debugging capabilities.
 - Inlay hints for types and parameters
 - **Neotest** integration for Go tests
 - **Delve** debugger (DAP) support
-- Auto-formatting on save (gofumpt)
-- Automatic import organization
+- Auto-formatting on save using **gofumpt** (stricter than gofmt)
+- Automatic import organization using **goimports**
 
 ### JavaScript/TypeScript/Vue
 
@@ -630,10 +630,16 @@ Automatically closes and renames HTML tags using nvim-ts-autotag.
 
 #### Format on Save Not Working
 
-1. Check LSP status with `:LspInfo`
-2. Verify the formatter is installed (e.g., Prettier, Ruff)
-3. Check formatter configuration in `lua/plugins/lsp.lua`
-4. Look for error messages when saving with `:messages`
+1. Check if the formatter is installed:
+   - Python: `ruff --version`
+   - Go: `gofumpt -version` and `goimports -version`
+   - JavaScript/TypeScript/HTML/CSS: `prettier --version`
+   - C/C++: `clang-format --version`
+2. Check formatter status with `:ConformInfo` (shows available formatters)
+3. Check LSP status with `:LspInfo` (for LSP fallback)
+4. Verify formatter configuration in `lua/plugins/formatter.lua` (conform.nvim)
+5. Look for error messages when saving with `:messages`
+6. For Go: Ensure `$GOPATH/bin` is in your PATH (formatters are installed there)
 
 #### Troubleshooting Quick Reference
 

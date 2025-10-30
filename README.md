@@ -128,7 +128,10 @@ This will install all Homebrew dependencies and npm packages.
 
 #### Formatters & Linters
 
-- **prettier** - Multi-language code formatter
+- **prettier** - Multi-language code formatter (JavaScript/TypeScript/Vue/HTML/CSS/JSON/Markdown)
+- **ruff** - Fast Python linter and formatter (already listed above)
+- **gofumpt** - Stricter Go formatter (install via: `go install mvdan.cc/gofumpt@latest`)
+- **goimports** - Go import organizer (install via: `go install golang.org/x/tools/cmd/goimports@latest`)
 
 #### Tools
 
@@ -319,11 +322,11 @@ See **[MANUAL.md](MANUAL.md)** for complete documentation including all keybindi
 
 This configuration provides comprehensive LSP support, debugging, and testing for multiple languages:
 
-- **Python** - Pyright, Ruff, debugpy, pytest, virtual environment auto-detection
+- **Python** - Pyright, Ruff formatting/linting, debugpy, pytest, virtual environment auto-detection
 - **JavaScript/TypeScript** - ts_ls, inlay hints, Prettier formatting
-- **Vue.js** - Volar LSP, template support, component validation
+- **Vue.js** - Volar LSP, template support, component validation, Prettier formatting
 - **HTML/CSS** - Auto-close tags, Emmet abbreviations, Prettier formatting
-- **Go** - gopls, Delve debugger, go test integration
+- **Go** - gopls, gofumpt/goimports formatting, Delve debugger, go test integration
 - **C/C++** - clangd, lldb debugger, clang-format
 - **Lua** - Built-in LSP with Neovim API support
 
