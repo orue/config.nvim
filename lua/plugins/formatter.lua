@@ -28,6 +28,8 @@ return {
       -- YAML
       yaml = { "prettier" },
       yml = { "prettier" },
+      -- Python
+      python = { "ruff_format", "ruff_organize_imports" },
       -- C/C++
       c = { "clang-format" },
       cpp = { "clang-format" },

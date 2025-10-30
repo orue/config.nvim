@@ -6,9 +6,7 @@ vim.opt_local.colorcolumn = "120"
 vim.opt_local.textwidth = 120
 
 -- Python-specific keymaps
-vim.keymap.set("n", "<leader>rf", function()
-  vim.lsp.buf.format({ async = true })
-end, { buffer = true, desc = "Format Python file" })
+-- Note: <leader>rf formatting is handled by conform.nvim (see lua/plugins/formatter.lua)
 
 vim.keymap.set("n", "<leader>ri", function()
   vim.lsp.buf.code_action({
