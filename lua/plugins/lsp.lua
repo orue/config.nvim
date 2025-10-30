@@ -129,6 +129,35 @@ return {
         capabilities = capabilities,
       })
 
+      -- C/C++ LSP (clangd)
+      vim.lsp.config('clangd', {
+        capabilities = capabilities,
+        cmd = {
+          'clangd',
+          '--background-index',
+          '--clang-tidy',
+          '--header-insertion=iwyu',
+          '--completion-style=detailed',
+          '--function-arg-placeholders',
+          '--fallback-style=llvm',
+        },
+        init_options = {
+          usePlaceholders = true,
+          completeUnimported = true,
+          clangdFileStatus = true,
+        },
+        settings = {
+          clangd = {
+            InlayHints = {
+              Designators = true,
+              Enabled = true,
+              ParameterNames = true,
+              DeducedTypes = true,
+            },
+          },
+        },
+      })
+
       -- Enable all configured LSP servers
       vim.lsp.enable('lua_ls')
       vim.lsp.enable('gopls')
@@ -140,6 +169,7 @@ return {
       vim.lsp.enable('taplo')
       vim.lsp.enable('yamlls')
       vim.lsp.enable('terraformls')
+      vim.lsp.enable('clangd')
 
       -- Diagnostic keymaps
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })

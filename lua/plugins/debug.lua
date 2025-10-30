@@ -101,6 +101,30 @@ return {
         }
       }
 
+      -- C/C++ DAP configuration (using lldb)
+      dap.adapters.lldb = {
+        type = 'executable',
+        command = '/usr/bin/lldb-dap', -- Default macOS path, adjust if needed
+        name = 'lldb'
+      }
+
+      dap.configurations.c = {
+        {
+          name = 'Launch',
+          type = 'lldb',
+          request = 'launch',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          end,
+          cwd = '${workspaceFolder}',
+          stopOnEntry = false,
+          args = {},
+        },
+      }
+
+      -- C++ uses the same configuration as C
+      dap.configurations.cpp = dap.configurations.c
+
       dapui.setup()
       
       dap.listeners.before.attach.dapui_config = function()

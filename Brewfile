@@ -16,12 +16,15 @@ brew "bash-language-server"
 brew "taplo"
 brew "yaml-language-server"
 brew "terraform-ls"
+brew "llvm"              # Provides clangd for C/C++
 
 # Debuggers
 brew "delve"             # Go debugger
+brew "lldb"              # C/C++ debugger (part of LLVM)
 
 # Formatters & Linters
 brew "prettier"          # Code formatter (brew instead of npm -g)
+brew "clang-format"      # C/C++ formatter
 
 # Search & Navigation Tools
 brew "ripgrep"           # Fast search tool
