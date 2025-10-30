@@ -177,21 +177,45 @@ After installing dependencies, you can verify everything is working:
    :Mason
    ```
 
-### Ubuntu/Debian Installation
+### Quick Install (Ubuntu/Debian)
 
-For Ubuntu Server or Debian-based systems, use the provided installation script:
+For Ubuntu Server or Debian-based systems, use the comprehensive installation script:
 
-```bash
-cd ~/.config/nvim
-chmod +x install-ubuntu.sh
-./install-ubuntu.sh
-```
+1. **Backup your existing configuration** (if any):
+   ```bash
+   mv ~/.config/nvim ~/.config/nvim.backup
+   mv ~/.local/share/nvim ~/.local/share/nvim.backup
+   ```
 
-This script will install all dependencies using apt, npm, pipx, and direct downloads where necessary. After installation, you may need to restart your shell:
+2. **Clone this repository**:
+   ```bash
+   git clone https://github.com/yourusername/nvim-config.git ~/.config/nvim
+   ```
 
-```bash
-source ~/.bashrc
-```
+3. **Run the installation script**:
+   ```bash
+   cd ~/.config/nvim
+   chmod +x install-ubuntu.sh
+   ./install-ubuntu.sh
+   ```
+
+   This script will:
+   - Install/update Neovim (latest stable via PPA)
+   - Install all system dependencies (LSP servers, formatters, tools)
+   - Install all npm dependencies
+   - Prepare Neovim for first launch
+
+4. **Restart your shell**:
+   ```bash
+   source ~/.bashrc
+   ```
+
+5. **Start Neovim**:
+   ```bash
+   nvim
+   ```
+
+   Lazy.nvim will automatically install all plugins on first launch.
 
 ### Other Linux Distributions
 
