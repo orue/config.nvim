@@ -32,6 +32,8 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 -- Better indenting
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("v", "<Left>", "<gv", { desc = "Indent left" })
+vim.keymap.set("v", "<Right>", ">gv", { desc = "Indent right" })
 
 -- Move lines
 vim.keymap.set("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
