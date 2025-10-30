@@ -41,7 +41,7 @@ The easiest way to set up everything at once:
 2. **Clone this repository**:
 
    ```bash
-   git clone https://github.com/yourusername/nvim-config.git ~/.config/nvim
+   git clone https://github.com/orue/config.nvim.git ~/.config/nvim
    ```
 
 3. **Run the installation script**:
@@ -208,7 +208,7 @@ For Ubuntu Server or Debian-based systems, use the comprehensive installation sc
 2. **Clone this repository**:
 
    ```bash
-   git clone https://github.com/yourusername/nvim-config.git ~/.config/nvim
+   git clone https://github.com/orue/config.nvim.git ~/.config/nvim
    ```
 
 3. **Run the installation script**:
