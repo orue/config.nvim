@@ -10,6 +10,8 @@ brew "lua-language-server"
 brew "gopls"
 brew "pyright"
 brew "ruff"
+brew "typescript-language-server"  # TypeScript/JavaScript LSP
+brew "vue-language-server"  # Vue.js LSP (Volar)
 brew "marksman"
 brew "dockerfile-language-server"
 brew "bash-language-server"
