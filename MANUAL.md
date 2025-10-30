@@ -94,6 +94,8 @@ The **leader key** is set to `<Space>` (spacebar). When you see `<Leader>` in a 
 | `<A-k>` | Visual | Move selection up | Move selected lines up |
 | `<` | Visual | Indent left | Decrease indentation and keep selection |
 | `>` | Visual | Indent right | Increase indentation and keep selection |
+| `<Left>` | Visual | Indent left | Decrease indentation and keep selection |
+| `<Right>` | Visual | Indent right | Increase indentation and keep selection |
 
 **Note:** `<A-j>` means `Alt+j` on Linux/Windows or `Option+j` on macOS.
 
