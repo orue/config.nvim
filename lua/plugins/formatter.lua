@@ -3,6 +3,17 @@ return {
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
   opts = {
+    formatters = {
+      prettier = {
+        command = "/opt/homebrew/bin/prettier",
+      },
+      gofumpt = {
+        command = vim.fn.expand("~/go/bin/gofumpt"),
+      },
+      goimports = {
+        command = vim.fn.expand("~/go/bin/goimports"),
+      },
+    },
     formatters_by_ft = {
       -- JavaScript/TypeScript
       javascript = { "prettier" },
@@ -25,11 +36,10 @@ return {
       gql = { "prettier" },
       -- Markdown
       markdown = { "prettier" },
-      -- YAML
-      yaml = { "prettier" },
-      yml = { "prettier" },
       -- Python
       python = { "ruff_format", "ruff_organize_imports" },
+      -- Go
+      go = { "gofumpt", "goimports" },
       -- C/C++
       c = { "clang-format" },
       cpp = { "clang-format" },

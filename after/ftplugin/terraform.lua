@@ -7,7 +7,4 @@ set.tabstop = 2
 set.shiftwidth = 2
 set.softtabstop = 2
 
--- Terraform-specific keymap for formatting
-vim.keymap.set("n", "<leader>rf", function()
-  vim.lsp.buf.format({ async = true })
-end, { buffer = true, desc = "Format Terraform file" })
+-- Note: <leader>rf formatting is handled by conform.nvim with LSP fallback (see lua/plugins/formatter.lua)
