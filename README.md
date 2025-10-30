@@ -1,17 +1,17 @@
 # Neovim Configuration
 
-A modern, well-organized Neovim configuration focused on Python development with comprehensive LSP support, debugging, testing, and an enhanced UI/UX experience.
+A modern, well-organized Neovim configuration with comprehensive LSP support, debugging, testing, and an enhanced UI/UX experience.
 
 ## Features
 
 - **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) for fast, lazy-loaded plugins
 - **Colorscheme**: Catppuccin Frappe with transparent background
-- **LSP**: Fully configured Language Server Protocol for Lua and Python
+- **LSP**: Fully configured Language Server Protocol for Lua, Python, Go, C/C++, TypeScript/JavaScript, and more
 - **Completion**: Modern completion engine with [blink.cmp](https://github.com/Saghen/blink.cmp)
 - **File Navigation**: Oil.nvim for intuitive file browsing, Telescope for fuzzy finding
 - **Git Integration**: Gitsigns for inline diff markers and git operations
-- **Debugging**: Full DAP setup with UI for Python debugging
-- **Testing**: Integrated pytest runner with Neotest
+- **Debugging**: Full DAP setup with UI for Python, Go, and C/C++ debugging
+- **Testing**: Integrated test runners with Neotest (Python & Go)
 - **Enhanced UI**: Noice.nvim for prettier messages and LSP documentation
 
 ## Requirements
@@ -71,12 +71,15 @@ This will install all required tools automatically.
 - **gopls** - Go LSP
 - **pyright** - Python type checking and IntelliSense
 - **ruff** - Fast Python linter and formatter
+- **typescript-language-server** - TypeScript/JavaScript LSP
+- **vue-language-server** - Vue.js LSP (Volar)
 - **marksman** - Markdown LSP
 - **dockerfile-language-server** - Dockerfile LSP
 - **bash-language-server** - Bash/shell script LSP
 - **taplo** - TOML LSP
 - **yaml-language-server** - YAML LSP
 - **terraform-ls** - Terraform LSP
+- **llvm** - Provides clangd for C/C++
 
 #### Debuggers
 - **delve** - Go debugger (dlv)
@@ -174,6 +177,12 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 │   └── ftplugin/             # Language-specific settings
 │       ├── python.lua        # Python config
 │       ├── go.lua            # Go config
+│       ├── c.lua             # C/C++ config
+│       ├── javascript.lua    # JavaScript config
+│       ├── typescript.lua    # TypeScript config
+│       ├── javascriptreact.lua  # JSX config
+│       ├── typescriptreact.lua  # TSX config
+│       ├── vue.lua           # Vue.js config
 │       └── lua.lua           # Lua config
 ├── Brewfile                   # macOS dependencies (Homebrew)
 ├── install-ubuntu.sh          # Ubuntu/Debian installation script
@@ -201,131 +210,115 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 
 See the full plugin list in the [lua/plugins/](lua/plugins/) directory.
 
-## Keybindings
+## Usage
 
-### Leader Key
-The leader key is `<Space>`.
+For complete documentation including all keybindings, workflows, and tips, see [MANUAL.md](MANUAL.md).
 
-### General
+### Quick Start
 
-| Key | Action | Mode |
-|-----|--------|------|
-| `<Space><Space>x` | Source current file | Normal |
-| `<Space>x` | Execute Lua line | Normal/Visual |
-| `<Space>-` | Open file explorer (float) | Normal |
-| `<Leader>h` | Open dashboard | Normal |
+- **Leader key:** `<Space>` (spacebar)
+- **Dashboard:** `<Leader>a` to open the dashboard
+- **File explorer:** `<Space>-` for Oil file explorer
+- **Find files:** `<Space>fd` for fuzzy file finding
+- **LSP navigation:** `gd` (definition), `gr` (references), `K` (hover docs)
 
-### LSP
+For the complete keybinding reference and usage guide, please refer to [MANUAL.md](MANUAL.md).
 
-| Key | Action |
-|-----|--------|
-| `gd` | Go to definition |
-| `gr` | Go to references |
-| `K` | Hover documentation |
-| `<Leader>ca` | Code actions |
-| `<Leader>rn` | Rename symbol |
-| `<Leader>d` | Line diagnostics |
-| `[d` / `]d` | Previous/next diagnostic |
+## Language-Specific Features
 
-### File Navigation & Search
+### Python Development
 
-| Key | Action |
-|-----|--------|
-| `<Space>fd` | Find files |
-| `<Space>fb` | Find buffers |
-| `<Space>fg` | Multi-grep (custom) |
-| `<Space>fr` | LSP references |
-| `<Space>fs` | Document symbols |
-| `<Space>fh` | Help tags |
-| `<Space>fo` | Recent files |
-| `<Space>en` | Edit Neovim config |
+This configuration includes comprehensive Python support:
 
-### Buffer & Window Navigation
-
-| Key | Action |
-|-----|--------|
-| `[b` / `]b` | Previous/next buffer |
-| `<Leader>bd` | Delete buffer |
-| `<C-h/j/k/l>` | Navigate between windows |
-
-### Git Operations
-
-| Key | Action |
-|-----|--------|
-| `]h` / `[h` | Next/previous hunk |
-| `<Leader>hp` | Preview hunk |
-| `<Leader>hs` | Stage hunk |
-| `<Leader>hr` | Reset hunk |
-| `<Leader>hb` | Blame line |
-
-### Debugging (Python)
-
-| Key | Action |
-|-----|--------|
-| `<Leader>db` | Toggle breakpoint |
-| `<Leader>dc` | Continue execution |
-| `<Leader>ds` | Step over |
-| `<Leader>di` | Step into |
-| `<Leader>dt` | Terminate debug |
-
-### Testing (Python)
-
-| Key | Action |
-|-----|--------|
-| `<Leader>tt` | Run nearest test |
-| `<Leader>tf` | Run file tests |
-| `<Leader>ts` | Toggle test summary |
-
-### Text Editing
-
-| Key | Action |
-|-----|--------|
-| `gcc` | Toggle line comment |
-| `gbc` | Toggle block comment |
-| `ys` / `ds` / `cs` | Surround/delete/change |
-| `<M-e>` | Fast wrap (autopairs) |
-| `s` / `S` | Flash jump/treesitter jump |
-| `<A-j>` / `<A-k>` | Move line down/up |
-| `<` / `>` | Better indent (visual mode) |
-
-### Docstring Generation
-
-| Key | Action |
-|-----|--------|
-| `<Leader>nf` | Generate function docstring |
-| `<Leader>nc` | Generate class docstring |
-
-## Python Development
-
-This configuration is optimized for Python development with the following features:
-
-### Virtual Environment Support
+#### Virtual Environment Support
 - Automatically detects and uses `.venv/bin/python` if available
 - Falls back to system Python if no virtual environment exists
 - Virtual environment indicator in statusline
 
-### LSP Configuration
+#### LSP Configuration
 - **Pyright**: Type checking and IntelliSense
 - **Ruff**: Fast linting and formatting
 - Auto-formatting on save
 - Import organization
 
-### Testing
+#### Testing
 - **Neotest** with pytest adapter
 - Run individual tests or entire files
 - Visual test results and summary window
 - Uses virtual environment Python if available
 
-### Debugging
+#### Debugging
 - **nvim-dap** with Python debugpy adapter
 - Full debugging UI with variable inspection
 - Breakpoint management
 - Uses virtual environment Python if available
 
-### File-Specific Settings
+#### File-Specific Settings
 - 4-space indentation (PEP 8 compliant)
 - 120-character line length indicator
-- Auto-formatting keybindings
+- Auto-formatting keybindings (`<leader>rf`, `<leader>ri`)
+
+### Node.js/TypeScript Development
+
+Full support for JavaScript, TypeScript, JSX, and TSX:
+
+#### LSP Configuration
+- **ts_ls** (TypeScript Language Server): IntelliSense, type checking, refactoring
+- Inlay hints for parameter names, types, and return values
+- Auto-formatting on save
+- Import organization
+
+#### Supported File Types
+- `.js` - JavaScript
+- `.ts` - TypeScript
+- `.jsx` - JavaScript with JSX (React)
+- `.tsx` - TypeScript with JSX (React)
+
+#### File-Specific Settings
+- 2-space indentation (Node.js standard)
+- 100-character line length indicator
+- Auto-formatting keybindings (`<leader>rf`, `<leader>ri`)
+
+### Vue.js Development
+
+Full support for Vue 3 single-file components:
+
+#### LSP Configuration
+- **vue_ls** (Volar): Official Vue Language Server for templates, scripts, and styles
+- **ts_ls**: TypeScript support in `<script>` sections
+- Template autocomplete and IntelliSense
+- Component props validation
+- Auto-formatting on save
+- Import organization
+
+#### Supported File Types
+- `.vue` - Vue single-file components
+
+#### File-Specific Settings
+- 2-space indentation (Vue standard)
+- 100-character line length indicator
+- Auto-formatting keybindings (`<leader>rf`, `<leader>ri`)
+- Full TypeScript/JavaScript support in `<script>` tags
+- CSS/SCSS/Less support in `<style>` tags
+
+### Go Development
+
+Full Go language support with:
+- **gopls** LSP server with static analysis
+- Auto-formatting on save (gofumpt)
+- Automatic import organization
+- Inlay hints for types and parameters
+- **Neotest** integration for Go tests
+- **Delve** debugger (DAP) support
+
+### C/C++ Development
+
+Comprehensive C/C++ support:
+- **clangd** LSP server with clang-tidy
+- **clang-format** for code formatting
+- Header/source file switching (`<leader>rh`)
+- Inlay hints for types and parameters
+- **lldb** debugger support
 
 ## Customization
 

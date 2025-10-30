@@ -158,6 +158,47 @@ return {
         },
       })
 
+      -- TypeScript/JavaScript LSP (also handles Vue <script> sections)
+      vim.lsp.config('ts_ls', {
+        capabilities = capabilities,
+        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        settings = {
+          typescript = {
+            inlayHints = {
+              includeInlayParameterNameHints = 'all',
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+          javascript = {
+            inlayHints = {
+              includeInlayParameterNameHints = 'all',
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+        },
+      })
+
+      -- Vue.js LSP (vue_ls)
+      vim.lsp.config('vue_ls', {
+        capabilities = capabilities,
+        filetypes = { 'vue' },
+        init_options = {
+          vue = {
+            hybridMode = false,
+          },
+        },
+      })
+
       -- Enable all configured LSP servers
       vim.lsp.enable('lua_ls')
       vim.lsp.enable('gopls')
@@ -170,6 +211,8 @@ return {
       vim.lsp.enable('yamlls')
       vim.lsp.enable('terraformls')
       vim.lsp.enable('clangd')
+      vim.lsp.enable('ts_ls')
+      vim.lsp.enable('vue_ls')
 
       -- Diagnostic keymaps
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })
@@ -228,6 +271,7 @@ return {
               end,
             })
           end
+          -- Note: JavaScript/TypeScript/Vue formatting is handled by conform.nvim (formatter.lua)
         end,
       })
     end,
