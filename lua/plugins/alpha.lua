@@ -126,13 +126,19 @@ return {
       button.opts.cursor = 5
     end
 
-    -- Set footer
+    -- Set footer (cache plugin count for performance)
+    local cached_plugin_count = nil
     local function footer()
       local datetime = os.date("  %Y-%m-%d   %H:%M:%S")
       local version = vim.version()
       local nvim_version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
-      local total_plugins = #vim.tbl_keys(require("lazy").plugins())
-      return datetime .. "          " .. nvim_version_info .. "          ⚡ " .. total_plugins .. " plugins"
+
+      -- Cache plugin count to avoid repeated calculations
+      if not cached_plugin_count then
+        cached_plugin_count = #vim.tbl_keys(require("lazy").plugins())
+      end
+
+      return datetime .. "          " .. nvim_version_info .. "          ⚡ " .. cached_plugin_count .. " plugins"
     end
 
     dashboard.section.footer.val = footer()
