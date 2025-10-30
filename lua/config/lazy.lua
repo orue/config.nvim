@@ -23,8 +23,9 @@ require("lazy").setup({
   },
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "catppuccin" } },
+  -- Disable automatic update checker for better performance
+  -- Use :Lazy update manually when you want to check for updates
   checker = {
-    enable = true,
-    notify = false,
+    enable = false,
   },
 })

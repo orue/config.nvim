@@ -237,23 +237,58 @@ return {
         filetypes = { 'html', 'css', 'scss', 'javascriptreact', 'typescriptreact', 'vue' },
       })
 
-      -- Enable all configured LSP servers
-      vim.lsp.enable('lua_ls')
-      vim.lsp.enable('gopls')
-      vim.lsp.enable('pyright')
-      vim.lsp.enable('ruff')
-      vim.lsp.enable('marksman')
-      vim.lsp.enable('dockerls')
-      vim.lsp.enable('bashls')
-      vim.lsp.enable('taplo')
-      vim.lsp.enable('yamlls')
-      vim.lsp.enable('terraformls')
-      vim.lsp.enable('clangd')
-      vim.lsp.enable('ts_ls')
-      vim.lsp.enable('vue_ls')
-      vim.lsp.enable('html')
-      vim.lsp.enable('cssls')
-      vim.lsp.enable('emmet_ls')
+      -- Enable LSP servers on-demand via FileType autocommands for performance
+      -- This prevents all 16 servers from starting at once, while still enabling them when needed
+      local lsp_enable_group = vim.api.nvim_create_augroup('lsp-enable', { clear = true })
+
+      -- Map filetypes to LSP servers
+      local filetype_to_lsp = {
+        lua = { 'lua_ls' },
+        go = { 'gopls' },
+        python = { 'pyright', 'ruff' },
+        c = { 'clangd' },
+        cpp = { 'clangd' },
+        objc = { 'clangd' },
+        objcpp = { 'clangd' },
+        typescript = { 'ts_ls' },
+        javascript = { 'ts_ls' },
+        javascriptreact = { 'ts_ls', 'emmet_ls' },
+        typescriptreact = { 'ts_ls', 'emmet_ls' },
+        vue = { 'ts_ls', 'vue_ls', 'emmet_ls' },
+        html = { 'html', 'emmet_ls' },
+        css = { 'cssls', 'emmet_ls' },
+        scss = { 'cssls', 'emmet_ls' },
+        less = { 'cssls', 'emmet_ls' },
+        markdown = { 'marksman' },
+        dockerfile = { 'dockerls' },
+        sh = { 'bashls' },
+        bash = { 'bashls' },
+        zsh = { 'bashls' },
+        toml = { 'taplo' },
+        yaml = { 'yamlls' },
+        terraform = { 'terraformls' },
+        tf = { 'terraformls' },
+      }
+
+      -- Track which servers have been enabled to avoid duplicate enables
+      local enabled_servers = {}
+
+      vim.api.nvim_create_autocmd('FileType', {
+        group = lsp_enable_group,
+        callback = function(args)
+          local ft = vim.bo[args.buf].filetype
+          local servers = filetype_to_lsp[ft]
+
+          if servers then
+            for _, server in ipairs(servers) do
+              if not enabled_servers[server] then
+                vim.lsp.enable(server)
+                enabled_servers[server] = true
+              end
+            end
+          end
+        end,
+      })
 
       -- Diagnostic keymaps
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })
@@ -296,19 +331,13 @@ return {
               group = bufgroup,
               buffer = args.buf,
               callback = function()
-                -- Organize imports first
-                local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
-                params.context = {only = {"source.organizeImports"}}
-                local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
-                for _, res in pairs(result or {}) do
-                  for _, action in pairs(res.result or {}) do
-                    if action.edit then
-                      vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
-                    end
-                  end
-                end
+                -- Organize imports first (async, non-blocking)
+                vim.lsp.buf.code_action({
+                  context = {only = {"source.organizeImports"}},
+                  apply = true,
+                })
                 -- Then format
-                vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+                vim.lsp.buf.format({ bufnr = args.buf, id = client.id, async = false })
               end,
             })
           end
