@@ -2,6 +2,8 @@
 
 A modern, well-organized Neovim configuration with comprehensive LSP support, debugging, testing, and an enhanced UI/UX experience.
 
+![cover](./img/cover.png)
+
 ## Features
 
 - **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) for fast, lazy-loaded plugins
@@ -30,17 +32,20 @@ For all other dependencies (LSP servers, formatters, tools), see the [Dependenci
 The easiest way to set up everything at once:
 
 1. **Backup your existing configuration** (if any):
+
    ```bash
    mv ~/.config/nvim ~/.config/nvim.backup
    mv ~/.local/share/nvim ~/.local/share/nvim.backup
    ```
 
 2. **Clone this repository**:
+
    ```bash
    git clone https://github.com/yourusername/nvim-config.git ~/.config/nvim
    ```
 
 3. **Run the installation script**:
+
    ```bash
    cd ~/.config/nvim
    chmod +x install.sh
@@ -54,6 +59,7 @@ The easiest way to set up everything at once:
    - Prepare Neovim for first launch
 
 4. **Start Neovim**:
+
    ```bash
    nvim
    ```
@@ -94,10 +100,12 @@ This will install all Homebrew dependencies and npm packages.
 ### What Gets Installed
 
 #### Core Dependencies
+
 - **node** - JavaScript runtime (needed for some LSP servers)
 - **python3** - Python runtime
 
 #### Language Servers
+
 - **lua-language-server** - Lua LSP
 - **gopls** - Go LSP
 - **pyright** - Python type checking and IntelliSense
@@ -114,13 +122,16 @@ This will install all Homebrew dependencies and npm packages.
 - **llvm** - Provides clangd (C/C++ LSP) and lldb (C/C++ debugger)
 
 #### Debuggers
+
 - **delve** - Go debugger (dlv)
 - **lldb** - C/C++ debugger (included with llvm, no separate install needed)
 
 #### Formatters & Linters
+
 - **prettier** - Multi-language code formatter
 
 #### Tools
+
 - **ripgrep** - Fast search tool (required for Telescope)
 - **lazygit** - Terminal UI for git commands
 - **make** - Build automation tool
@@ -134,6 +145,7 @@ npm install -g emmet-ls
 ```
 
 **Required packages:**
+
 - **emmet-ls** - Emmet abbreviations for HTML/CSS/JSX/Vue
 
 #### Python Packages (Per-Project)
@@ -152,10 +164,12 @@ pip install debugpy pytest
 ```
 
 **Required packages:**
+
 - **debugpy** - Python debugger adapter for nvim-dap
 - **pytest** - Testing framework for neotest-python
 
 **Why virtual environments?**
+
 - Avoids conflicts between project dependencies
 - Keeps system Python clean
 - Allows different versions per project
@@ -166,6 +180,7 @@ pip install debugpy pytest
 After installing dependencies, you can verify everything is working:
 
 1. **Check Homebrew packages:**
+
    ```bash
    brew bundle check --verbose
    ```
@@ -182,17 +197,20 @@ After installing dependencies, you can verify everything is working:
 For Ubuntu Server or Debian-based systems, use the comprehensive installation script:
 
 1. **Backup your existing configuration** (if any):
+
    ```bash
    mv ~/.config/nvim ~/.config/nvim.backup
    mv ~/.local/share/nvim ~/.local/share/nvim.backup
    ```
 
 2. **Clone this repository**:
+
    ```bash
    git clone https://github.com/yourusername/nvim-config.git ~/.config/nvim
    ```
 
 3. **Run the installation script**:
+
    ```bash
    cd ~/.config/nvim
    chmod +x install-ubuntu.sh
@@ -206,11 +224,13 @@ For Ubuntu Server or Debian-based systems, use the comprehensive installation sc
    - Prepare Neovim for first launch
 
 4. **Restart your shell**:
+
    ```bash
    source ~/.bashrc
    ```
 
 5. **Start Neovim**:
+
    ```bash
    nvim
    ```
@@ -262,23 +282,23 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 
 ## Key Plugins
 
-| Plugin | Purpose |
-|--------|---------|
-| [catppuccin/nvim](https://github.com/catppuccin/nvim) | Colorscheme |
-| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting |
-| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP configuration |
-| [blink.cmp](https://github.com/Saghen/blink.cmp) | Completion engine |
-| [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | Fuzzy finder |
-| [oil.nvim](https://github.com/stevearc/oil.nvim) | File explorer |
-| [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | Statusline |
-| [alpha-nvim](https://github.com/goolord/alpha-nvim) | Dashboard |
-| [flash.nvim](https://github.com/folke/flash.nvim) | Fast navigation |
-| [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git integration |
-| [nvim-dap](https://github.com/mfussenegger/nvim-dap) | Debugging |
-| [neotest](https://github.com/nvim-neotest/neotest) | Test runner |
-| [noice.nvim](https://github.com/folke/noice.nvim) | Enhanced UI |
-| [which-key.nvim](https://github.com/folke/which-key.nvim) | Keybinding help |
-| [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) | Auto-close/rename HTML tags |
+| Plugin                                                                | Purpose                     |
+| --------------------------------------------------------------------- | --------------------------- |
+| [catppuccin/nvim](https://github.com/catppuccin/nvim)                 | Colorscheme                 |
+| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting         |
+| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)            | LSP configuration           |
+| [blink.cmp](https://github.com/Saghen/blink.cmp)                      | Completion engine           |
+| [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)    | Fuzzy finder                |
+| [oil.nvim](https://github.com/stevearc/oil.nvim)                      | File explorer               |
+| [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)          | Statusline                  |
+| [alpha-nvim](https://github.com/goolord/alpha-nvim)                   | Dashboard                   |
+| [flash.nvim](https://github.com/folke/flash.nvim)                     | Fast navigation             |
+| [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)           | Git integration             |
+| [nvim-dap](https://github.com/mfussenegger/nvim-dap)                  | Debugging                   |
+| [neotest](https://github.com/nvim-neotest/neotest)                    | Test runner                 |
+| [noice.nvim](https://github.com/folke/noice.nvim)                     | Enhanced UI                 |
+| [which-key.nvim](https://github.com/folke/which-key.nvim)             | Keybinding help             |
+| [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)          | Auto-close/rename HTML tags |
 
 See the full plugin list in the [lua/plugins/](lua/plugins/) directory.
 
@@ -312,7 +332,9 @@ For detailed language-specific features, keybindings, and workflows, see **[MANU
 ## Customization
 
 ### Changing the Colorscheme
+
 Edit `lua/plugins/colorscheme.lua`:
+
 ```lua
 return {
   "catppuccin/nvim",
@@ -328,7 +350,9 @@ return {
 ```
 
 ### Adding New Plugins
+
 Create a new file in `lua/plugins/` or add to an existing one:
+
 ```lua
 return {
   "author/plugin-name",
@@ -340,9 +364,11 @@ return {
 ```
 
 ### Modifying Keybindings
+
 Edit `lua/config/keymaps.lua` or the specific plugin configuration file.
 
 ### Language-Specific Settings
+
 Add or modify files in `after/ftplugin/` named `{language}.lua`.
 
 ## Troubleshooting
@@ -359,6 +385,7 @@ For detailed troubleshooting steps, see the **[MANUAL.md](MANUAL.md)** Troublesh
 ## Performance
 
 This configuration is optimized for performance:
+
 - Lazy-loading for most plugins (load only when needed)
 - Treesitter disabled for files larger than 100KB
 - Async formatting to avoid blocking
@@ -375,6 +402,7 @@ MIT License - Feel free to use and modify this configuration.
 ## Acknowledgments
 
 This configuration was built using excellent plugins from the Neovim community. Special thanks to:
+
 - [folke](https://github.com/folke) for lazy.nvim, which-key, noice, and flash
 - [Catppuccin](https://github.com/catppuccin) for the beautiful colorscheme
 - [nvim-lua](https://github.com/nvim-lua) for the foundation of modern Neovim configs
