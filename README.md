@@ -210,99 +210,19 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 
 See the full plugin list in the [lua/plugins/](lua/plugins/) directory.
 
-## Keybindings
+## Usage
 
-### Leader Key
-The leader key is `<Space>`.
+For complete documentation including all keybindings, workflows, and tips, see [MANUAL.md](MANUAL.md).
 
-### General
+### Quick Start
 
-| Key | Action | Mode |
-|-----|--------|------|
-| `<Space><Space>x` | Source current file | Normal |
-| `<Space>x` | Execute Lua line | Normal/Visual |
-| `<Space>-` | Open file explorer (float) | Normal |
-| `<Leader>h` | Open dashboard | Normal |
+- **Leader key:** `<Space>` (spacebar)
+- **Dashboard:** `<Leader>a` to open the dashboard
+- **File explorer:** `<Space>-` for Oil file explorer
+- **Find files:** `<Space>fd` for fuzzy file finding
+- **LSP navigation:** `gd` (definition), `gr` (references), `K` (hover docs)
 
-### LSP
-
-| Key | Action |
-|-----|--------|
-| `gd` | Go to definition |
-| `gr` | Go to references |
-| `K` | Hover documentation |
-| `<Leader>ca` | Code actions |
-| `<Leader>rn` | Rename symbol |
-| `<Leader>d` | Line diagnostics |
-| `[d` / `]d` | Previous/next diagnostic |
-
-### File Navigation & Search
-
-| Key | Action |
-|-----|--------|
-| `<Space>fd` | Find files |
-| `<Space>fb` | Find buffers |
-| `<Space>fg` | Multi-grep (custom) |
-| `<Space>fr` | LSP references |
-| `<Space>fs` | Document symbols |
-| `<Space>fh` | Help tags |
-| `<Space>fo` | Recent files |
-| `<Space>en` | Edit Neovim config |
-
-### Buffer & Window Navigation
-
-| Key | Action |
-|-----|--------|
-| `[b` / `]b` | Previous/next buffer |
-| `<Leader>bd` | Delete buffer |
-| `<C-h/j/k/l>` | Navigate between windows |
-
-### Git Operations
-
-| Key | Action |
-|-----|--------|
-| `]h` / `[h` | Next/previous hunk |
-| `<Leader>hp` | Preview hunk |
-| `<Leader>hs` | Stage hunk |
-| `<Leader>hr` | Reset hunk |
-| `<Leader>hb` | Blame line |
-
-### Debugging (Python)
-
-| Key | Action |
-|-----|--------|
-| `<Leader>db` | Toggle breakpoint |
-| `<Leader>dc` | Continue execution |
-| `<Leader>ds` | Step over |
-| `<Leader>di` | Step into |
-| `<Leader>dt` | Terminate debug |
-
-### Testing (Python)
-
-| Key | Action |
-|-----|--------|
-| `<Leader>tt` | Run nearest test |
-| `<Leader>tf` | Run file tests |
-| `<Leader>ts` | Toggle test summary |
-
-### Text Editing
-
-| Key | Action |
-|-----|--------|
-| `gcc` | Toggle line comment |
-| `gbc` | Toggle block comment |
-| `ys` / `ds` / `cs` | Surround/delete/change |
-| `<M-e>` | Fast wrap (autopairs) |
-| `s` / `S` | Flash jump/treesitter jump |
-| `<A-j>` / `<A-k>` | Move line down/up |
-| `<` / `>` | Better indent (visual mode) |
-
-### Docstring Generation
-
-| Key | Action |
-|-----|--------|
-| `<Leader>nf` | Generate function docstring |
-| `<Leader>nc` | Generate class docstring |
+For the complete keybinding reference and usage guide, please refer to [MANUAL.md](MANUAL.md).
 
 ## Language-Specific Features
 
