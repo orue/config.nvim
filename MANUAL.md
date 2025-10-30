@@ -260,10 +260,13 @@ Some keybindings are only available in specific file types.
 
 ### Python
 
+This configuration includes comprehensive Python support with full LSP, testing, and debugging capabilities.
+
 **File-specific settings:**
-- 4-space indentation (PEP 8)
+- 4-space indentation (PEP 8 compliant)
 - 120-character line length indicator
 - Auto-format on save (using Ruff)
+- Auto-organize imports on save
 
 | Keybinding | Mode | Action | Description |
 |------------|------|--------|-------------|
@@ -271,19 +274,39 @@ Some keybindings are only available in specific file types.
 | `<Leader>ri` | Normal | Organize imports | Sort and organize import statements |
 
 **Features:**
-- Virtual environment auto-detection (`.venv`)
-- Type checking with Pyright
-- Linting with Ruff
-- Debugging with debugpy
-- Testing with pytest
+
+#### Virtual Environment Support
+- Automatically detects and uses `.venv/bin/python` if available
+- Falls back to system Python if no virtual environment exists
+- Virtual environment indicator in statusline
+
+#### LSP Configuration
+- **Pyright**: Type checking and IntelliSense
+- **Ruff**: Fast linting and formatting
+- Auto-formatting on save
+- Import organization
+
+#### Testing
+- **Neotest** with pytest adapter
+- Run individual tests or entire files
+- Visual test results and summary window
+- Uses virtual environment Python if available
+
+#### Debugging
+- **nvim-dap** with Python debugpy adapter
+- Full debugging UI with variable inspection
+- Breakpoint management
+- Uses virtual environment Python if available
 
 ### Go
+
+Full Go language support with LSP, testing, and debugging capabilities.
 
 **File-specific settings:**
 - Tab indentation (Go standard)
 - 120-character line length indicator
 - Auto-format on save (using gofumpt)
-- Auto-organize imports on save
+- Automatic import organization on save
 
 | Keybinding | Mode | Action | Description |
 |------------|------|--------|-------------|
@@ -292,17 +315,22 @@ Some keybindings are only available in specific file types.
 | `<Leader>rj` | Normal | Add struct tags | Add JSON/YAML tags to struct fields |
 
 **Features:**
-- gopls LSP with static analysis
+- **gopls** LSP server with static analysis
 - Inlay hints for types and parameters
-- Debugging with Delve
-- Testing with go test
+- **Neotest** integration for Go tests
+- **Delve** debugger (DAP) support
+- Auto-formatting on save (gofumpt)
+- Automatic import organization
 
 ### JavaScript/TypeScript/Vue
 
+Full support for JavaScript, TypeScript, JSX, TSX, and Vue development.
+
 **File-specific settings:**
-- 2-space indentation (standard)
+- 2-space indentation (Node.js/web standard)
 - 100-character line length indicator
 - Auto-format on save (using Prettier)
+- Auto-organize imports on save
 
 | Keybinding | Mode | Action | Description |
 |------------|------|--------|-------------|
@@ -312,15 +340,25 @@ Some keybindings are only available in specific file types.
 **Supported file types:**
 - `.js` - JavaScript
 - `.ts` - TypeScript
-- `.jsx` - React JSX
-- `.tsx` - React TSX
+- `.jsx` - JavaScript with JSX (React)
+- `.tsx` - TypeScript with JSX (React)
 - `.vue` - Vue single-file components
 
 **Features:**
-- TypeScript IntelliSense
-- Inlay hints for parameters and types
-- Vue template support with Volar
-- Component props validation (Vue)
+
+#### TypeScript/JavaScript
+- **ts_ls** (TypeScript Language Server): IntelliSense, type checking, refactoring
+- Inlay hints for parameter names, types, and return values
+- Auto-formatting on save
+- Import organization
+
+#### Vue.js
+- **vue_ls** (Volar): Official Vue Language Server for templates, scripts, and styles
+- **ts_ls**: TypeScript support in `<script>` sections
+- Template autocomplete and IntelliSense
+- Component props validation
+- Full TypeScript/JavaScript support in `<script>` tags
+- CSS/SCSS/Less support in `<style>` tags
 
 ### HTML/CSS
 
@@ -355,6 +393,8 @@ Some keybindings are only available in specific file types.
 
 ### C/C++
 
+Comprehensive C/C++ support with LSP, debugging, and formatting capabilities.
+
 **File-specific settings:**
 - 4-space indentation
 - 120-character line length indicator
@@ -366,9 +406,11 @@ Some keybindings are only available in specific file types.
 | `<Leader>rh` | Normal | Switch header/source | Toggle between .h and .c/.cpp files |
 
 **Features:**
-- clangd LSP with clang-tidy
+- **clangd** LSP server with clang-tidy integration
+- **clang-format** for code formatting
+- Header/source file switching (`<leader>rh`)
 - Inlay hints for types and parameters
-- Debugging with lldb
+- **lldb** debugger support via nvim-dap
 
 ---
 
@@ -550,7 +592,48 @@ Automatically closes and renames HTML tags using nvim-ts-autotag.
 - **LSP info:** Use `:LspInfo` to see active language servers
 - **Plugin manager:** Use `:Lazy` to manage plugins
 
-### Troubleshooting Quick Reference
+### Troubleshooting
+
+#### LSP Not Working
+
+1. Check if the language server is installed
+2. Run `:LspInfo` to see server status
+3. Check `:Mason` for available servers
+4. Verify the language server binary is in your PATH
+
+#### Plugins Not Loading
+
+1. Run `:Lazy` to see plugin status
+2. Press `U` in Lazy window to update plugins
+3. Press `S` to sync (install missing plugins)
+4. Check for error messages in `:messages`
+
+#### Python Features Not Working
+
+1. Ensure all dependencies are installed (see Dependencies section in README)
+2. Install Python packages in your project's virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   pip install debugpy pytest
+   ```
+3. Restart Neovim after activating the virtual environment
+4. Check `:LspInfo` to verify Pyright is running
+
+#### Missing Dependencies
+
+1. Run `brew bundle check --verbose` to see what's missing (macOS)
+2. Install missing packages: `brew bundle`
+3. Verify installation with `:checkhealth` in Neovim
+
+#### Format on Save Not Working
+
+1. Check LSP status with `:LspInfo`
+2. Verify the formatter is installed (e.g., Prettier, Ruff)
+3. Check formatter configuration in `lua/plugins/lsp.lua`
+4. Look for error messages when saving with `:messages`
+
+#### Troubleshooting Quick Reference
 
 | Issue | Solution |
 |-------|----------|

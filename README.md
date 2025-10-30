@@ -284,141 +284,30 @@ See the full plugin list in the [lua/plugins/](lua/plugins/) directory.
 
 ## Usage
 
-For complete documentation including all keybindings, workflows, and tips, see [MANUAL.md](MANUAL.md).
+See **[MANUAL.md](MANUAL.md)** for complete documentation including all keybindings, workflows, language-specific features, and troubleshooting.
 
-### Quick Start
+### Quick Reference
 
 - **Leader key:** `<Space>` (spacebar)
-- **Dashboard:** `<Leader>a` to open the dashboard
-- **File explorer:** `<Space>-` for Oil file explorer
-- **Find files:** `<Space>fd` for fuzzy file finding
-- **LSP navigation:** `gd` (definition), `gr` (references), `K` (hover docs)
+- **Dashboard:** `<Leader>a`
+- **File explorer:** `<Space>-`
+- **Find files:** `<Space>fd`
+- **Git:** `<Leader>gg` (LazyGit)
+- **LSP:** `gd` (definition), `gr` (references), `K` (hover)
 
-For the complete keybinding reference and usage guide, please refer to [MANUAL.md](MANUAL.md).
+## Language Support
 
-## Language-Specific Features
+This configuration provides comprehensive LSP support, debugging, and testing for multiple languages:
 
-### Python Development
+- **Python** - Pyright, Ruff, debugpy, pytest, virtual environment auto-detection
+- **JavaScript/TypeScript** - ts_ls, inlay hints, Prettier formatting
+- **Vue.js** - Volar LSP, template support, component validation
+- **HTML/CSS** - Auto-close tags, Emmet abbreviations, Prettier formatting
+- **Go** - gopls, Delve debugger, go test integration
+- **C/C++** - clangd, lldb debugger, clang-format
+- **Lua** - Built-in LSP with Neovim API support
 
-This configuration includes comprehensive Python support:
-
-#### Virtual Environment Support
-- Automatically detects and uses `.venv/bin/python` if available
-- Falls back to system Python if no virtual environment exists
-- Virtual environment indicator in statusline
-
-#### LSP Configuration
-- **Pyright**: Type checking and IntelliSense
-- **Ruff**: Fast linting and formatting
-- Auto-formatting on save
-- Import organization
-
-#### Testing
-- **Neotest** with pytest adapter
-- Run individual tests or entire files
-- Visual test results and summary window
-- Uses virtual environment Python if available
-
-#### Debugging
-- **nvim-dap** with Python debugpy adapter
-- Full debugging UI with variable inspection
-- Breakpoint management
-- Uses virtual environment Python if available
-
-#### File-Specific Settings
-- 4-space indentation (PEP 8 compliant)
-- 120-character line length indicator
-- Auto-formatting keybindings (`<leader>rf`, `<leader>ri`)
-
-### Node.js/TypeScript Development
-
-Full support for JavaScript, TypeScript, JSX, and TSX:
-
-#### LSP Configuration
-- **ts_ls** (TypeScript Language Server): IntelliSense, type checking, refactoring
-- Inlay hints for parameter names, types, and return values
-- Auto-formatting on save
-- Import organization
-
-#### Supported File Types
-- `.js` - JavaScript
-- `.ts` - TypeScript
-- `.jsx` - JavaScript with JSX (React)
-- `.tsx` - TypeScript with JSX (React)
-
-#### File-Specific Settings
-- 2-space indentation (Node.js standard)
-- 100-character line length indicator
-- Auto-formatting keybindings (`<leader>rf`, `<leader>ri`)
-
-### Vue.js Development
-
-Full support for Vue 3 single-file components:
-
-#### LSP Configuration
-- **vue_ls** (Volar): Official Vue Language Server for templates, scripts, and styles
-- **ts_ls**: TypeScript support in `<script>` sections
-- Template autocomplete and IntelliSense
-- Component props validation
-- Auto-formatting on save
-- Import organization
-
-#### Supported File Types
-- `.vue` - Vue single-file components
-
-#### File-Specific Settings
-- 2-space indentation (Vue standard)
-- 100-character line length indicator
-- Auto-formatting keybindings (`<leader>rf`, `<leader>ri`)
-- Full TypeScript/JavaScript support in `<script>` tags
-- CSS/SCSS/Less support in `<style>` tags
-
-### HTML/CSS Development
-
-Full support for web development with HTML and CSS:
-
-#### LSP Configuration
-- **html**: HTML language server for validation, autocomplete, and IntelliSense
-- **cssls**: CSS/SCSS/Less language server with linting and validation
-- **emmet_ls**: Emmet abbreviations for rapid HTML/CSS authoring
-
-#### Features
-- Auto-close HTML tags: Type `<div>` and it becomes `<div></div>`
-- Auto-rename tags: Change opening tag and closing tag updates automatically
-- Emmet abbreviations: `div.container>ul>li*3` expands to full HTML structure
-- CSS property autocomplete with browser compatibility info
-- Auto-formatting on save (Prettier)
-
-#### Supported File Types
-- `.html` - HTML files
-- `.css` - CSS files
-- `.scss` - SCSS/Sass files
-- `.less` - Less files
-
-#### File-Specific Settings
-- 2-space indentation (web standard)
-- 120-character line length indicator
-- Auto-formatting keybindings (`<leader>rf`)
-- Emmet also works in JSX, TSX, and Vue files
-
-### Go Development
-
-Full Go language support with:
-- **gopls** LSP server with static analysis
-- Auto-formatting on save (gofumpt)
-- Automatic import organization
-- Inlay hints for types and parameters
-- **Neotest** integration for Go tests
-- **Delve** debugger (DAP) support
-
-### C/C++ Development
-
-Comprehensive C/C++ support:
-- **clangd** LSP server with clang-tidy
-- **clang-format** for code formatting
-- Header/source file switching (`<leader>rh`)
-- Inlay hints for types and parameters
-- **lldb** debugger support
+For detailed language-specific features, keybindings, and workflows, see **[MANUAL.md](MANUAL.md)**.
 
 ## Customization
 
@@ -456,59 +345,16 @@ Edit `lua/config/keymaps.lua` or the specific plugin configuration file.
 ### Language-Specific Settings
 Add or modify files in `after/ftplugin/` named `{language}.lua`.
 
-## Tips & Tricks
-
-### Multi-Grep Search
-Use `<Space>fg` for the custom multi-grep picker:
-1. Type your search pattern
-2. Press `<Space><Space>` (double space)
-3. Type a glob pattern (e.g., `*.py`, `src/**/*.lua`)
-4. Press `<Enter>` to search
-
-### Oil File Explorer
-- Press `<Space>-` to open Oil in float mode
-- Edit files like a buffer (delete lines to delete files, add lines to create)
-- Press `<CR>` to save changes
-- Deleted files go to trash (not permanently deleted)
-- Use `:Oil` to open in current directory
-
-### Dashboard Actions
-When opening Neovim without a file:
-- Press the number key to select an action
-- Recent projects are loaded from your file history
-- Press `q` to dismiss the dashboard
-
-### Flash Navigation
-- Press `s` followed by characters to jump to any word on screen
-- Press `S` for treesitter-aware jumping
-- Works in operator-pending mode (e.g., `ds` to delete to flash target)
-
 ## Troubleshooting
 
-### LSP Not Working
-1. Check if the language server is installed
-2. Run `:LspInfo` to see server status
-3. Check `:Mason` for available servers
+For detailed troubleshooting steps, see the **[MANUAL.md](MANUAL.md)** Troubleshooting section.
 
-### Plugins Not Loading
-1. Run `:Lazy` to see plugin status
-2. Press `U` in Lazy window to update plugins
-3. Press `S` to sync (install missing plugins)
+### Quick Checks
 
-### Python Features Not Working
-1. Ensure all dependencies are installed (see [Dependencies](#dependencies) section)
-2. Install Python packages in your project's virtual environment:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate
-   pip install debugpy pytest
-   ```
-3. Restart Neovim after activating the virtual environment
-
-### Missing Dependencies
-1. Run `brew bundle check --verbose` to see what's missing
-2. Install missing packages: `brew bundle`
-3. Verify installation with `:checkhealth` in Neovim
+- **LSP issues:** Run `:LspInfo` and `:checkhealth`
+- **Plugin issues:** Run `:Lazy` and press `U` to update
+- **Missing dependencies:** Run `brew bundle check --verbose` (macOS)
+- **Python issues:** Ensure debugpy and pytest are installed in your virtual environment
 
 ## Performance
 
