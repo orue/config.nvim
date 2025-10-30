@@ -12,6 +12,8 @@ brew "pyright"
 brew "ruff"
 brew "typescript-language-server"  # TypeScript/JavaScript LSP
 brew "vue-language-server"  # Vue.js LSP (Volar)
+brew "vscode-langservers-extracted"  # HTML, CSS, JSON, ESLint LSPs
+brew "emmet-ls"          # Emmet abbreviations for HTML/CSS
 brew "marksman"
 brew "dockerfile-language-server"
 brew "bash-language-server"

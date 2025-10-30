@@ -21,6 +21,7 @@ Complete guide for using this Neovim configuration, including all keybindings, w
   - [Python](#python)
   - [Go](#go)
   - [JavaScript/TypeScript/Vue](#javascripttypescriptvue)
+  - [HTML/CSS](#htmlcss)
   - [C/C++](#cc)
 - [Plugin-Specific Features](#plugin-specific-features)
   - [Oil File Explorer](#oil-file-explorer)
@@ -30,6 +31,7 @@ Complete guide for using this Neovim configuration, including all keybindings, w
   - [Comment Plugin](#comment-plugin)
   - [Surround Plugin](#surround-plugin)
   - [Auto-pairs](#auto-pairs)
+  - [Auto-tag (HTML/JSX/Vue)](#auto-tag-htmljsxvue)
 - [Tips & Tricks](#tips--tricks)
 
 ---
@@ -320,6 +322,37 @@ Some keybindings are only available in specific file types.
 - Vue template support with Volar
 - Component props validation (Vue)
 
+### HTML/CSS
+
+**File-specific settings:**
+- 2-space indentation (web standard)
+- 120-character line length indicator
+- Auto-format on save (using Prettier)
+
+| Keybinding | Mode | Action | Description |
+|------------|------|--------|-------------|
+| `<Leader>rf` | Normal | Format file | Manually format with Prettier |
+
+**Supported file types:**
+- `.html` - HTML files
+- `.css` - CSS files
+- `.scss` - SCSS/Sass files
+- `.less` - Less files
+
+**Features:**
+- HTML/CSS LSP with validation and autocomplete
+- Auto-close HTML tags: Type `<div>` → `<div></div>`
+- Auto-rename tags: Change `<div>` and closing tag updates automatically
+- Emmet abbreviations: `div.container>ul>li*3` → full HTML structure
+- CSS property autocomplete with browser compatibility info
+- Emmet also works in JSX, TSX, and Vue files
+
+**Emmet Examples:**
+- `!` → HTML5 boilerplate
+- `div.container` → `<div class="container"></div>`
+- `ul>li*3` → `<ul><li></li><li></li><li></li></ul>`
+- `a[href="#"]` → `<a href="#"></a>`
+
 ### C/C++
 
 **File-specific settings:**
@@ -467,6 +500,21 @@ Automatically inserts matching pairs of brackets, quotes, etc.
 - Fast wrap: Select text in visual mode, press `<M-e>`, then type opening character
 
 **Note:** `<M-e>` means `Alt+e` on Linux/Windows or `Option+e` on macOS.
+
+### Auto-tag (HTML/JSX/Vue)
+
+Automatically closes and renames HTML tags using nvim-ts-autotag.
+
+**Features:**
+- Auto-close tags: Type `<div>` and it becomes `<div>|</div>` (cursor at `|`)
+- Auto-rename tags: Change `<div>` to `<section>` and closing tag updates automatically
+- Works in HTML, Vue, JSX, and TSX files
+- Treesitter-powered for accurate tag detection
+
+**Examples:**
+- Type `<button>` → `<button></button>`
+- Change `<div>` to `<span>` → closing `</div>` becomes `</span>`
+- Type `<h1>Title` → `<h1>Title</h1>`
 
 ---
 

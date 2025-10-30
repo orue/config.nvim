@@ -73,6 +73,8 @@ This will install all required tools automatically.
 - **ruff** - Fast Python linter and formatter
 - **typescript-language-server** - TypeScript/JavaScript LSP
 - **vue-language-server** - Vue.js LSP (Volar)
+- **vscode-langservers-extracted** - HTML, CSS, JSON, ESLint LSP servers
+- **emmet-ls** - Emmet abbreviations for HTML/CSS
 - **marksman** - Markdown LSP
 - **dockerfile-language-server** - Dockerfile LSP
 - **bash-language-server** - Bash/shell script LSP
@@ -183,6 +185,8 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 │       ├── javascriptreact.lua  # JSX config
 │       ├── typescriptreact.lua  # TSX config
 │       ├── vue.lua           # Vue.js config
+│       ├── html.lua          # HTML config
+│       ├── css.lua           # CSS config
 │       └── lua.lua           # Lua config
 ├── Brewfile                   # macOS dependencies (Homebrew)
 ├── install-ubuntu.sh          # Ubuntu/Debian installation script
@@ -207,6 +211,7 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 | [neotest](https://github.com/nvim-neotest/neotest) | Test runner |
 | [noice.nvim](https://github.com/folke/noice.nvim) | Enhanced UI |
 | [which-key.nvim](https://github.com/folke/which-key.nvim) | Keybinding help |
+| [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) | Auto-close/rename HTML tags |
 
 See the full plugin list in the [lua/plugins/](lua/plugins/) directory.
 
@@ -300,6 +305,34 @@ Full support for Vue 3 single-file components:
 - Auto-formatting keybindings (`<leader>rf`, `<leader>ri`)
 - Full TypeScript/JavaScript support in `<script>` tags
 - CSS/SCSS/Less support in `<style>` tags
+
+### HTML/CSS Development
+
+Full support for web development with HTML and CSS:
+
+#### LSP Configuration
+- **html**: HTML language server for validation, autocomplete, and IntelliSense
+- **cssls**: CSS/SCSS/Less language server with linting and validation
+- **emmet_ls**: Emmet abbreviations for rapid HTML/CSS authoring
+
+#### Features
+- Auto-close HTML tags: Type `<div>` and it becomes `<div></div>`
+- Auto-rename tags: Change opening tag and closing tag updates automatically
+- Emmet abbreviations: `div.container>ul>li*3` expands to full HTML structure
+- CSS property autocomplete with browser compatibility info
+- Auto-formatting on save (Prettier)
+
+#### Supported File Types
+- `.html` - HTML files
+- `.css` - CSS files
+- `.scss` - SCSS/Sass files
+- `.less` - Less files
+
+#### File-Specific Settings
+- 2-space indentation (web standard)
+- 120-character line length indicator
+- Auto-formatting keybindings (`<leader>rf`)
+- Emmet also works in JSX, TSX, and Vue files
 
 ### Go Development
 
