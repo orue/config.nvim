@@ -2,6 +2,12 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Add GOPATH/bin to PATH for Go tools
+local gopath = vim.fn.getenv("GOPATH")
+if gopath ~= vim.NIL and gopath ~= "" then
+  vim.env.PATH = gopath .. "/bin:" .. vim.env.PATH
+end
+
 local opt = vim.opt
 
 -- Line number

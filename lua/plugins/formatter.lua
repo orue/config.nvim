@@ -7,12 +7,6 @@ return {
       prettier = {
         command = "/opt/homebrew/bin/prettier",
       },
-      gofumpt = {
-        command = vim.fn.expand("~/go/bin/gofumpt"),
-      },
-      goimports = {
-        command = vim.fn.expand("~/go/bin/goimports"),
-      },
     },
     formatters_by_ft = {
       -- JavaScript/TypeScript
