@@ -25,6 +25,10 @@ For all other dependencies (LSP servers, formatters, tools), see the [Dependenci
 
 ## Installation
 
+### Quick Install (macOS)
+
+The easiest way to set up everything at once:
+
 1. **Backup your existing configuration** (if any):
    ```bash
    mv ~/.config/nvim ~/.config/nvim.backup
@@ -36,29 +40,56 @@ For all other dependencies (LSP servers, formatters, tools), see the [Dependenci
    git clone https://github.com/yourusername/nvim-config.git ~/.config/nvim
    ```
 
-3. **Start Neovim**:
+3. **Run the installation script**:
+   ```bash
+   cd ~/.config/nvim
+   chmod +x install.sh
+   ./install.sh
+   ```
+
+   This script will:
+   - Install/update Neovim
+   - Install all Homebrew dependencies (LSP servers, formatters, tools)
+   - Install all npm dependencies (emmet-ls)
+   - Prepare Neovim for first launch
+
+4. **Start Neovim**:
    ```bash
    nvim
    ```
 
    Lazy.nvim will automatically install all plugins on first launch.
 
-4. **Install dependencies** (see Dependencies section below)
+### Manual Installation
+
+If you prefer to install dependencies manually, follow the steps in the [Dependencies](#dependencies) section below.
 
 ## Dependencies
 
 This configuration requires several external tools for full functionality. On **macOS**, all dependencies can be easily installed using Homebrew.
 
-### Quick Install (macOS)
+### Quick Install (macOS) - Option 1: Automated Script
 
-The easiest way to install all dependencies is using the included `Brewfile`:
+The easiest way to install everything (Neovim + all dependencies) is using the installation script:
+
+```bash
+cd ~/.config/nvim
+./install.sh
+```
+
+This will install Neovim, all Homebrew dependencies, and npm packages automatically.
+
+### Quick Install (macOS) - Option 2: Brewfile Only
+
+If you already have Neovim installed and only need dependencies:
 
 ```bash
 cd ~/.config/nvim
 brew bundle
+npm install -g emmet-ls
 ```
 
-This will install all required tools automatically.
+This will install all Homebrew dependencies and npm packages.
 
 ### What Gets Installed
 
@@ -74,17 +105,17 @@ This will install all required tools automatically.
 - **typescript-language-server** - TypeScript/JavaScript LSP
 - **vue-language-server** - Vue.js LSP (Volar)
 - **vscode-langservers-extracted** - HTML, CSS, JSON, ESLint LSP servers
-- **emmet-ls** - Emmet abbreviations for HTML/CSS
 - **marksman** - Markdown LSP
 - **dockerfile-language-server** - Dockerfile LSP
 - **bash-language-server** - Bash/shell script LSP
 - **taplo** - TOML LSP
 - **yaml-language-server** - YAML LSP
 - **terraform-ls** - Terraform LSP
-- **llvm** - Provides clangd for C/C++
+- **llvm** - Provides clangd (C/C++ LSP) and lldb (C/C++ debugger)
 
 #### Debuggers
 - **delve** - Go debugger (dlv)
+- **lldb** - C/C++ debugger (included with llvm, no separate install needed)
 
 #### Formatters & Linters
 - **prettier** - Multi-language code formatter
@@ -93,6 +124,17 @@ This will install all required tools automatically.
 - **ripgrep** - Fast search tool (required for Telescope)
 - **lazygit** - Terminal UI for git commands
 - **make** - Build automation tool
+
+#### NPM-based Language Servers
+
+The following language servers are installed via npm (not Homebrew):
+
+```bash
+npm install -g emmet-ls
+```
+
+**Required packages:**
+- **emmet-ls** - Emmet abbreviations for HTML/CSS/JSX/Vue
 
 #### Python Packages (Per-Project)
 
@@ -189,6 +231,7 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 │       ├── css.lua           # CSS config
 │       └── lua.lua           # Lua config
 ├── Brewfile                   # macOS dependencies (Homebrew)
+├── install.sh                 # Comprehensive installation script (macOS)
 ├── install-ubuntu.sh          # Ubuntu/Debian installation script
 └── README.md
 ```

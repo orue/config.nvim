@@ -13,7 +13,6 @@ brew "ruff"
 brew "typescript-language-server"  # TypeScript/JavaScript LSP
 brew "vue-language-server"  # Vue.js LSP (Volar)
 brew "vscode-langservers-extracted"  # HTML, CSS, JSON, ESLint LSPs
-brew "emmet-ls"          # Emmet abbreviations for HTML/CSS
 brew "marksman"
 brew "dockerfile-language-server"
 brew "bash-language-server"
@@ -24,7 +23,7 @@ brew "llvm"              # Provides clangd for C/C++
 
 # Debuggers
 brew "delve"             # Go debugger
-brew "lldb"              # C/C++ debugger (part of LLVM)
+# Note: lldb (C/C++ debugger) is included with llvm, no separate install needed
 
 # Formatters & Linters
 brew "prettier"          # Code formatter (brew instead of npm -g)
@@ -38,6 +37,17 @@ brew "lazygit"           # Terminal UI for git
 
 # Build Tools
 brew "make"              # Build automation
+
+# ============================================================
+# NPM-based Language Servers (Not Managed by Homebrew)
+# ============================================================
+# The following language servers need to be installed via npm:
+#
+#   npm install -g emmet-ls
+#
+# Required npm packages:
+#   - emmet-ls: Emmet abbreviations for HTML/CSS/JSX/Vue
+#
 
 # ============================================================
 # Python Packages (Not Managed by Homebrew)
