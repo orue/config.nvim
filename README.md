@@ -194,55 +194,6 @@ After installing dependencies, you can verify everything is working:
    :LspInfo
    ```
 
-### Quick Install (Ubuntu/Debian)
-
-For Ubuntu Server or Debian-based systems, use the comprehensive installation script:
-
-1. **Backup your existing configuration** (if any):
-
-   ```bash
-   mv ~/.config/nvim ~/.config/nvim.backup
-   mv ~/.local/share/nvim ~/.local/share/nvim.backup
-   ```
-
-2. **Clone this repository**:
-
-   ```bash
-   git clone https://github.com/orue/config.nvim.git ~/.config/nvim
-   ```
-
-3. **Run the installation script**:
-
-   ```bash
-   cd ~/.config/nvim
-   chmod +x install-ubuntu.sh
-   ./install-ubuntu.sh
-   ```
-
-   This script will:
-   - Install/update Neovim (latest stable via PPA)
-   - Install all system dependencies (LSP servers, formatters, tools)
-   - Install all npm dependencies
-   - Prepare Neovim for first launch
-
-4. **Restart your shell**:
-
-   ```bash
-   source ~/.bashrc
-   ```
-
-5. **Start Neovim**:
-
-   ```bash
-   nvim
-   ```
-
-   Lazy.nvim will automatically install all plugins on first launch.
-
-### Other Linux Distributions
-
-For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` for the complete list of required tools and install them using your distribution's package manager.
-
 ## Directory Structure
 
 ```
@@ -278,7 +229,6 @@ For other Linux distributions, refer to the `Brewfile` or `install-ubuntu.sh` fo
 │       └── lua.lua           # Lua config
 ├── Brewfile                   # macOS dependencies (Homebrew)
 ├── install.sh                 # Comprehensive installation script (macOS)
-├── install-ubuntu.sh          # Ubuntu/Debian installation script
 └── README.md
 ```
 

@@ -38,7 +38,6 @@ print_info() {
 # Check if running on macOS
 if [[ "$OSTYPE" != "darwin"* ]]; then
     print_error "This script is designed for macOS"
-    echo "For Ubuntu/Debian, use ./install-ubuntu.sh instead"
     exit 1
 fi
 
