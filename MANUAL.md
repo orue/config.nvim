@@ -598,10 +598,12 @@ Automatically closes and renames HTML tags using nvim-ts-autotag.
 
 #### LSP Not Working
 
-1. Check if the language server is installed
+1. Check if the language server is installed:
+   - macOS: `brew list | grep <server-name>`
+   - Check version: e.g., `pyright --version`, `gopls version`
 2. Run `:LspInfo` to see server status
-3. Check `:Mason` for available servers
-4. Verify the language server binary is in your PATH
+3. Verify the language server binary is in your PATH: `which <server-name>`
+4. Check `:checkhealth` for any missing dependencies
 
 #### Plugins Not Loading
 

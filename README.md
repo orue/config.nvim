@@ -192,7 +192,6 @@ After installing dependencies, you can verify everything is working:
    ```vim
    :checkhealth
    :LspInfo
-   :Mason
    ```
 
 ### Quick Install (Ubuntu/Debian)
