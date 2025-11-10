@@ -61,6 +61,8 @@ return {
           -- Disable italic for imported module/library names in Python
           ["@variable.member.python"] = { fg = colors.sky, style = {} },
           ["@module.python"] = { fg = colors.sky, style = {} },
+          -- Thin transparent colorcolumn
+          ColorColumn = { bg = colors.mantle },
         }
       end,
     })

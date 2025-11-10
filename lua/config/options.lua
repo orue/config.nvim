@@ -41,6 +41,9 @@ opt.splitbelow = true -- split horizontal window to the bottom
 opt.updatetime = 250
 opt.timeoutlen = 300
 
+-- Colorcolumn
+opt.colorcolumn = "120"
+
 vim.diagnostic.config({
   virtual_text = {
     prefix = '●',
