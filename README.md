@@ -7,7 +7,7 @@ A modern, well-organized Neovim configuration with comprehensive LSP support, de
 ## Features
 
 - **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) for fast, lazy-loaded plugins
-- **Colorscheme**: Catppuccin Frappe with transparent background
+- **Colorscheme**: Rose Pine Moon with transparent background
 - **LSP**: Fully configured Language Server Protocol for Lua, Python, Go, C/C++, TypeScript/JavaScript, and more
 - **Completion**: Modern completion engine with [blink.cmp](https://github.com/Saghen/blink.cmp)
 - **File Navigation**: Oil.nvim for intuitive file browsing, Telescope for fuzzy finding
@@ -236,7 +236,7 @@ After installing dependencies, you can verify everything is working:
 
 | Plugin                                                                | Purpose                     |
 | --------------------------------------------------------------------- | --------------------------- |
-| [catppuccin/nvim](https://github.com/catppuccin/nvim)                 | Colorscheme                 |
+| [rose-pine/neovim](https://github.com/rose-pine/neovim)               | Colorscheme                 |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting         |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)            | LSP configuration           |
 | [blink.cmp](https://github.com/Saghen/blink.cmp)                      | Completion engine           |
@@ -289,14 +289,16 @@ Edit `lua/plugins/colorscheme.lua`:
 
 ```lua
 return {
-  "catppuccin/nvim",
-  name = "catppuccin",
+  "rose-pine/neovim",
+  name = "rose-pine",
   config = function()
-    require("catppuccin").setup({
-      flavour = "frappe",  -- latte, frappe, macchiato, mocha
-      transparent_background = true,
+    require("rose-pine").setup({
+      variant = "moon",  -- auto, main, moon, dawn
+      styles = {
+        transparency = true,
+      },
     })
-    vim.cmd.colorscheme("catppuccin-frappe")
+    vim.cmd.colorscheme("rose-pine-moon")
   end,
 }
 ```
@@ -356,7 +358,7 @@ MIT License - Feel free to use and modify this configuration.
 This configuration was built using excellent plugins from the Neovim community. Special thanks to:
 
 - [folke](https://github.com/folke) for lazy.nvim, which-key, noice, and flash
-- [Catppuccin](https://github.com/catppuccin) for the beautiful colorscheme
+- [Rose Pine](https://github.com/rose-pine) for the beautiful colorscheme
 - [nvim-lua](https://github.com/nvim-lua) for the foundation of modern Neovim configs
 - [nvim-treesitter](https://github.com/nvim-treesitter) for amazing syntax highlighting
 - All plugin authors whose work made this configuration possible
