@@ -3,11 +3,11 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local utils = require('config.utils')
-    local colors = require("rose-pine.palette")
+    local colors = require("catppuccin.palettes").get_palette("mocha")
 
     require("lualine").setup {
       options = {
-        theme = "rose-pine",
+        theme = "catppuccin",
         icons_enabled = true,
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
@@ -33,7 +33,7 @@ return {
               end
               return ""
             end,
-            color = { fg = colors.foam }
+            color = { fg = colors.teal }
           },
           {
             "filetype",
