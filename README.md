@@ -113,7 +113,6 @@ This will install all Homebrew dependencies and npm packages.
 - **typescript-language-server** - TypeScript/JavaScript LSP
 - **vue-language-server** - Vue.js LSP (Volar)
 - **vscode-langservers-extracted** - HTML, CSS, JSON, ESLint LSP servers
-- **marksman** - Markdown LSP
 - **dockerfile-language-server** - Dockerfile LSP
 - **bash-language-server** - Bash/shell script LSP
 - **taplo** - TOML LSP

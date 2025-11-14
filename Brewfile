@@ -13,7 +13,6 @@ brew "ruff"
 brew "typescript-language-server"  # TypeScript/JavaScript LSP
 brew "vue-language-server"  # Vue.js LSP (Volar)
 brew "vscode-langservers-extracted"  # HTML, CSS, JSON, ESLint LSPs
-brew "marksman"
 brew "dockerfile-language-server"
 brew "bash-language-server"
 brew "taplo"

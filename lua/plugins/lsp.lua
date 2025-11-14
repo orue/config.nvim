@@ -79,11 +79,6 @@ return {
         end,
       })
 
-      -- Markdown LSP
-      vim.lsp.config('marksman', {
-        capabilities = capabilities,
-      })
-
       -- Docker LSP
       vim.lsp.config('dockerls', {
         capabilities = capabilities,
@@ -259,7 +254,6 @@ return {
         css = { 'cssls', 'emmet_ls' },
         scss = { 'cssls', 'emmet_ls' },
         less = { 'cssls', 'emmet_ls' },
-        markdown = { 'marksman' },
         dockerfile = { 'dockerls' },
         sh = { 'bashls' },
         bash = { 'bashls' },
