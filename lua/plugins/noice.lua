@@ -3,7 +3,16 @@ return {
   event = "VeryLazy",
   dependencies = {
     "MunifTanjim/nui.nvim",
-    "rcarriga/nvim-notify",
+    {
+      "rcarriga/nvim-notify",
+      config = function()
+        require("notify").setup({
+          background_colour = "#1e1e2e", -- Catppuccin Mocha base background
+          timeout = 3000,
+          max_width = 50,
+        })
+      end,
+    },
   },
   opts = {
     lsp = {
