@@ -22,29 +22,6 @@ return {
         capabilities = capabilities,
       })
 
-      -- Go LSP
-      vim.lsp.config('gopls', {
-        capabilities = capabilities,
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
-              shadow = true,
-            },
-            staticcheck = true,
-            gofumpt = true,  -- Use gofumpt formatting (stricter than gofmt)
-            hints = {
-              assignVariableTypes = true,
-              compositeLiteralFields = true,
-              constantValues = true,
-              functionTypeParameters = true,
-              parameterNames = true,
-              rangeVariableTypes = true,
-            },
-          },
-        },
-      })
-
       -- Python LSP (Pyright)
       vim.lsp.config('pyright', {
         capabilities = capabilities,
@@ -239,7 +216,6 @@ return {
       -- Map filetypes to LSP servers
       local filetype_to_lsp = {
         lua = { 'lua_ls' },
-        go = { 'gopls' },
         python = { 'pyright', 'ruff' },
         c = { 'clangd' },
         cpp = { 'clangd' },
@@ -318,20 +294,6 @@ return {
               buffer = args.buf,
               callback = function()
                 vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-              end,
-            })
-          elseif vim.bo.filetype == "go" and client.name == "gopls" then
-            vim.api.nvim_create_autocmd('BufWritePre', {
-              group = bufgroup,
-              buffer = args.buf,
-              callback = function()
-                -- Organize imports first (async, non-blocking)
-                vim.lsp.buf.code_action({
-                  context = {only = {"source.organizeImports"}},
-                  apply = true,
-                })
-                -- Then format
-                vim.lsp.buf.format({ bufnr = args.buf, id = client.id, async = false })
               end,
             })
           end

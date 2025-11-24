@@ -19,7 +19,6 @@ Complete guide for using this Neovim configuration, including all keybindings, w
 - [Code Documentation](#code-documentation)
 - [Language-Specific Keybindings](#language-specific-keybindings)
   - [Python](#python)
-  - [Go](#go)
   - [JavaScript/TypeScript/Vue](#javascripttypescriptvue)
   - [HTML/CSS](#htmlcss)
   - [C/C++](#cc)
@@ -195,7 +194,6 @@ Powered by nvim-dap (Debug Adapter Protocol) with a visual debugging UI.
 
 ### Supported Languages
 - Python (using debugpy)
-- Go (using delve)
 - C/C++ (using lldb)
 
 ### Debug Controls
@@ -224,7 +222,6 @@ Powered by Neotest for running and managing tests.
 
 ### Supported Languages
 - Python (using pytest)
-- Go (using go test)
 
 ### Test Commands
 
@@ -299,30 +296,6 @@ This configuration includes comprehensive Python support with full LSP, testing,
 - Full debugging UI with variable inspection
 - Breakpoint management
 - Uses virtual environment Python if available
-
-### Go
-
-Full Go language support with LSP, testing, and debugging capabilities.
-
-**File-specific settings:**
-- Tab indentation (Go standard)
-- 120-character line length indicator
-- Auto-format on save (using gofumpt)
-- Automatic import organization on save
-
-| Keybinding | Mode | Action | Description |
-|------------|------|--------|-------------|
-| `<Leader>rf` | Normal | Format file | Manually format Go file |
-| `<Leader>ri` | Normal | Organize imports | Sort and organize import statements |
-| `<Leader>rj` | Normal | Add struct tags | Add JSON/YAML tags to struct fields |
-
-**Features:**
-- **gopls** LSP server with static analysis
-- Inlay hints for types and parameters
-- **Neotest** integration for Go tests
-- **Delve** debugger (DAP) support
-- Auto-formatting on save using **gofumpt** (stricter than gofmt)
-- Automatic import organization using **goimports**
 
 ### JavaScript/TypeScript/Vue
 
@@ -600,7 +573,7 @@ Automatically closes and renames HTML tags using nvim-ts-autotag.
 
 1. Check if the language server is installed:
    - macOS: `brew list | grep <server-name>`
-   - Check version: e.g., `pyright --version`, `gopls version`
+   - Check version: e.g., `pyright --version`
 2. Run `:LspInfo` to see server status
 3. Verify the language server binary is in your PATH: `which <server-name>`
 4. Check `:checkhealth` for any missing dependencies
@@ -634,14 +607,12 @@ Automatically closes and renames HTML tags using nvim-ts-autotag.
 
 1. Check if the formatter is installed:
    - Python: `ruff --version`
-   - Go: `gofumpt -version` and `goimports -version`
    - JavaScript/TypeScript/HTML/CSS: `prettier --version`
    - C/C++: `clang-format --version`
 2. Check formatter status with `:ConformInfo` (shows available formatters)
 3. Check LSP status with `:LspInfo` (for LSP fallback)
 4. Verify formatter configuration in `lua/plugins/formatter.lua` (conform.nvim)
 5. Look for error messages when saving with `:messages`
-6. For Go: Ensure `$GOPATH/bin` is in your PATH (formatters are installed there)
 
 #### Troubleshooting Quick Reference
 
@@ -751,7 +722,6 @@ Format (language-specific):
 <Leader> rf   →  Format file
 <Leader> ri   →  Organize imports
 <Leader> rh   →  Switch header/source (C/C++)
-<Leader> rj   →  Add struct tags (Go)
 ```
 
 ### Navigation Mappings
