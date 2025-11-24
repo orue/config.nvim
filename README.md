@@ -8,12 +8,12 @@ A modern, well-organized Neovim configuration with comprehensive LSP support, de
 
 - **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) for fast, lazy-loaded plugins
 - **Colorscheme**: Catppuccin Mocha with transparent background
-- **LSP**: Fully configured Language Server Protocol for Lua, Python, Go, C/C++, TypeScript/JavaScript, and more
+- **LSP**: Fully configured Language Server Protocol for Lua, Python, C/C++, TypeScript/JavaScript, and more
 - **Completion**: Modern completion engine with [blink.cmp](https://github.com/Saghen/blink.cmp)
 - **File Navigation**: Oil.nvim for intuitive file browsing, Telescope for fuzzy finding
 - **Git Integration**: Gitsigns for inline diff markers and git operations
-- **Debugging**: Full DAP setup with UI for Python, Go, and C/C++ debugging
-- **Testing**: Integrated test runners with Neotest (Python & Go)
+- **Debugging**: Full DAP setup with UI for Python and C/C++ debugging
+- **Testing**: Integrated test runners with Neotest (Python)
 - **Enhanced UI**: Noice.nvim for prettier messages and LSP documentation
 
 ## Requirements
@@ -107,7 +107,6 @@ This will install all Homebrew dependencies and npm packages.
 #### Language Servers
 
 - **lua-language-server** - Lua LSP
-- **gopls** - Go LSP
 - **pyright** - Python type checking and IntelliSense
 - **ruff** - Fast Python linter and formatter
 - **typescript-language-server** - TypeScript/JavaScript LSP
@@ -122,15 +121,12 @@ This will install all Homebrew dependencies and npm packages.
 
 #### Debuggers
 
-- **delve** - Go debugger (dlv)
 - **lldb** - C/C++ debugger (included with llvm, no separate install needed)
 
 #### Formatters & Linters
 
 - **prettier** - Multi-language code formatter (JavaScript/TypeScript/Vue/HTML/CSS/JSON/Markdown)
 - **ruff** - Fast Python linter and formatter (already listed above)
-- **gofumpt** - Stricter Go formatter (install via: `go install mvdan.cc/gofumpt@latest`)
-- **goimports** - Go import organizer (install via: `go install golang.org/x/tools/cmd/goimports@latest`)
 
 #### Tools
 
@@ -210,13 +206,12 @@ After installing dependencies, you can verify everything is working:
 │   │   ├── telescope.lua     # Fuzzy finder
 │   │   ├── treesitter.lua    # Syntax highlighting
 │   │   ├── debug.lua         # DAP debugging
-│   │   ├── neotest.lua       # Testing (Python & Go)
+│   │   ├── neotest.lua       # Testing (Python)
 │   │   └── ...               # Other plugins
 │   └── alpha_custom.lua       # Custom dashboard functions
 ├── after/
 │   └── ftplugin/             # Language-specific settings
 │       ├── python.lua        # Python config
-│       ├── go.lua            # Go config
 │       ├── c.lua             # C/C++ config
 │       ├── javascript.lua    # JavaScript config
 │       ├── typescript.lua    # TypeScript config
@@ -274,7 +269,6 @@ This configuration provides comprehensive LSP support, debugging, and testing fo
 - **JavaScript/TypeScript** - ts_ls, inlay hints, Prettier formatting
 - **Vue.js** - Volar LSP, template support, component validation, Prettier formatting
 - **HTML/CSS** - Auto-close tags, Emmet abbreviations, Prettier formatting
-- **Go** - gopls, gofumpt/goimports formatting, Delve debugger, go test integration
 - **C/C++** - clangd, lldb debugger, clang-format
 - **Lua** - Built-in LSP with Neovim API support
 

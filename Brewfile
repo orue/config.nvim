@@ -7,7 +7,6 @@ brew "python3"           # Python runtime
 
 # Language Servers
 brew "lua-language-server"
-brew "gopls"
 brew "pyright"
 brew "ruff"
 brew "typescript-language-server"  # TypeScript/JavaScript LSP
@@ -21,7 +20,6 @@ brew "terraform-ls"
 brew "llvm"              # Provides clangd for C/C++
 
 # Debuggers
-brew "delve"             # Go debugger
 # Note: lldb (C/C++ debugger) is included with llvm, no separate install needed
 
 # Formatters & Linters

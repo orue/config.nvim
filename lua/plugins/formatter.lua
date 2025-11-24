@@ -32,8 +32,6 @@ return {
       markdown = { "prettier" },
       -- Python
       python = { "ruff_format", "ruff_organize_imports" },
-      -- Go
-      go = { "gofumpt", "goimports" },
       -- C/C++
       c = { "clang-format" },
       cpp = { "clang-format" },

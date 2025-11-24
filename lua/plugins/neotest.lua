@@ -5,7 +5,6 @@ return {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
       "nvim-neotest/neotest-python",
-      "nvim-neotest/neotest-go",
     },
     config = function()
       local utils = require('config.utils')
@@ -17,7 +16,6 @@ return {
             runner = "pytest",
             python = utils.get_python_path(),
           }),
-          require("neotest-go"),
         },
       })
     end,

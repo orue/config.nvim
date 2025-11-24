@@ -27,7 +27,6 @@ return {
           "vimdoc",
           "c",
           "python",
-          "go",
           "toml",
           "hcl",
           "terraform"
