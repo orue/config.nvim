@@ -15,7 +15,42 @@ return {
 
       appearance = {
         use_nvim_cmp_as_default = true,
-        nerd_font_variant = 'mono'
+        nerd_font_variant = 'mono',
+
+        kind_icons = {
+          Text = '󰉿',
+          Method = '󰊕',
+          Function = '󰊕',
+          Constructor = '󰒓',
+          Field = '󰆨',
+          Variable = '󰀫',
+          Class = '󰠱',
+          Interface = '󰕘',
+          Struct = '󰌗',
+          Module = '󰅩',
+          Property = '󰖷',
+          Enum = '󰕘',
+          Operator = '󰆕',
+          Keyword = '󰌋',
+          Snippet = '󰍌',
+          Color = '󰏘',
+          File = '󰈔',
+          Reference = '󰈇',
+          Folder = '󰉋',
+          EnumMember = '󰜢',
+          Constant = '󰏿',
+          Event = '󰉁',
+          Namespace = '󰅩',
+          Package = '󰆦',
+          String = '󰀬',
+          Number = '󰎠',
+          Boolean = '󰨙',
+          Array = '󰅪',
+          Object = '󰅩',
+          Key = '󰌋',
+          Null = '󰟢',
+          TypeParameter = '󰆩',
+        },
       },
 
       signature = { enabled = true }
