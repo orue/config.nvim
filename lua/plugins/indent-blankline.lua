@@ -27,6 +27,7 @@ return {
         "notify",
         "toggleterm",
         "lazyterm",
+        "go",
       },
     },
   },
