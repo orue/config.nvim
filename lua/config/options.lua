@@ -65,3 +65,13 @@ vim.diagnostic.config({
   severity_sort = true,
 })
 
+-- Render whitespace settings
+opt.list = true
+opt.listchars = {
+  tab = '→ ',        -- Show tabs
+  trail = '·',       -- Show trailing spaces
+  nbsp = '␣',        -- Show non-breaking spaces
+  extends = '⟩',     -- Show when line extends beyond screen
+  precedes = '⟨',    -- Show when line precedes beyond screen
+  space = '·',       -- Show spaces
+}
