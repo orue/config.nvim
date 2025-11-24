@@ -7,6 +7,11 @@ return {
       prettier = {
         command = "/opt/homebrew/bin/prettier",
       },
+      goimports = {
+        command = "/opt/homebrew/bin/goimports",
+        args = { "-w", "$FILENAME" },
+        stdin = false,
+      },
     },
     formatters_by_ft = {
       -- JavaScript/TypeScript
@@ -35,6 +40,8 @@ return {
       -- C/C++
       c = { "clang-format" },
       cpp = { "clang-format" },
+      -- Go
+      go = { "goimports" },
     },
     format_on_save = {
       timeout_ms = 500,
