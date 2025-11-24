@@ -6,6 +6,16 @@ vim.opt_local.softtabstop = 4
 vim.opt_local.colorcolumn = "120"
 vim.opt_local.textwidth = 120
 
+-- Ensure whitespace characters are visible in Go files
+vim.opt_local.list = true
+vim.opt_local.listchars = {
+  tab = '→ ',
+  trail = '·',
+  nbsp = '␣',
+  extends = '⟩',
+  precedes = '⟨',
+}
+
 -- Go-specific keymaps
 -- Note: <leader>rf formatting is handled by conform.nvim (see lua/plugins/formatter.lua)
 

@@ -43,8 +43,14 @@ return {
           -- Disable italic for imported module/library names in Python
           ["@variable.member.python"] = { fg = colors.teal, style = {} },
           ["@module.python"] = { fg = colors.teal, style = {} },
+          -- Disable italic for functions in Go
+          ["@function.go"] = { fg = colors.blue, style = {} },
+          ["@function.call"] = { fg = colors.blue, style = {} },
+          ["@function.builtin"] = { fg = colors.blue, style = {} },
           -- Thin transparent colorcolumn
           ColorColumn = { bg = colors.surface0 },
+          -- Whitespace characters (tab, trailing spaces, etc.)
+          SpecialKey = { fg = colors.surface2, style = {} },
         }
       end,
       default_integrations = true,
