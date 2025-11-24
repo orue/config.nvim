@@ -101,6 +101,33 @@ return {
         capabilities = capabilities,
       })
 
+      -- Go LSP (gopls)
+      vim.lsp.config('gopls', {
+        capabilities = capabilities,
+        settings = {
+          gopls = {
+            usePlaceholders = true,
+            completeUnimported = true,
+            staticcheck = true,
+            semanticTokens = true,
+            analyses = {
+              unusedparams = true,
+              shadow = true,
+            },
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+            gofumpt = true,
+          },
+        },
+      })
+
       -- C/C++ LSP (clangd)
       vim.lsp.config('clangd', {
         capabilities = capabilities,
@@ -221,6 +248,7 @@ return {
         cpp = { 'clangd' },
         objc = { 'clangd' },
         objcpp = { 'clangd' },
+        go = { 'gopls' },
         typescript = { 'ts_ls' },
         javascript = { 'ts_ls' },
         javascriptreact = { 'ts_ls', 'emmet_ls' },

@@ -92,6 +92,50 @@ return {
       -- C++ uses the same configuration as C
       dap.configurations.cpp = dap.configurations.c
 
+      -- Go DAP configuration (using Delve)
+      dap.adapters.go = {
+        type = 'executable',
+        command = 'dlv',
+        args = { 'dap' },
+      }
+
+      dap.configurations.go = {
+        {
+          type = 'go',
+          name = 'Attach',
+          mode = 'local',
+          request = 'attach',
+          processId = require('dap.utils').pick_process,
+          showLog = false,
+        },
+        {
+          type = 'go',
+          name = 'Debug',
+          mode = 'debug',
+          request = 'launch',
+          program = '${fileDirname}',
+          env = {},
+          args = {},
+        },
+        {
+          type = 'go',
+          name = 'Debug Package',
+          mode = 'debug',
+          request = 'launch',
+          program = '${workspaceFolder}',
+          env = {},
+          args = {},
+        },
+        {
+          type = 'go',
+          name = 'Debug Test',
+          mode = 'test',
+          request = 'launch',
+          program = '${workspaceFolder}',
+          args = {},
+        },
+      }
+
       dapui.setup()
       
       dap.listeners.before.attach.dapui_config = function()
