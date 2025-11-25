@@ -43,10 +43,24 @@ return {
           -- Disable italic for imported module/library names in Python
           ["@variable.member.python"] = { fg = colors.teal, style = {} },
           ["@module.python"] = { fg = colors.teal, style = {} },
-          -- Disable italic for functions in Go
+          -- Disable italic for all Go syntax except comments
           ["@function.go"] = { fg = colors.blue, style = {} },
-          ["@function.call"] = { fg = colors.blue, style = {} },
-          ["@function.builtin"] = { fg = colors.blue, style = {} },
+          ["@function.call.go"] = { fg = colors.blue, style = {} },
+          ["@function.builtin.go"] = { fg = colors.blue, style = {} },
+          ["@keyword.go"] = { style = {} },
+          ["@keyword.conditional.go"] = { style = {} },
+          ["@keyword.repeat.go"] = { style = {} },
+          ["@type.go"] = { style = {} },
+          ["@variable.go"] = { style = {} },
+          ["@property.go"] = { style = {} },
+          ["@string.go"] = { style = {} },
+          ["@number.go"] = { style = {} },
+          ["@boolean.go"] = { style = {} },
+          ["@operator.go"] = { style = {} },
+          ["@punctuation.go"] = { style = {} },
+          ["@constant.go"] = { style = {} },
+          ["@lsp.type.variable.go"] = { fg = colors.text, style = {} },
+          ["@lsp.type.parameter.go"] = { fg = colors.peach, style = {} },
           -- Thin transparent colorcolumn
           ColorColumn = { bg = colors.surface0 },
           -- Whitespace characters (tab, trailing spaces, etc.)
