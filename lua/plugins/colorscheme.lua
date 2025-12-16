@@ -61,6 +61,10 @@ return {
           ["@constant.go"] = { style = {} },
           ["@lsp.type.variable.go"] = { fg = colors.text, style = {} },
           ["@lsp.type.parameter.go"] = { fg = colors.peach, style = {} },
+          -- Disable italic for Go imports and packages
+          ["@module.go"] = { style = {} },
+          ["@module.builtin.go"] = { style = {} },
+          ["@lsp.type.namespace.go"] = { style = {} },
           -- Thin transparent colorcolumn
           ColorColumn = { bg = colors.surface0 },
           -- Whitespace characters (tab, trailing spaces, etc.)
