@@ -103,6 +103,9 @@ return {
 
       -- Go LSP (gopls)
       vim.lsp.config('gopls', {
+        cmd = { '/Users/orue/go/bin/gopls' },
+        filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+        root_markers = { 'go.mod', 'go.sum', '.git' },
         capabilities = capabilities,
         settings = {
           gopls = {
@@ -123,7 +126,6 @@ return {
               parameterNames = true,
               rangeVariableTypes = true,
             },
-            gofumpt = true,
           },
         },
       })
@@ -268,8 +270,36 @@ return {
         tf = { 'terraformls' },
       }
 
-      -- Track which servers have been enabled to avoid duplicate enables
-      local enabled_servers = {}
+      -- Server configurations for vim.lsp.start
+      local server_configs = {
+        gopls = {
+          cmd = { '/Users/orue/go/bin/gopls' },
+          filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+          root_markers = { 'go.mod', 'go.sum', '.git' },
+          capabilities = capabilities,
+          settings = {
+            gopls = {
+              usePlaceholders = true,
+              completeUnimported = true,
+              staticcheck = true,
+              semanticTokens = true,
+              analyses = {
+                unusedparams = true,
+                shadow = true,
+              },
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+            },
+          },
+        },
+      }
 
       vim.api.nvim_create_autocmd('FileType', {
         group = lsp_enable_group,
@@ -279,9 +309,10 @@ return {
 
           if servers then
             for _, server in ipairs(servers) do
-              if not enabled_servers[server] then
-                vim.lsp.enable(server)
-                enabled_servers[server] = true
+              if server == 'gopls' and server_configs[server] then
+                vim.lsp.start(server_configs[server], { bufnr = args.buf, reuse_client = function() return true end })
+              else
+                vim.lsp.enable(server, { bufnr = args.buf })
               end
             end
           end

@@ -8,7 +8,7 @@ return {
         command = "/opt/homebrew/bin/prettier",
       },
       goimports = {
-        command = "/opt/homebrew/bin/goimports",
+        command = "/Users/orue/go/bin/goimports",
         args = { "-w", "$FILENAME" },
         stdin = false,
       },
