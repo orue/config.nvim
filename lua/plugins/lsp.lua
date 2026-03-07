@@ -13,7 +13,6 @@ return {
       },
     },
     config = function()
-      -- Migrated to new vim.lsp.config API (Neovim 0.11+)
       local utils = require('config.utils')
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
@@ -23,22 +22,31 @@ return {
       })
 
       -- Python LSP (Pyright)
-      vim.lsp.config('pyright', {
-        capabilities = capabilities,
-        settings = {
-          pyright = {
-            disableOrganizeImports = true,
-          },
-          python = {
-            pythonPath = utils.get_python_path(),
-            analysis = {
-              typeCheckingMode = "basic",
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-              autoImportCompletions = true,
-            },
+      local pyright_settings = {
+        pyright = {
+          disableOrganizeImports = true,
+        },
+        python = {
+          pythonPath = utils.get_python_path(),
+          analysis = {
+            typeCheckingMode = "basic",
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            autoImportCompletions = true,
           },
         },
+      }
+
+      -- Add venv info so Pyright resolves venv packages
+      local venv_info = utils.get_venv_info()
+      if venv_info then
+        pyright_settings.python.venvPath = venv_info.venv_path
+        pyright_settings.python.venv = venv_info.venv_name
+      end
+
+      vim.lsp.config('pyright', {
+        capabilities = capabilities,
+        settings = pyright_settings,
       })
 
       -- Python LSP (Ruff)
@@ -238,11 +246,9 @@ return {
         filetypes = { 'html', 'css', 'scss', 'javascriptreact', 'typescriptreact', 'vue' },
       })
 
-      -- Enable LSP servers on-demand via FileType autocommands for performance
-      -- This prevents all 16 servers from starting at once, while still enabling them when needed
+      -- Enable LSP servers on-demand via FileType autocommands
       local lsp_enable_group = vim.api.nvim_create_augroup('lsp-enable', { clear = true })
 
-      -- Map filetypes to LSP servers
       local filetype_to_lsp = {
         lua = { 'lua_ls' },
         python = { 'pyright', 'ruff' },
@@ -251,6 +257,9 @@ return {
         objc = { 'clangd' },
         objcpp = { 'clangd' },
         go = { 'gopls' },
+        gomod = { 'gopls' },
+        gowork = { 'gopls' },
+        gotmpl = { 'gopls' },
         typescript = { 'ts_ls' },
         javascript = { 'ts_ls' },
         javascriptreact = { 'ts_ls', 'emmet_ls' },
@@ -270,50 +279,14 @@ return {
         tf = { 'terraformls' },
       }
 
-      -- Server configurations for vim.lsp.start
-      local server_configs = {
-        gopls = {
-          cmd = { '/Users/orue/go/bin/gopls' },
-          filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-          root_markers = { 'go.mod', 'go.sum', '.git' },
-          capabilities = capabilities,
-          settings = {
-            gopls = {
-              usePlaceholders = true,
-              completeUnimported = true,
-              staticcheck = true,
-              semanticTokens = true,
-              analyses = {
-                unusedparams = true,
-                shadow = true,
-              },
-              hints = {
-                assignVariableTypes = true,
-                compositeLiteralFields = true,
-                compositeLiteralTypes = true,
-                constantValues = true,
-                functionTypeParameters = true,
-                parameterNames = true,
-                rangeVariableTypes = true,
-              },
-            },
-          },
-        },
-      }
-
       vim.api.nvim_create_autocmd('FileType', {
         group = lsp_enable_group,
         callback = function(args)
           local ft = vim.bo[args.buf].filetype
           local servers = filetype_to_lsp[ft]
-
           if servers then
             for _, server in ipairs(servers) do
-              if server == 'gopls' and server_configs[server] then
-                vim.lsp.start(server_configs[server], { bufnr = args.buf, reuse_client = function() return true end })
-              else
-                vim.lsp.enable(server, { bufnr = args.buf })
-              end
+              vim.lsp.enable(server, { bufnr = args.buf })
             end
           end
         end,
@@ -327,7 +300,7 @@ return {
         vim.diagnostic.setloclist()
       end, { desc = "Workspace diagnostics" })
 
-      -- Create augroup for LSP autocommands to prevent duplicates
+      -- LSP attach: buffer-local keymaps + inlay hints
       local lsp_group = vim.api.nvim_create_augroup('lsp-attach', { clear = true })
 
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -336,27 +309,57 @@ return {
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           if not client then return end
 
-          -- Create buffer-specific augroup to prevent duplicate format-on-save
-          local bufgroup = vim.api.nvim_create_augroup('lsp-format-' .. args.buf, { clear = true })
+          local buf = args.buf
+          local map = function(mode, lhs, rhs, desc)
+            vim.keymap.set(mode, lhs, rhs, { buffer = buf, desc = desc })
+          end
 
-          if vim.bo.filetype == "lua" then
+          -- Core LSP keymaps (moved from keymaps.lua to be buffer-local)
+          map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+          map("n", "gr", vim.lsp.buf.references, "Go to references")
+          map("n", "K", vim.lsp.buf.hover, "Hover documentation")
+          map("n", "<leader>ca", vim.lsp.buf.code_action, "Code actions")
+          map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+
+          -- VS Code-like additional keymaps
+          map("n", "gD", vim.lsp.buf.type_definition, "Type definition")
+          map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+          map("n", "gO", vim.lsp.buf.document_symbol, "Document symbols")
+          map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, "Workspace symbols")
+          map("n", "gp", function()
+            vim.lsp.buf.definition({ on_list = function(options)
+              if #options.items == 0 then return end
+              local item = options.items[1]
+              local buf_id = vim.fn.bufadd(item.filename)
+              vim.fn.bufload(buf_id)
+              local lines = vim.api.nvim_buf_get_lines(buf_id, math.max(0, item.lnum - 6), item.lnum + 14, false)
+              vim.lsp.util.open_floating_preview(lines, 'lua', {
+                border = 'rounded',
+                title = vim.fn.fnamemodify(item.filename, ':t'),
+                title_pos = 'center',
+              })
+            end })
+          end, "Peek definition")
+
+          -- Inlay hints
+          if client:supports_method('textDocument/inlayHint') then
+            vim.lsp.inlay_hint.enable(true, { bufnr = buf })
+            map("n", "<leader>ih", function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }), { bufnr = buf })
+            end, "Toggle inlay hints")
+          end
+
+          -- Format-on-save for Lua (conform.nvim handles Python and JS/TS/Vue)
+          if vim.bo[buf].filetype == "lua" then
+            local bufgroup = vim.api.nvim_create_augroup('lsp-format-' .. buf, { clear = true })
             vim.api.nvim_create_autocmd('BufWritePre', {
               group = bufgroup,
-              buffer = args.buf,
+              buffer = buf,
               callback = function()
-                vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-              end,
-            })
-          elseif vim.bo.filetype == "python" and client.name == "ruff" then
-            vim.api.nvim_create_autocmd('BufWritePre', {
-              group = bufgroup,
-              buffer = args.buf,
-              callback = function()
-                vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+                vim.lsp.buf.format({ bufnr = buf, id = client.id })
               end,
             })
           end
-          -- Note: JavaScript/TypeScript/Vue formatting is handled by conform.nvim (formatter.lua)
         end,
       })
     end,

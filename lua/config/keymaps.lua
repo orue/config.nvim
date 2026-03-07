@@ -11,13 +11,6 @@ vim.keymap.set("n", "<space>-", "<cmd>Oil --float<CR>", { desc = "Open Parent Di
 -- Alpha Dashboard
 vim.keymap.set("n", "<leader>a", "<cmd>Alpha<CR>", { desc = "Open Dashboard" })
 
--- LSP keymaps
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Go to references" })
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
-vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
-
 -- Buffer navigation
 vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })

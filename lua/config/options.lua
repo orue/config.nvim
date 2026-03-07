@@ -73,5 +73,4 @@ opt.listchars = {
   nbsp = '␣',        -- Show non-breaking spaces
   extends = '⟩',     -- Show when line extends beyond screen
   precedes = '⟨',    -- Show when line precedes beyond screen
-  space = '·',       -- Show spaces
 }
