@@ -5,10 +5,10 @@ return {
   opts = {
     formatters = {
       prettier = {
-        command = "/opt/homebrew/bin/prettier",
+        command = vim.fn.exepath("prettier"),
       },
       goimports = {
-        command = "/Users/orue/go/bin/goimports",
+        command = vim.fn.exepath("goimports"),
         args = { "-w", "$FILENAME" },
         stdin = false,
       },

@@ -71,7 +71,7 @@ return {
       -- C/C++ DAP configuration (using lldb)
       dap.adapters.lldb = {
         type = 'executable',
-        command = '/usr/bin/lldb-dap', -- Default macOS path, adjust if needed
+        command = vim.fn.exepath('lldb-dap') ~= '' and vim.fn.exepath('lldb-dap') or '/usr/bin/lldb-dap',
         name = 'lldb'
       }
 

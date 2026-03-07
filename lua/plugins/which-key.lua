@@ -12,6 +12,8 @@ return {
       { "<leader>b", group = "Buffer" },
       { "<leader>w", group = "Workspace" },
       { "<leader>g", group = "Git" },
+      { "<leader>i", group = "Inlay Hints" },
+      { "<leader>n", group = "Neogen" },
     },
   },
   keys = {

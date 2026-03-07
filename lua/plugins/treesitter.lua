@@ -29,7 +29,10 @@ return {
           "python",
           "toml",
           "hcl",
-          "terraform"
+          "terraform",
+          "go",
+          "gomod",
+          "gowork"
         },
         auto_install = false,
         highlight = {

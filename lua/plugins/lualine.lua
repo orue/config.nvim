@@ -28,6 +28,26 @@ return {
         lualine_x = {
           {
             function()
+              local reg = vim.fn.reg_recording()
+              if reg ~= "" then
+                return "recording @" .. reg
+              end
+              return ""
+            end,
+            color = { fg = colors.red },
+          },
+          {
+            function()
+              if vim.bo.filetype == "markdown" then
+                local wc = vim.fn.wordcount()
+                return wc.words .. " words"
+              end
+              return ""
+            end,
+            color = { fg = colors.lavender },
+          },
+          {
+            function()
               if vim.bo.filetype == "python" and utils.has_venv() then
                 return "(.venv)"
               end
@@ -36,9 +56,21 @@ return {
             color = { fg = colors.teal }
           },
           {
+            function()
+              local clients = vim.lsp.get_clients({ bufnr = 0 })
+              if #clients == 0 then return "" end
+              local names = {}
+              for _, client in ipairs(clients) do
+                table.insert(names, client.name)
+              end
+              return " " .. table.concat(names, ", ")
+            end,
+            color = { fg = colors.subtext0 },
+          },
+          {
             "filetype",
-            icon_only = false, -- Show both icon and filetype name
-            colored = true,    -- Color the icon based on filetype
+            icon_only = false,
+            colored = true,
             icon = { align = "left" }
           },
           "encoding",

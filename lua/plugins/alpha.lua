@@ -23,7 +23,7 @@ return {
     -- Cache for recent projects (memoization)
     local recent_projects_cache = nil
     local cache_timestamp = 0
-    local cache_ttl = 300  -- 5 minutes in seconds
+    local cache_ttl = 60  -- 1 minute in seconds
 
     -- Function to get recent directories with caching
     local function get_recent_projects()
