@@ -201,6 +201,7 @@ return {
           enabled = true,
         },
         which_key = true,
+        bufferline = true,
       },
     })
 
