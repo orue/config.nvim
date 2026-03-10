@@ -9,7 +9,7 @@ vim.keymap.set("v", "<space>x", ":lua<CR>")
 vim.keymap.set("n", "<space>-", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory in Oil" })
 
 -- Alpha Dashboard
-vim.keymap.set("n", "<leader>a", "<cmd>Alpha<CR>", { desc = "Open Dashboard" })
+vim.keymap.set("n", "<leader>A", "<cmd>Alpha<CR>", { desc = "Open Dashboard" })
 
 -- Buffer navigation
 vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
