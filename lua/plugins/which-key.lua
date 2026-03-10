@@ -14,6 +14,7 @@ return {
       { "<leader>g", group = "Git" },
       { "<leader>i", group = "Inlay Hints" },
       { "<leader>n", group = "Neogen" },
+      { "<leader>a", group = "AI/Claude Code" },
     },
   },
   keys = {

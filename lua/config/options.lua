@@ -34,6 +34,7 @@ opt.splitbelow = true -- split horizontal window to the bottom
 -- Python-friendly settings
 opt.updatetime = 250
 opt.timeoutlen = 300
+opt.autoread = true
 
 -- Colorcolumn
 opt.colorcolumn = "120"
