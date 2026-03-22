@@ -29,7 +29,7 @@ return {
     terminal_cmd = "/Users/orue/.local/bin/claude",
     terminal = {
       provider = "native",
-      split_side = "right",
+      split_side = "left",
       split_width_percentage = 0.35,
     },
     auto_start = true,
