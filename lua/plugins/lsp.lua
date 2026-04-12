@@ -59,7 +59,7 @@ return {
             },
           }
         },
-        on_attach = function(client, bufnr)
+        on_attach = function(client)
           client.server_capabilities.hoverProvider = false
         end,
       })
@@ -77,7 +77,7 @@ return {
       -- TOML LSP
       vim.lsp.config('taplo', {
         capabilities = capabilities,
-        cmd = { '/opt/homebrew/bin/taplo', 'lsp', 'stdio' },
+        cmd = { vim.fn.exepath('taplo') or 'taplo', 'lsp', 'stdio' },
       })
 
       -- YAML LSP (GitHub Actions, Kubernetes, Docker Compose)
@@ -111,7 +111,7 @@ return {
 
       -- Go LSP (gopls)
       vim.lsp.config('gopls', {
-        cmd = { '/Users/orue/go/bin/gopls' },
+        cmd = { vim.fn.exepath('gopls') or 'gopls' },
         filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
         root_markers = { 'go.mod', 'go.sum', '.git' },
         capabilities = capabilities,

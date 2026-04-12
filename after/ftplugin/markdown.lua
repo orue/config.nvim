@@ -1,5 +1,12 @@
 -- Markdown-specific configuration
 
+-- Neovim 0.12's built-in ftplugin/markdown.lua calls vim.treesitter.start(),
+-- which triggers a conceal_line bug (nil node:range() call). Stop it
+-- synchronously here — after/ftplugin runs after the built-in ftplugin,
+-- so the highlighter is already registered and we can deregister it
+-- before the first screen render.
+vim.treesitter.stop(vim.api.nvim_get_current_buf())
+
 -- Enhance markdown colors for Catppuccin Mocha
 local colors = require("catppuccin.palettes").get_palette("mocha")
 
