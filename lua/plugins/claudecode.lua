@@ -25,8 +25,7 @@ return {
     { "<leader>at", "<cmd>ClaudeCodeTreeAdd<cr>",     desc = "Add file from tree", ft = "oil" },
   },
   opts = {
-    -- Explicit path: claude is installed at ~/.local/bin/claude
-    terminal_cmd = "/Users/orue/.local/bin/claude",
+    terminal_cmd = vim.fn.expand("~/.local/bin/claude"),
     terminal = {
       provider = "native",
       split_side = "left",
