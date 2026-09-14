@@ -124,6 +124,7 @@ print_info "Installing global npm packages"
 echo ""
 
 NPM_PACKAGES=(
+    "typescript"
     "emmet-ls"
 )
 
@@ -147,6 +148,7 @@ LSP_SERVERS=(
     "pyright:pyright-langserver"
     "ruff:ruff"
     "typescript-language-server:typescript-language-server"
+    "typescript:tsc"
     "vscode-html-language-server:vscode-langservers-extracted"
     "emmet-ls:emmet-ls"
     "prettier:prettier"
