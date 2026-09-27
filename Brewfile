@@ -34,6 +34,7 @@ brew "lazygit"           # Terminal UI for git
 
 # Build Tools
 brew "make"              # Build automation
+brew "tree-sitter-cli"   # Required by nvim-treesitter (main branch) to compile parsers
 
 # ============================================================
 # NPM-based Language Servers (Not Managed by Homebrew)

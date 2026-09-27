@@ -65,9 +65,11 @@ Pyright handles type checking and IntelliSense. Ruff handles linting and formatt
 
 Set per-language local options (indent, textwidth, colorcolumn) and buffer-local keymaps (format, organize imports). These run before LSP attaches and do not conflict with plugin configs.
 
-### Treesitter workaround
+### Treesitter (lua/plugins/treesitter.lua)
 
-Neovim 0.12's built-in `$VIMRUNTIME/ftplugin/markdown.lua` calls `vim.treesitter.start()`, which triggers a `conceal_line` crash (nil node). The fix is in `after/ftplugin/markdown.lua`: it calls `vim.treesitter.stop()` synchronously after the built-in ftplugin runs. The nvim-treesitter plugin also disables its highlighter for markdown and falls back to regex highlighting.
+`nvim-treesitter` is pinned to its `main` branch (the `master` branch is archived and incompatible with Neovim 0.12's changed query/predicate API -- it crashes with `attempt to call method 'range' (a nil value)` while editing). The `main` branch only installs parsers/queries; highlighting is native Neovim (`vim.treesitter.start()`), wired up by a `FileType` autocmd in `treesitter.lua` that skips oversized files and markdown (handled separately below). Requires the `tree-sitter-cli` Homebrew formula to compile parsers (see Brewfile) -- the plain `tree-sitter` formula is just the runtime library and isn't enough.
+
+Neovim 0.12's built-in `$VIMRUNTIME/ftplugin/markdown.lua` calls `vim.treesitter.start()`, which triggers a `conceal_line` crash (nil node). The fix is in `after/ftplugin/markdown.lua`: it calls `vim.treesitter.stop()` synchronously after the built-in ftplugin runs. The `FileType` autocmd in `treesitter.lua` also skips starting the highlighter for markdown, since the built-in ftplugin already handles (and then this stops) it.
 
 ## Conventions
 
