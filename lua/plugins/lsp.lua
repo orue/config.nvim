@@ -182,7 +182,8 @@ return {
       })
 
       -- Diagnostic keymaps ([d / ]d / [D / ]D are Neovim defaults)
-      vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })
+      -- <leader>cd, not <leader>d: <leader>d is the debug prefix, so a bare <leader>d had to wait out timeoutlen
+      vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line diagnostics" })
       vim.keymap.set("n", "<leader>wd", function()
         vim.diagnostic.setqflist()
       end, { desc = "Workspace diagnostics" })
@@ -203,7 +204,7 @@ return {
 
           -- Core LSP keymaps (moved from keymaps.lua to be buffer-local)
           map("n", "gd", vim.lsp.buf.definition, "Go to definition")
-          map("n", "gr", vim.lsp.buf.references, "Go to references")
+          -- References: Neovim's built-in grr (no custom gr, which would delay grr/grn/gra/gri/grt)
           map("n", "K", vim.lsp.buf.hover, "Hover documentation")
           map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "Code actions")
           map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")

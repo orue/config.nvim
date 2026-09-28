@@ -26,7 +26,7 @@
 | `Alt+↑` / `Alt+↓` | `Alt+k` / `Alt+j` | Move line up / down |
 | `F12` | `gd` | Go to definition |
 | `Alt+F12` | `gp` | Peek definition |
-| `Shift+F12` | `gr` | Find references |
+| `Shift+F12` | `grr` | Find references |
 | `F2` | `Space rn` | Rename symbol |
 | `Ctrl+.` | `Space ca` | Quick fix / code actions |
 | hover mouse | `K` | Show documentation |

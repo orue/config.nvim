@@ -93,7 +93,7 @@ Available in any buffer with a language server attached.
 |-----|--------|
 | `gd` | Go to definition |
 | `gp` | Peek definition (floating preview) |
-| `gr` | References |
+| `grr` | References (Neovim built-in; also `grn` rename, `gra` code action, `gri` implementation, `grt` type definition) |
 | `gi` | Implementation |
 | `gD` | Type definition |
 | `gO` | Document symbols |
@@ -108,7 +108,7 @@ Available in any buffer with a language server attached.
 
 | Key | Action |
 |-----|--------|
-| `Space d` | Line diagnostics (float) |
+| `Space cd` | Line diagnostics (float); `Ctrl+w d` also works |
 | `[d` / `]d` | Previous / next diagnostic |
 | `[D` / `]D` | First / last diagnostic |
 | `Space wd` | All diagnostics in the quickfix list |
@@ -286,7 +286,7 @@ Open a test file, run the nearest test (`Space tt`) or the whole file (`Space tf
 Edit files, navigate hunks (`]h` / `[h`), stage (`Space hs`), open LazyGit (`Space gg`) to commit and push.
 
 **Refactoring:**
-Rename (`Space rn`), check references (`gr`), apply code actions (`Space ca`), jump to definition (`gd`).
+Rename (`Space rn`), check references (`grr`), apply code actions (`Space ca`), jump to definition (`gd`).
 
 ## Troubleshooting
 

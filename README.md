@@ -157,7 +157,7 @@ Most used:
 | `Space -` | File explorer |
 | `Space fd` / `Space fg` | Find files / grep across files |
 | `Space gg` | LazyGit |
-| `gd` / `gr` / `K` | Definition / references / hover docs |
+| `gd` / `grr` / `K` | Definition / references / hover docs |
 | `Space ca` / `Space rn` | Code actions / rename |
 | `Space ac` | Toggle Claude Code |
 
