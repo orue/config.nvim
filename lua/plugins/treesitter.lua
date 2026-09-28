@@ -9,23 +9,28 @@ return {
         "json",
         "javascript",
         "typescript",
+        "jsdoc",
+        "regex",
         "tsx",
         "yaml",
         "html",
         "css",
-        "prisma",
+        "scss",
         "markdown",
         "markdown_inline",
-        "svelte",
         "graphql",
         "bash",
         "lua",
+        "luadoc",
         "vim",
         "dockerfile",
         "gitignore",
+        "gitcommit",
+        "diff",
         "query",
         "vimdoc",
         "c",
+        "cpp",
         "python",
         "toml",
         "hcl",
@@ -51,7 +56,7 @@ return {
           local bufnr = args.buf
           local lang = vim.treesitter.language.get_lang(vim.bo[bufnr].filetype)
           if not lang or lang == "markdown" then
-            -- Markdown highlighting is handled in after/ftplugin/markdown.lua
+            -- Neovim's built-in markdown ftplugin already starts the highlighter
             return
           end
 

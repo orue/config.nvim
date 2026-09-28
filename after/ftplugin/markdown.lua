@@ -1,12 +1,6 @@
 -- Markdown-specific configuration
--- (Markdown highlight colors live in lua/plugins/colorscheme.lua)
-
--- Neovim 0.12's built-in ftplugin/markdown.lua calls vim.treesitter.start(),
--- which triggers a conceal_line bug (nil node:range() call). Stop it
--- synchronously here — after/ftplugin runs after the built-in ftplugin,
--- so the highlighter is already registered and we can deregister it
--- before the first screen render.
-vim.treesitter.stop(vim.api.nvim_get_current_buf())
+-- (Markdown highlight colors live in lua/plugins/colorscheme.lua; Treesitter
+-- highlighting is started by Neovim's built-in markdown ftplugin)
 
 -- Better line breaking for markdown
 vim.opt_local.linebreak = true

@@ -76,7 +76,7 @@ Set per-language local options and buffer-local keymaps through `lua/config/lang
 
 `nvim-treesitter` is pinned to its `main` branch (the `master` branch is archived and incompatible with Neovim 0.12's changed query/predicate API -- it crashes with `attempt to call method 'range' (a nil value)` while editing). The `main` branch only installs parsers/queries; highlighting is native Neovim (`vim.treesitter.start()`), wired up by a `FileType` autocmd in `treesitter.lua` that skips oversized files and markdown (handled separately below). Requires the `tree-sitter-cli` Homebrew formula to compile parsers (see Brewfile) -- the plain `tree-sitter` formula is just the runtime library and isn't enough.
 
-Neovim 0.12's built-in `$VIMRUNTIME/ftplugin/markdown.lua` calls `vim.treesitter.start()`, which triggers a `conceal_line` crash (nil node). The fix is in `after/ftplugin/markdown.lua`: it calls `vim.treesitter.stop()` synchronously after the built-in ftplugin runs. The `FileType` autocmd in `treesitter.lua` also skips starting the highlighter for markdown, since the built-in ftplugin already handles (and then this stops) it.
+Markdown: Neovim's built-in `$VIMRUNTIME/ftplugin/markdown.lua` starts the Treesitter highlighter itself, so the `FileType` autocmd in `treesitter.lua` skips markdown. (An earlier `conceal_line` crash, "attempt to call method 'range'", came from the archived `master` branch queries; a 300-edit stress test on Neovim 0.12.5 with the `main` branch no longer reproduces it, so the old `vim.treesitter.stop()` workaround was removed. If it returns, restore that call in `after/ftplugin/markdown.lua`.)
 
 ## Conventions
 

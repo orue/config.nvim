@@ -1,6 +1,6 @@
 return {
   'nvim-telescope/telescope.nvim',
-  tag = '0.1.8',
+  version = '*', -- latest release (was pinned to 0.1.8, which calls APIs deprecated in Nvim 0.12)
   cmd = 'Telescope',
   keys = {
     { "<leader>fd", function() require('telescope.builtin').find_files() end, desc = "Find files" },

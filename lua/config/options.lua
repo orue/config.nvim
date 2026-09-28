@@ -56,7 +56,7 @@ vim.diagnostic.config({
     spacing = 4,
   },
   float = {
-    source = "always",
+    source = true,
     border = "rounded",
     header = "",
     prefix = "",

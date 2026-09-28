@@ -141,7 +141,7 @@ return {
           TabLineFill = { bg = colors.surface0 },
           TabLineSel = { bg = colors.surface1, fg = colors.text, style = { "bold" } },
 
-          -- Markdown (Treesitter captures; used in LSP hover/docs floats)
+          -- Markdown (Treesitter captures: markdown buffers and LSP hover/docs floats)
           ["@markup.heading.1.markdown"] = { fg = colors.red, style = { "bold" } },
           ["@markup.heading.2.markdown"] = { fg = colors.peach, style = { "bold" } },
           ["@markup.heading.3.markdown"] = { fg = colors.pink, style = { "bold" } },

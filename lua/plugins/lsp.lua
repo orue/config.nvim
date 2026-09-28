@@ -181,10 +181,8 @@ return {
         'terraformls',
       })
 
-      -- Diagnostic keymaps
+      -- Diagnostic keymaps ([d / ]d / [D / ]D are Neovim defaults)
       vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line diagnostics" })
-      vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic" })
-      vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next diagnostic" })
       vim.keymap.set("n", "<leader>wd", function()
         vim.diagnostic.setqflist()
       end, { desc = "Workspace diagnostics" })
