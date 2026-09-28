@@ -65,7 +65,14 @@ return {
             return
           end
 
-          pcall(vim.treesitter.start, bufnr, lang)
+          if pcall(vim.treesitter.start, bufnr, lang) then
+            -- Fold by syntax (za toggles, zR opens all, zM closes all)
+            local win = vim.fn.bufwinid(bufnr)
+            if win ~= -1 then
+              vim.wo[win][0].foldmethod = "expr"
+              vim.wo[win][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            end
+          end
         end,
       })
     end,

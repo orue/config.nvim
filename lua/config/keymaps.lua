@@ -5,6 +5,9 @@ vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Source c
 vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Run line as Lua" })
 vim.keymap.set("x", "<leader>x", ":lua<CR>", { desc = "Run selection as Lua" })
 
+-- Clear search highlighting
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR><Esc>", { desc = "Clear search highlight" })
+
 -- Oil
 vim.keymap.set("n", "<leader>-", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory in Oil" })
 

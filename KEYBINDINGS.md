@@ -40,6 +40,8 @@
 | `F10` / `F11` | `Space ds` / `Space di` | Step over / into |
 | `Ctrl+Shift+G` | `Space gg` | Source control (LazyGit) |
 | `Ctrl+Shift+P` | `:` | Command palette (Ex commands) |
+| `Ctrl+Shift+[` / `]` | `zc` / `zo` | Fold / unfold (`za` toggles) |
+| `Ctrl+H` (replace) | `:%s/old/new/g` | Replace in file, with a live preview |
 
 ---
 
@@ -97,6 +99,8 @@
 | `viw` | Select word |
 | `vi"` | Select inside quotes |
 | `vib` | Select inside brackets |
+| `vaf` / `vif` | Select a function / its body |
+| `vac` / `vaa` | Select a class / an argument |
 | `>` / `<` | Indent / outdent (stays selected) |
 
 ### Surround

@@ -14,6 +14,8 @@ New to Vim coming from VS Code? Start with [KEYBINDINGS.md](KEYBINDINGS.md).
 | `Space Space x` | Source current file |
 | `Space x` | Run current line as Lua (visual: selection) |
 | `Ctrl+\` | Toggle floating terminal |
+| `Esc Esc` | Leave terminal mode in the floating terminal (scroll and copy with Normal-mode keys) |
+| `Esc` | Clear search highlighting |
 
 ## Buffers
 
@@ -48,6 +50,34 @@ New to Vim coming from VS Code? Start with [KEYBINDINGS.md](KEYBINDINGS.md).
 | `S{char}` | Visual | Surround selection |
 
 Auto-pairs close brackets and quotes as you type; HTML/JSX/TSX tags auto-close and auto-rename.
+
+### Code text objects
+
+Use these after an operator (`d`, `c`, `y`, `v`) like `iw` or `ip`:
+
+| Key | Selects |
+|-----|---------|
+| `af` / `if` | A whole function / its body (`daf` deletes a function, `cif` rewrites its body) |
+| `ac` / `ic` | A whole class / its body |
+| `aa` / `ia` | An argument with / without its comma |
+| `]f` / `[f` | Jump to the next / previous function (`Ctrl+o` jumps back) |
+
+### Folding
+
+Code folds by syntax (functions, classes, blocks). Everything starts unfolded.
+
+| Key | Action |
+|-----|--------|
+| `za` | Toggle the fold under the cursor |
+| `zM` / `zR` | Close / open all folds |
+| `zc` / `zo` | Close / open one fold |
+
+### Editor behavior
+
+- Undo history is kept after you close a file: reopen it and `u` still works.
+- `:q` with unsaved changes asks whether to save instead of showing an error.
+- `:%s/old/new/g` previews every replacement live, in a split, as you type.
+- Wrapped lines keep their indentation.
 
 ## Navigation (Flash)
 
@@ -109,7 +139,7 @@ Available in any buffer with a language server attached.
 | Key | Action |
 |-----|--------|
 | `Space cd` | Line diagnostics (float); `Ctrl+w d` also works |
-| `[d` / `]d` | Previous / next diagnostic |
+| `[d` / `]d` | Previous / next diagnostic (shows its message) |
 | `[D` / `]D` | First / last diagnostic |
 | `Space wd` | All diagnostics in the quickfix list |
 

@@ -20,6 +20,17 @@ opt.relativenumber = true
 
 opt.shiftwidth = 2
 opt.wrap = true
+opt.breakindent = true -- wrapped lines keep their indentation
+
+opt.undofile = true        -- undo history survives closing the file
+opt.confirm = true         -- :q with unsaved changes asks to save instead of erroring
+opt.inccommand = "split"   -- live preview of :s substitutions
+
+-- Folding: Treesitter folds are enabled per buffer in lua/plugins/treesitter.lua;
+-- everything starts unfolded, fold text keeps syntax colors
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldtext = ""
 -- Deferred: clipboard provider detection shouldn't block startup
 vim.schedule(function()
   opt.clipboard = "unnamedplus"
@@ -72,6 +83,12 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
   severity_sort = true,
+  -- ]d / [d show the full message at the new position
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
+    end,
+  },
 })
 
 -- Render whitespace settings

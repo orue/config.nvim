@@ -117,7 +117,8 @@ pip install debugpy pytest
 | Plugin | Purpose |
 |--------|---------|
 | [catppuccin/nvim](https://github.com/catppuccin/nvim) | Colorscheme (Macchiato) |
-| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Parsers for syntax highlighting (`main` branch) |
+| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Parsers for syntax highlighting and folding (`main` branch) |
+| [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) | Function, class and argument text objects (`main` branch) |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | Language server defaults |
 | [lazydev.nvim](https://github.com/folke/lazydev.nvim) | Neovim Lua API types |
 | [blink.cmp](https://github.com/Saghen/blink.cmp) | Completion and signature help |
