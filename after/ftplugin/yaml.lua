@@ -1,7 +1,2 @@
-local set = vim.opt_local
-
--- YAML uses 2 spaces for indentation by convention
-set.expandtab = true
-set.tabstop = 2
-set.shiftwidth = 2
-set.softtabstop = 2
+-- YAML: 2-space indent by convention
+require("config.lang").setup_buffer({ indent = 2 })

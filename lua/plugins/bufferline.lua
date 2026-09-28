@@ -30,6 +30,11 @@ return {
       tab_size = 22,
     },
   },
+  config = function(_, opts)
+    -- Catppuccin themes bufferline through this helper, not an `integrations` entry
+    opts.highlights = require("catppuccin.special.bufferline").get_theme()
+    require("bufferline").setup(opts)
+  end,
   keys = {
     { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous buffer" },
     { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },

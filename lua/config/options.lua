@@ -9,6 +9,9 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 
+-- Neovim maps *.tf to "tf" (TinyFugue); here .tf is always Terraform
+vim.filetype.add({ extension = { tf = "terraform" } })
+
 local opt = vim.opt
 
 -- Line number
@@ -23,6 +26,8 @@ vim.schedule(function()
 end)
 
 opt.cursorline = true
+-- Explicit on purpose: auto-detection can fail (tmux, light terminals) and
+-- would switch catppuccin away from Macchiato
 opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
@@ -34,9 +39,6 @@ opt.showmode = false
 opt.ignorecase = true
 opt.smartcase = true
 
--- backspace
-opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
-
 -- split windows
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
@@ -44,7 +46,6 @@ opt.splitbelow = true -- split horizontal window to the bottom
 -- Python-friendly settings
 opt.updatetime = 250
 opt.timeoutlen = 300
-opt.autoread = true
 
 -- Colorcolumn
 opt.colorcolumn = "120"
@@ -53,9 +54,6 @@ vim.diagnostic.config({
   virtual_text = {
     prefix = '●',
     spacing = 4,
-    format = function(diagnostic)
-      return string.format("%s", diagnostic.message)
-    end,
   },
   float = {
     source = "always",

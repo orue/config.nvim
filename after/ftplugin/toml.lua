@@ -1,8 +1,2 @@
-local set = vim.opt_local
-
--- TOML formatting settings
--- TOML typically uses 2 spaces for indentation
-set.expandtab = true
-set.tabstop = 2
-set.shiftwidth = 2
-set.softtabstop = 2
+-- TOML: 2-space indent
+require("config.lang").setup_buffer({ indent = 2 })

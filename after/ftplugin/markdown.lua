@@ -1,4 +1,5 @@
 -- Markdown-specific configuration
+-- (Markdown highlight colors live in lua/plugins/colorscheme.lua)
 
 -- Neovim 0.12's built-in ftplugin/markdown.lua calls vim.treesitter.start(),
 -- which triggers a conceal_line bug (nil node:range() call). Stop it
@@ -7,29 +8,6 @@
 -- before the first screen render.
 vim.treesitter.stop(vim.api.nvim_get_current_buf())
 
--- Enhance markdown colors for Catppuccin Mocha
-local colors = require("catppuccin.palettes").get_palette("mocha")
-
--- Headings with distinct colors
-vim.api.nvim_set_hl(0, "@markup.heading.1.markdown", { fg = colors.red, bold = true })
-vim.api.nvim_set_hl(0, "@markup.heading.2.markdown", { fg = colors.peach, bold = true })
-vim.api.nvim_set_hl(0, "@markup.heading.3.markdown", { fg = colors.pink, bold = true })
-vim.api.nvim_set_hl(0, "@markup.heading.4.markdown", { fg = colors.green, bold = true })
-vim.api.nvim_set_hl(0, "@markup.heading.5.markdown", { fg = colors.teal, bold = true })
-vim.api.nvim_set_hl(0, "@markup.heading.6.markdown", { fg = colors.mauve, bold = true })
-
--- Make code blocks stand out
-vim.api.nvim_set_hl(0, "@markup.raw.block.markdown", { bg = colors.surface0, fg = colors.text })
-vim.api.nvim_set_hl(0, "@markup.raw.markdown_inline", { bg = colors.surface0, fg = colors.pink })
-
--- Emphasize bold/italic
-vim.api.nvim_set_hl(0, "@markup.strong.markdown_inline", { fg = colors.mauve, bold = true })
-vim.api.nvim_set_hl(0, "@markup.italic.markdown_inline", { fg = colors.teal, italic = true })
-
--- Links
-vim.api.nvim_set_hl(0, "@markup.link.markdown_inline", { fg = colors.sapphire, underline = true })
-vim.api.nvim_set_hl(0, "@markup.link.label.markdown_inline", { fg = colors.teal })
-
 -- Better line breaking for markdown
 vim.opt_local.linebreak = true
 vim.opt_local.conceallevel = 2  -- Hide markup for cleaner view
@@ -37,7 +15,8 @@ vim.opt_local.spell = true       -- Enable spell check
 vim.opt_local.textwidth = 80     -- Wrap at 80 characters
 
 -- Markdown-specific keybindings
+-- `e` flag: no error on lines without a checkbox; keeppatterns: leave search history alone
 local map = vim.keymap.set
 map("n", "<leader>mt", "i- [ ] ", { buffer = true, desc = "Insert TODO checkbox" })
-map("n", "<leader>mc", "<cmd>s/- \\[ \\]/- [x]/<cr>", { buffer = true, desc = "Check TODO" })
-map("n", "<leader>mu", "<cmd>s/- \\[x\\]/- [ ]/<cr>", { buffer = true, desc = "Uncheck TODO" })
+map("n", "<leader>mc", "<cmd>keeppatterns s/- \\[ \\]/- [x]/e<cr>", { buffer = true, desc = "Check TODO" })
+map("n", "<leader>mu", "<cmd>keeppatterns s/- \\[x\\]/- [ ]/e<cr>", { buffer = true, desc = "Uncheck TODO" })

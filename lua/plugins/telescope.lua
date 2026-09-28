@@ -11,7 +11,7 @@ return {
     { "<leader>fo", function() require('telescope.builtin').oldfiles() end, desc = "Recent files" },
     { "<leader>en", function() require('telescope.builtin').find_files({ cwd = vim.fn.stdpath("config") }) end, desc = "Edit neovim config" },
     -- Multi-grep with custom picker
-    { "<leader>fg", function() require("plugins.telescope.multigrep").live_multigrep() end, desc = "Multi grep" },
+    { "<leader>fg", function() require("config.multigrep").live_multigrep() end, desc = "Multi grep" },
   },
   dependencies = {
     'nvim-lua/plenary.nvim',

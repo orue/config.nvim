@@ -1,13 +1,4 @@
-local set = vim.opt_local
+-- Dockerfile: 4-space indent, 120-char ruler (long RUN commands)
+require("config.lang").setup_buffer({ indent = 4, width = 120 })
 
--- Dockerfile formatting settings
--- Dockerfiles typically use 4 spaces or tabs for indentation
-set.expandtab = true
-set.tabstop = 4
-set.shiftwidth = 4
-set.softtabstop = 4
-
--- Useful for long RUN commands
-set.textwidth = 120
-set.formatoptions:remove("t") -- wrap comments only, never code
-set.colorcolumn = "120"
+-- Note: <leader>rf formatting is handled by conform.nvim (see lua/plugins/formatter.lua)

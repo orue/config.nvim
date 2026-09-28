@@ -15,6 +15,8 @@ return {
       { "<leader>i", group = "Inlay Hints" },
       { "<leader>n", group = "Neogen" },
       { "<leader>a", group = "AI/Claude Code" },
+      { "<leader>m", group = "Markdown" },
+      { "<leader>e", group = "Edit config" },
     },
   },
   keys = {

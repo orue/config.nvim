@@ -1,12 +1,12 @@
 -- set leader key to space
 vim.g.mapleader = " "
 
-vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
-vim.keymap.set("n", "<space>x", ":.lua<CR>")
-vim.keymap.set("v", "<space>x", ":lua<CR>")
+vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Source current file" })
+vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Run line as Lua" })
+vim.keymap.set("x", "<leader>x", ":lua<CR>", { desc = "Run selection as Lua" })
 
 -- Oil
-vim.keymap.set("n", "<space>-", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory in Oil" })
+vim.keymap.set("n", "<leader>-", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory in Oil" })
 
 -- Alpha Dashboard
 vim.keymap.set("n", "<leader>A", "<cmd>Alpha<CR>", { desc = "Open Dashboard" })
@@ -23,24 +23,13 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
 -- Better indenting
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
-vim.keymap.set("v", "<Left>", "<gv", { desc = "Indent left" })
-vim.keymap.set("v", "<Right>", ">gv", { desc = "Indent right" })
+vim.keymap.set("x", "<", "<gv", { desc = "Indent left" })
+vim.keymap.set("x", ">", ">gv", { desc = "Indent right" })
+vim.keymap.set("x", "<Left>", "<gv", { desc = "Indent left" })
+vim.keymap.set("x", "<Right>", ">gv", { desc = "Indent right" })
 
 -- Move lines
 vim.keymap.set("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 vim.keymap.set("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
-vim.keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move line down" })
-vim.keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move line up" })
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd("TextYankPost", {
-  desc = "Highlight when yanking (copying) text",
-  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
+vim.keymap.set("x", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move line down" })
+vim.keymap.set("x", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move line up" })

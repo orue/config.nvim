@@ -46,6 +46,7 @@ return {
       -- while editing. Enable highlighting directly via Neovim's native
       -- vim.treesitter.start(), which the `main` branch queries support.
       vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
         callback = function(args)
           local bufnr = args.buf
           local lang = vim.treesitter.language.get_lang(vim.bo[bufnr].filetype)

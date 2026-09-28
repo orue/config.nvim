@@ -25,7 +25,7 @@ return {
     { "<leader>at", "<cmd>ClaudeCodeTreeAdd<cr>",     desc = "Add file from tree", ft = "oil" },
   },
   opts = {
-    terminal_cmd = vim.fn.expand("~/.local/bin/claude"),
+    terminal_cmd = vim.fn.exepath("claude") ~= "" and vim.fn.exepath("claude") or vim.fn.expand("~/.local/bin/claude"),
     terminal = {
       provider = "native",
       split_side = "left",
@@ -40,15 +40,5 @@ return {
       open_in_current_tab = true,
     },
   },
-  config = function(_, opts)
-    require("claudecode").setup(opts)
-
-    -- Auto-reload buffers when Claude edits files externally
-    local group = vim.api.nvim_create_augroup("ClaudeCodeAutoReload", { clear = true })
-    vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
-      group = group,
-      pattern = "*",
-      command = "silent! checktime",
-    })
-  end,
+  -- Buffers edited by Claude are reloaded by the checktime autocmd in lua/config/autocmds.lua
 }

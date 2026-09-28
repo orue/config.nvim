@@ -95,7 +95,7 @@ return {
     -- Set menu with wider layout
     dashboard.section.buttons.val = {
       dashboard.button("e", "  New file                     ", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("n", "  New project                  ", ":lua require('alpha_custom').create_new_project()<CR>"),
+      dashboard.button("n", "  New project                  ", ":lua require('config.new_project').create_new_project()<CR>"),
       dashboard.button("f", "  Find file                    ", ":Telescope find_files <CR>"),
       dashboard.button("r", "  Recent files                 ", ":Telescope oldfiles <CR>"),
       dashboard.button("g", "  Find text                    ", ":Telescope live_grep <CR>"),

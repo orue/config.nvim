@@ -1,6 +1,6 @@
 # Neovim Configuration
 
-A Neovim setup with LSP, debugging, testing, and a clean UI. Built on lazy.nvim with Catppuccin Mocha.
+A Neovim setup with LSP, debugging, testing, and a clean UI. Built on lazy.nvim with Catppuccin Macchiato.
 
 ![cover](./img/cover.png)
 

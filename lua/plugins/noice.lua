@@ -7,7 +7,8 @@ return {
       "rcarriga/nvim-notify",
       config = function()
         require("notify").setup({
-          background_colour = "#1e1e2e", -- Catppuccin Mocha base background
+          -- Needed with catppuccin's transparent background
+          background_colour = require("catppuccin.palettes").get_palette("macchiato").base,
           timeout = 3000,
           max_width = 50,
         })

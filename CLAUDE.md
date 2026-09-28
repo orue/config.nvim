@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A Neovim configuration targeting Neovim >= 0.12, managed by lazy.nvim, using Catppuccin Mocha as the colorscheme. macOS-focused but mostly portable.
+A Neovim configuration targeting Neovim >= 0.12, managed by lazy.nvim, using Catppuccin Macchiato as the colorscheme. macOS-focused but mostly portable.
 
 ## Commands
 
@@ -27,10 +27,13 @@ npm install -g @olrtg/emmet-language-server
 
 ## Boot sequence
 
-`init.lua` loads three files in order:
-1. `lua/config/options.lua` -- editor settings, diagnostics config
+`init.lua` loads four files in order:
+1. `lua/config/options.lua` -- editor settings, diagnostics config, filetype overrides (`.tf` → terraform)
 2. `lua/config/keymaps.lua` -- global keybindings (leader = Space)
-3. `lua/config/lazy.lua` -- bootstraps lazy.nvim, which auto-discovers all files in `lua/plugins/`
+3. `lua/config/autocmds.lua` -- global autocommands (yank highlight, reload files changed on disk)
+4. `lua/config/lazy.lua` -- bootstraps lazy.nvim, which auto-discovers all files in `lua/plugins/`
+
+Other modules in `lua/config/` are helpers loaded on demand: `utils.lua` (Python venv), `lang.lua` (ftplugin helpers), `multigrep.lua` (Telescope picker), `new_project.lua` (dashboard action). Only plugin specs belong in `lua/plugins/` (lazy.nvim imports every module there).
 
 ## Architecture
 
@@ -67,7 +70,7 @@ Pyright handles type checking and IntelliSense. Ruff handles linting and formatt
 
 ### Ftplugin files (after/ftplugin/)
 
-Set per-language local options (indent, textwidth, colorcolumn) and buffer-local keymaps (format, organize imports). These run before LSP attaches and do not conflict with plugin configs.
+Set per-language local options and buffer-local keymaps through `lua/config/lang.lua`: `setup_buffer({ indent, tabs?, width? })` sets indentation, textwidth and colorcolumn (and always removes `t` from `formatoptions`, so code is never auto-wrapped), and `map_code_action(lhs, kind, desc)` / `map_organize_imports()` map LSP code actions by kind. These run before LSP attaches and do not conflict with plugin configs.
 
 ### Treesitter (lua/plugins/treesitter.lua)
 
@@ -81,5 +84,7 @@ Neovim 0.12's built-in `$VIMRUNTIME/ftplugin/markdown.lua` calls `vim.treesitter
 - Lazy-load plugins via `event`, `cmd`, `ft`, or `keys` whenever possible. Only catppuccin, oil (directory buffers) and nvim-treesitter (main branch requirement) load at startup; a plugin spec with no trigger loads at startup too, so always give one
 - Remote-plugin providers (python3, ruby, perl, node) are disabled in `options.lua`; the python3 one cost ~100ms on the first Python file
 - LSP keymaps are buffer-local, set on `LspAttach` (not global)
+- Write mappings with `<leader>` (not a literal `<space>`) and use `x` (not `v`) for visual-mode mappings
+- Catppuccin: flavour is Macchiato; `auto_integrations` covers installed plugins (only `noice` is listed explicitly); custom colors go in `custom_highlights` in `colorscheme.lua`, not in ftplugins
 - Python packages (debugpy, pytest) are per-project in virtualenvs, never global
 - Hardcoded paths should use `vim.fn.exepath()` with a fallback

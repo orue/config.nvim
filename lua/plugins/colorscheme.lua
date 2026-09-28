@@ -1,4 +1,4 @@
--- Catppuccin Mocha colorscheme configuration for Lazy.nvim
+-- Catppuccin Macchiato colorscheme configuration for Lazy.nvim
 
 return {
   "catppuccin/nvim",
@@ -7,37 +7,11 @@ return {
   priority = 1000, -- Load before other plugins
   config = function()
     require("catppuccin").setup({
+      -- Unlisted options (styles, lsp_styles, dim_inactive, ...) use catppuccin's defaults
       flavour = "macchiato", -- latte, frappe, macchiato, mocha
-      background = {
-        light = "latte",
-        dark = "macchiato",
-      },
       transparent_background = true,
       show_end_of_buffer = false,
       term_colors = true,
-      dim_inactive = {
-        enabled = false,
-        shade = "dark",
-        percentage = 0.15,
-      },
-      no_italic = false,
-      no_bold = false,
-      no_underline = false,
-      styles = {
-        comments = { "italic" },
-        conditionals = { "italic" },
-        loops = {},
-        functions = {},
-        keywords = {},
-        strings = {},
-        variables = {},
-        numbers = {},
-        booleans = {},
-        properties = {},
-        types = {},
-        operators = {},
-      },
-      color_overrides = {},
       custom_highlights = function(colors)
         return {
           -- Disable italic for imported module/library names in Python
@@ -166,42 +140,26 @@ return {
           TabLine = { bg = colors.surface0, fg = colors.surface2 },
           TabLineFill = { bg = colors.surface0 },
           TabLineSel = { bg = colors.surface1, fg = colors.text, style = { "bold" } },
+
+          -- Markdown (Treesitter captures; used in LSP hover/docs floats)
+          ["@markup.heading.1.markdown"] = { fg = colors.red, style = { "bold" } },
+          ["@markup.heading.2.markdown"] = { fg = colors.peach, style = { "bold" } },
+          ["@markup.heading.3.markdown"] = { fg = colors.pink, style = { "bold" } },
+          ["@markup.heading.4.markdown"] = { fg = colors.green, style = { "bold" } },
+          ["@markup.heading.5.markdown"] = { fg = colors.teal, style = { "bold" } },
+          ["@markup.heading.6.markdown"] = { fg = colors.mauve, style = { "bold" } },
+          ["@markup.raw.block.markdown"] = { bg = colors.surface0, fg = colors.text },
+          ["@markup.raw.markdown_inline"] = { bg = colors.surface0, fg = colors.pink },
+          ["@markup.strong.markdown_inline"] = { fg = colors.mauve, style = { "bold" } },
+          ["@markup.italic.markdown_inline"] = { fg = colors.teal, style = { "italic" } },
+          ["@markup.link.markdown_inline"] = { fg = colors.sapphire, style = { "underline" } },
+          ["@markup.link.label.markdown_inline"] = { fg = colors.teal },
         }
       end,
-      default_integrations = true,
+      -- auto_integrations (default) enables integrations for installed plugins;
+      -- noice isn't auto-detected
       integrations = {
-        cmp = true,
-        gitsigns = true,
-        nvimtree = true,
-        treesitter = true,
-        notify = true,
-        mini = {
-          enabled = true,
-          indentscope_color = "",
-        },
-        native_lsp = {
-          enabled = true,
-          virtual_text = {
-            errors = { "italic" },
-            hints = { "italic" },
-            warnings = { "italic" },
-            information = { "italic" },
-          },
-          underlines = {
-            errors = { "underline" },
-            hints = { "underline" },
-            warnings = { "underline" },
-            information = { "underline" },
-          },
-          inlay_hints = {
-            background = true,
-          },
-        },
-        telescope = {
-          enabled = true,
-        },
-        which_key = true,
-        bufferline = true,
+        noice = true,
       },
     })
 

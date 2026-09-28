@@ -1,65 +1,34 @@
--- Go formatting settings (follows Go community standards)
-vim.opt_local.expandtab = false  -- Use tabs (Go standard)
-vim.opt_local.tabstop = 4
-vim.opt_local.shiftwidth = 4
-vim.opt_local.softtabstop = 4
-vim.opt_local.colorcolumn = "120"
-vim.opt_local.textwidth = 120
+-- Go: tab indent (width 4), 120-char ruler
+local lang = require("config.lang")
+lang.setup_buffer({ indent = 4, tabs = true, width = 120 })
 
--- Ensure whitespace characters are visible in Go files
-vim.opt_local.list = true
-vim.opt_local.listchars = {
-  tab = '→ ',
-  trail = '·',
-  nbsp = '␣',
-  extends = '⟩',
-  precedes = '⟨',
-}
-
--- Go-specific keymaps
 -- Note: <leader>rf formatting is handled by conform.nvim (see lua/plugins/formatter.lua)
 
--- Organize imports (gopls code action)
-vim.keymap.set("n", "<leader>ri", function()
-  vim.lsp.buf.code_action({
-    filter = function(action)
-      return action.kind and action.kind:match("source.organizeImports")
-    end,
-    apply = true,
-  })
-end, { buffer = true, desc = "Organize imports" })
+lang.map_organize_imports()
+lang.map_code_action("<leader>rats", "refactor.rewrite.addTags", "Add struct tags")
 
--- Run current test file
+-- Run `go test <args>` in the current file's package directory
+local function go_test_package(args)
+  local dir = vim.fn.shellescape(vim.fn.expand("%:p:h"))
+  vim.cmd("!cd " .. dir .. " && go test " .. args .. " .")
+end
+
 vim.keymap.set("n", "<leader>rt", function()
-  vim.cmd("!go test -v ./...")
-end, { buffer = true, desc = "Run tests" })
+  go_test_package("-v")
+end, { buffer = true, desc = "Run tests (current package)" })
 
--- Run verbose tests for current directory
-vim.keymap.set("n", "<leader>rvt", function()
-  vim.cmd("!go test -v -race ./...")
-end, { buffer = true, desc = "Run tests (verbose, race)" })
-
--- Run test coverage for current directory
 vim.keymap.set("n", "<leader>rc", function()
-  vim.cmd("!go test -cover ./...")
-end, { buffer = true, desc = "Run test coverage" })
+  go_test_package("-cover")
+end, { buffer = true, desc = "Run test coverage (current package)" })
 
--- Run all tests in workspace
 vim.keymap.set("n", "<leader>re", function()
   vim.cmd("!go test -v ./...")
 end, { buffer = true, desc = "Run all tests" })
 
--- Run benchmark
+vim.keymap.set("n", "<leader>rvt", function()
+  vim.cmd("!go test -v -race ./...")
+end, { buffer = true, desc = "Run all tests (race)" })
+
 vim.keymap.set("n", "<leader>rab", function()
   vim.cmd("!go test -bench=. -benchmem ./...")
-end, { buffer = true, desc = "Run benchmark" })
-
--- Add struct tags helper (gopls code action)
-vim.keymap.set("n", "<leader>rats", function()
-  vim.lsp.buf.code_action({
-    filter = function(action)
-      return action.kind and action.kind:match("source.addMissingTag")
-    end,
-    apply = true,
-  })
-end, { buffer = true, desc = "Add struct tags" })
+end, { buffer = true, desc = "Run benchmarks" })
