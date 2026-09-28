@@ -1,28 +1,49 @@
 # Neovim Keybindings Guide (VS Code Transition)
 
 > **Leader key** = `Space`
-> Press `<leader>?` anytime to see available keymaps via which-key.
+> Press `Space` and wait to see available keys (which-key), or `Space ?` for keys specific to the current buffer.
+>
+> This guide maps VS Code habits to this config and covers core Vim editing. The complete reference for every key in this config is [MANUAL.md](MANUAL.md).
 
 ---
 
-## Essentials (Learn These First)
+## VS Code → Neovim
 
 | VS Code | Neovim | What it does |
 |---------|--------|--------------|
-| `Ctrl+P` | `<leader>fd` | Find files |
-| `Ctrl+Shift+F` | `<leader>fg` | Search across files (grep) |
-| `Ctrl+Shift+E` | `<leader>-` | File explorer (Oil) |
-| `Ctrl+`` ` | `<C-\>` | Toggle terminal |
-| `Ctrl+S` | `:w` | Save file |
-| `Ctrl+Z` / `Ctrl+Y` | `u` / `<C-r>` | Undo / Redo |
+| `Ctrl+P` | `Space fd` | Find files |
+| `Ctrl+Shift+F` | `Space fg` | Search across files (grep) |
+| `Ctrl+Shift+E` | `Space -` | File explorer (Oil) |
+| `Ctrl+Tab` | `Space fb` | Switch between open files |
+| `Ctrl+PageUp/Down` | `Shift+H` / `Shift+L` | Previous / next open file |
+| `Ctrl+W` | `Space bd` | Close file |
+| `` Ctrl+` `` | `Ctrl+\` | Toggle terminal |
+| `Ctrl+S` | `:w` | Save (formats on save) |
+| `Shift+Alt+F` | `Space rf` | Format document |
+| `Ctrl+Z` / `Ctrl+Y` | `u` / `Ctrl+r` | Undo / redo |
 | `Ctrl+/` | `gcc` | Toggle line comment |
-| `Ctrl+Shift+/` | `gbc` | Toggle block comment |
+| `Shift+Alt+A` | `gbc` | Toggle block comment |
+| `Alt+↑` / `Alt+↓` | `Alt+k` / `Alt+j` | Move line up / down |
+| `F12` | `gd` | Go to definition |
+| `Alt+F12` | `gp` | Peek definition |
+| `Shift+F12` | `gr` | Find references |
+| `F2` | `Space rn` | Rename symbol |
+| `Ctrl+.` | `Space ca` | Quick fix / code actions |
+| hover mouse | `K` | Show documentation |
+| `Ctrl+Space` | `Ctrl+Space` | Trigger completion |
+| `F8` | `]d` | Next problem |
+| `Ctrl+Shift+M` | `Space wd` | Problems panel (quickfix list) |
+| `Ctrl+Shift+O` | `Space fs` | Go to symbol in file |
+| `Ctrl+T` | `Space ws` | Go to symbol in workspace |
+| `F9` | `Space db` | Toggle breakpoint |
+| `F5` | `Space dc` | Start / continue debugging |
+| `F10` / `F11` | `Space ds` / `Space di` | Step over / into |
+| `Ctrl+Shift+G` | `Space gg` | Source control (LazyGit) |
+| `Ctrl+Shift+P` | `:` | Command palette (Ex commands) |
 
 ---
 
-## Navigation
-
-### Moving Around a File
+## Moving Around a File
 
 | Key | What it does |
 |-----|--------------|
@@ -37,13 +58,7 @@
 | `<C-o>` / `<C-i>` | Jump back / forward (history) |
 | `%` | Jump to matching bracket |
 | `zz` | Center screen on cursor |
-
-### Flash (Quick Jump)
-
-| Key | What it does |
-|-----|--------------|
-| `s` | Flash jump — type 2 chars, then label |
-| `S` | Flash Treesitter select |
+| `s` | Flash jump — type 2 chars, then the label |
 
 ### Search in File
 
@@ -56,50 +71,21 @@
 
 ---
 
-## Buffers (Tabs)
-
-| Key | What it does |
-|-----|--------------|
-| `Shift+L` | Next buffer |
-| `Shift+H` | Previous buffer |
-| `<leader>1`–`5` | Jump to buffer 1–5 |
-| `<leader>bx` | Close current buffer |
-| `<leader>bo` | Close all other buffers |
-| `<leader>bp` | Pin buffer |
-| `<leader>bl` / `<leader>bh` | Move buffer right / left |
-
----
-
-## Windows (Splits)
-
-| Key | What it does |
-|-----|--------------|
-| `<C-h>` `<C-j>` `<C-k>` `<C-l>` | Navigate between splits |
-| `:vs` | Vertical split |
-| `:sp` | Horizontal split |
-| `<C-w>q` | Close split |
-| `<C-w>=` | Equal split sizes |
-| `<C-w>_` / `<C-w>\|` | Maximize height / width |
-
----
-
 ## Editing
 
-### Basic Operations
-
-| Key | Mode | What it does |
-|-----|------|--------------|
-| `i` / `a` | Normal | Insert before / after cursor |
-| `I` / `A` | Normal | Insert at start / end of line |
-| `o` / `O` | Normal | New line below / above |
-| `dd` | Normal | Delete line |
-| `yy` | Normal | Copy line |
-| `p` / `P` | Normal | Paste after / before |
-| `ciw` | Normal | Change inner word |
-| `ci"` | Normal | Change inside quotes |
-| `di(` | Normal | Delete inside parentheses |
-| `cc` | Normal | Change entire line |
-| `.` | Normal | Repeat last change |
+| Key | What it does |
+|-----|--------------|
+| `i` / `a` | Insert before / after cursor |
+| `I` / `A` | Insert at start / end of line |
+| `o` / `O` | New line below / above |
+| `dd` | Delete line |
+| `yy` | Copy line |
+| `p` / `P` | Paste after / before |
+| `ciw` | Change inner word |
+| `ci"` | Change inside quotes |
+| `di(` | Delete inside parentheses |
+| `cc` | Change entire line |
+| `.` | Repeat last change |
 
 ### Visual Selection
 
@@ -111,15 +97,9 @@
 | `viw` | Select word |
 | `vi"` | Select inside quotes |
 | `vib` | Select inside brackets |
+| `>` / `<` | Indent / outdent (stays selected) |
 
-### Move & Indent Lines
-
-| Key | Mode | What it does |
-|-----|------|--------------|
-| `Alt+j` / `Alt+k` | Normal/Visual | Move line(s) down / up |
-| `>` / `<` | Visual | Indent / Outdent (stays selected) |
-
-### Surround (nvim-surround)
+### Surround
 
 | Key | What it does |
 |-----|--------------|
@@ -129,99 +109,15 @@
 
 ---
 
-## Find & Search
+## Splits
 
 | Key | What it does |
 |-----|--------------|
-| `<leader>fd` | Find files |
-| `<leader>fg` | Live grep (multi-grep with `  ` separator for file filter) |
-| `<leader>fb` | Find open buffers |
-| `<leader>fo` | Recent files |
-| `<leader>fh` | Help tags |
-| `<leader>ft` | Find TODOs |
-| `<leader>en` | Browse nvim config files |
-
----
-
-## Code Intelligence (LSP)
-
-| Key | What it does |
-|-----|--------------|
-| `gd` | Go to definition |
-| `gr` | Go to references |
-| `gi` | Go to implementation |
-| `gD` | Go to type definition |
-| `gO` | Document symbols (outline) |
-| `gp` | Peek definition (floating) |
-| `K` | Hover documentation |
-| `<leader>ca` | Code actions |
-| `<leader>rn` | Rename symbol |
-| `<leader>rf` | Format buffer |
-| `<leader>ws` | Workspace symbols |
-| `<leader>ih` | Toggle inlay hints |
-
-### Diagnostics
-
-| Key | What it does |
-|-----|--------------|
-| `<leader>d` | Show line diagnostics |
-| `[d` / `]d` | Previous / Next diagnostic |
-| `<leader>wd` | Workspace diagnostics list |
-
----
-
-## Git
-
-| Key | What it does |
-|-----|--------------|
-| `<leader>gg` | Open LazyGit |
-| `]h` / `[h` | Next / Previous hunk |
-| `<leader>hp` | Preview hunk |
-| `<leader>hs` | Stage hunk |
-| `<leader>hr` | Reset hunk |
-| `<leader>hb` | Blame line |
-
----
-
-## Testing & Debugging
-
-### Tests (Neotest)
-
-| Key | What it does |
-|-----|--------------|
-| `<leader>tt` | Run nearest test |
-| `<leader>tf` | Run all tests in file |
-| `<leader>ts` | Toggle test summary |
-
-### Debug (DAP)
-
-| Key | What it does |
-|-----|--------------|
-| `<leader>db` | Toggle breakpoint |
-| `<leader>dc` | Continue / Start debugger |
-| `<leader>ds` | Step over |
-| `<leader>di` | Step into |
-| `<leader>dt` | Terminate debugger |
-
----
-
-## Code Generation
-
-| Key | What it does |
-|-----|--------------|
-| `<leader>nf` | Generate function docstring |
-| `<leader>nc` | Generate class docstring |
-
----
-
-## Completion (Insert Mode)
-
-| Key | What it does |
-|-----|--------------|
-| `<C-Space>` | Trigger completions |
-| `Tab` / `Shift+Tab` | Next / Previous item |
-| `Enter` | Accept completion |
-| `<C-u>` / `<C-d>` | Scroll docs up / down |
+| `<C-h>` `<C-j>` `<C-k>` `<C-l>` | Navigate between splits |
+| `:vs` / `:sp` | Vertical / horizontal split |
+| `<C-w>q` | Close split |
+| `<C-w>=` | Equal split sizes |
+| `<C-w>_` / `<C-w>\|` | Maximize height / width |
 
 ---
 
@@ -231,5 +127,6 @@
 2. **Think in verbs + nouns**: `d` (delete) + `iw` (inner word) = delete word. `c` (change) + `i"` = change inside quotes.
 3. **Don't reach for the mouse**: `s` (Flash) lets you jump anywhere in 3 keystrokes.
 4. **`:w` to save**, `:q` to quit, `:wq` both. `:q!` to quit without saving.
-5. **`<leader>?`** shows all available keymaps — use it when you forget something.
+5. **`Space`, then wait** shows what's available — use it when you forget something.
 6. **Repeat with `.`** — the most powerful Vim key. Make a change once, repeat it everywhere.
+7. **Everything else** (tests, Git hunks, Claude Code, language-specific keys) is in [MANUAL.md](MANUAL.md).

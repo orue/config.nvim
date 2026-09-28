@@ -7,9 +7,12 @@
 #   3. Install all npm dependencies (emmet-language-server)
 #   4. Set up Neovim plugins
 #
-# Usage: ./install.sh
+# Usage: ./install.sh   (can be run from any directory)
 
 set -e  # Exit on error
+
+# Run from the repo so Brewfile is found wherever the script is invoked from
+cd "$(dirname "$0")"
 
 echo "========================================"
 echo "Neovim Configuration Setup (macOS)"
@@ -57,6 +60,14 @@ fi
 
 print_success "Homebrew found: $(brew --version | head -1)"
 
+# clangd, lldb-dap and make come from the Xcode Command Line Tools
+if ! xcode-select -p &> /dev/null; then
+    print_error "Xcode Command Line Tools are not installed"
+    echo "Install them with: xcode-select --install"
+    exit 1
+fi
+print_success "Xcode Command Line Tools found"
+
 # ============================================================
 # 2. Install/Update Neovim
 # ============================================================
@@ -89,7 +100,7 @@ if [ -f "Brewfile" ]; then
     brew bundle --file=Brewfile
     print_success "All Homebrew dependencies installed"
 else
-    print_error "Brewfile not found in current directory"
+    print_error "Brewfile not found next to install.sh"
     exit 1
 fi
 
@@ -141,27 +152,38 @@ echo "Step 6: Verifying Installations..."
 echo "-----------------------------------"
 echo ""
 
-# Check critical LSP servers
-LSP_SERVERS=(
+# Check language servers, formatters and debuggers ("command:label")
+TOOLS=(
     "lua-language-server:lua-language-server"
-    "pyright:pyright-langserver"
+    "pyright-langserver:pyright"
     "ruff:ruff"
-    "tsc:typescript"
+    "tsc:typescript (tsc --lsp)"
     "vscode-html-language-server:vscode-langservers-extracted"
+    "vscode-eslint-language-server:eslint (vscode-langservers-extracted)"
     "emmet-language-server:@olrtg/emmet-language-server"
+    "gopls:gopls"
+    "goimports:goimports"
+    "dlv:delve"
+    "clangd:clangd (Xcode Command Line Tools)"
     "prettier:prettier"
-    "clangd:/opt/homebrew/opt/llvm/bin/clangd"
+    "shellcheck:shellcheck"
+    "terraform-ls:terraform-ls"
 )
 
 echo "Checking installed tools:"
-for entry in "${LSP_SERVERS[@]}"; do
-    IFS=':' read -r cmd package <<< "$entry"
-    if command -v "$cmd" &> /dev/null || [ -f "$cmd" ]; then
-        print_success "$package"
+for entry in "${TOOLS[@]}"; do
+    IFS=':' read -r cmd label <<< "$entry"
+    if command -v "$cmd" &> /dev/null; then
+        print_success "$label"
     else
-        print_error "$package (not found)"
+        print_error "$label (not found: $cmd)"
     fi
 done
+if xcrun --find lldb-dap &> /dev/null; then
+    print_success "lldb-dap (Xcode Command Line Tools)"
+else
+    print_error "lldb-dap (not found via xcrun)"
+fi
 
 # ============================================================
 # 7. Setup Neovim Plugins
@@ -217,10 +239,10 @@ echo "   source .venv/bin/activate"
 echo "   pip install debugpy pytest"
 echo ""
 echo "Installed LSP Servers:"
-echo "  • Lua, Python, C/C++"
+echo "  • Lua, Python, C/C++, Go"
 echo "  • TypeScript/JavaScript, React (JSX/TSX), ESLint"
 echo "  • HTML, CSS, Emmet"
-echo "  • Markdown, Docker, Bash, YAML, TOML, Terraform"
+echo "  • Docker, Bash, YAML, TOML, Terraform"
 echo ""
 echo "For detailed usage, see MANUAL.md"
 echo ""

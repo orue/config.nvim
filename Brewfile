@@ -1,9 +1,12 @@
 # Brewfile for macOS Neovim dependencies
 # Install all dependencies with: brew bundle
+#
+# Provided by the Xcode Command Line Tools (required by Homebrew itself), so not listed here:
+#   clangd, clang, lldb-dap (C/C++ LSP and debugger), make (builds telescope-fzf-native)
 
 # Core dependencies
-brew "node"              # Needed for some LSP servers
-brew "python3"           # Python runtime
+brew "node"              # Needed for Node-based LSP servers
+brew "python"            # Python runtime
 
 # Language Servers
 brew "lua-language-server"
@@ -16,14 +19,19 @@ brew "bash-language-server"
 brew "taplo"
 brew "yaml-language-server"
 brew "terraform-ls"
-brew "llvm"              # Provides clangd for C/C++
 
-# Debuggers
-# Note: lldb (C/C++ debugger) is included with llvm, no separate install needed
+# Go toolchain
+brew "go"
+brew "gopls"             # Go LSP
+brew "goimports"         # Go formatter (conform.nvim)
+brew "delve"             # Go debugger (nvim-dap)
 
 # Formatters & Linters
-brew "prettier"          # Code formatter (brew instead of npm -g)
+brew "prettier"          # JS/TS/HTML/CSS/JSON/Markdown formatter
 brew "clang-format"      # C/C++ formatter
+brew "shellcheck"        # Shell linting (used by bash-language-server)
+brew "shfmt"             # Shell formatting (used by bash-language-server)
+brew "terraform"         # `terraform fmt`, used by terraform-ls for formatting
 
 # Search & Navigation Tools
 brew "ripgrep"           # Fast search tool
@@ -32,7 +40,6 @@ brew "ripgrep"           # Fast search tool
 brew "lazygit"           # Terminal UI for git
 
 # Build Tools
-brew "make"              # Build automation
 brew "tree-sitter-cli"   # Required by nvim-treesitter (main branch) to compile parsers
 
 # ============================================================

@@ -9,7 +9,7 @@ A Neovim configuration targeting Neovim >= 0.12, managed by lazy.nvim, using Cat
 ## Commands
 
 ```bash
-# Install all dependencies (macOS)
+# Install all dependencies (macOS; safe to re-run, lists any missing tools)
 ./install.sh
 
 # Install only brew dependencies
@@ -88,3 +88,5 @@ Markdown: Neovim's built-in `$VIMRUNTIME/ftplugin/markdown.lua` starts the Trees
 - Catppuccin: flavour is Macchiato; `auto_integrations` covers installed plugins (only `noice` is listed explicitly); custom colors go in `custom_highlights` in `colorscheme.lua`, not in ftplugins
 - Python packages (debugpy, pytest) are per-project in virtualenvs, never global
 - Hardcoded paths should use `vim.fn.exepath()` with a fallback
+- clangd, lldb-dap and make come from the Xcode Command Line Tools; don't add `llvm`/`make` to the Brewfile
+- When adding a tool or keymap, update together: `Brewfile` + the `TOOLS` check in `install.sh` + README's dependency tables (tools); `MANUAL.md`, the complete key reference (keys). `KEYBINDINGS.md` is only the VS Code transition guide and links to MANUAL
