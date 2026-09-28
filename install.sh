@@ -174,12 +174,21 @@ echo "-------------------------------------"
 print_info "Neovim will install plugins on first launch"
 echo ""
 
-# Create backup of existing Neovim data if it exists
+# Optionally reset existing Neovim data (plugins, parsers, undo history, shada).
+# Opt-in only: re-running the installer must not wipe a working setup.
 if [ -d "$HOME/.local/share/nvim" ]; then
-    print_info "Backing up existing Neovim data..."
-    BACKUP_DIR="$HOME/.local/share/nvim.backup.$(date +%Y%m%d_%H%M%S)"
-    mv "$HOME/.local/share/nvim" "$BACKUP_DIR"
-    print_success "Backup created at: $BACKUP_DIR"
+    RESET_DATA="n"
+    if [ -t 0 ]; then
+        read -r -p "Back up and reset existing Neovim data (~/.local/share/nvim)? [y/N] " RESET_DATA || true
+    fi
+    if [[ "$RESET_DATA" =~ ^[Yy]$ ]]; then
+        print_info "Backing up existing Neovim data..."
+        BACKUP_DIR="$HOME/.local/share/nvim.backup.$(date +%Y%m%d_%H%M%S)"
+        mv "$HOME/.local/share/nvim" "$BACKUP_DIR"
+        print_success "Backup created at: $BACKUP_DIR"
+    else
+        print_info "Keeping existing Neovim data"
+    fi
 fi
 
 # ============================================================

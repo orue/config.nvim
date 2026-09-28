@@ -8,8 +8,8 @@ return {
     opts = {
       keymap = {
         preset = 'default',
-        ['<Tab>'] = { 'select_next', 'fallback' },
-        ['<S-Tab>'] = { 'select_prev', 'fallback' },
+        ['<Tab>'] = { 'snippet_forward', 'select_next', 'fallback' },
+        ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
         ['<CR>'] = { 'accept', 'fallback' },
         ['<C-Space>'] = { 'show', 'fallback' },
         ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },

@@ -4,6 +4,7 @@ vim.opt_local.shiftwidth = 4
 vim.opt_local.softtabstop = 4
 vim.opt_local.colorcolumn = "120"
 vim.opt_local.textwidth = 120
+vim.opt_local.formatoptions:remove("t") -- wrap comments only, never code
 
 -- Python-specific keymaps
 -- Note: <leader>rf formatting is handled by conform.nvim (see lua/plugins/formatter.lua)

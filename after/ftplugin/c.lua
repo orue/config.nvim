@@ -11,5 +11,5 @@ vim.opt_local.textwidth = 120
 
 -- Switch between header and source file (clangd feature)
 vim.keymap.set("n", "<leader>rh", function()
-  vim.cmd("ClangdSwitchSourceHeader")
+  vim.cmd("LspClangdSwitchSourceHeader")
 end, { buffer = true, desc = "Switch header/source" })

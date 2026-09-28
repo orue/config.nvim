@@ -3,16 +3,6 @@ return {
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
   opts = {
-    formatters = {
-      prettier = {
-        command = vim.fn.exepath("prettier"),
-      },
-      goimports = {
-        command = vim.fn.exepath("goimports"),
-        args = { "-w", "$FILENAME" },
-        stdin = false,
-      },
-    },
     formatters_by_ft = {
       -- JavaScript/TypeScript
       javascript = { "prettier" },

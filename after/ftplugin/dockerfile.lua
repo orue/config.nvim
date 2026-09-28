@@ -9,4 +9,5 @@ set.softtabstop = 4
 
 -- Useful for long RUN commands
 set.textwidth = 120
+set.formatoptions:remove("t") -- wrap comments only, never code
 set.colorcolumn = "120"

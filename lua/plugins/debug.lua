@@ -69,9 +69,15 @@ return {
       }
 
       -- C/C++ DAP configuration (using lldb)
+      -- lldb-dap ships with the Xcode Command Line Tools but isn't on PATH
+      local lldb_dap = vim.fn.exepath('lldb-dap')
+      if lldb_dap == '' then
+        lldb_dap = vim.trim(vim.fn.system({ 'xcrun', '--find', 'lldb-dap' }))
+      end
+
       dap.adapters.lldb = {
         type = 'executable',
-        command = vim.fn.exepath('lldb-dap') ~= '' and vim.fn.exepath('lldb-dap') or '/usr/bin/lldb-dap',
+        command = lldb_dap,
         name = 'lldb'
       }
 

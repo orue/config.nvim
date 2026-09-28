@@ -77,7 +77,6 @@ return {
       -- TOML LSP
       vim.lsp.config('taplo', {
         capabilities = capabilities,
-        cmd = { vim.fn.exepath('taplo') or 'taplo', 'lsp', 'stdio' },
       })
 
       -- YAML LSP (GitHub Actions, Kubernetes, Docker Compose)
@@ -111,7 +110,6 @@ return {
 
       -- Go LSP (gopls)
       vim.lsp.config('gopls', {
-        cmd = { vim.fn.exepath('gopls') or 'gopls' },
         filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
         root_markers = { 'go.mod', 'go.sum', '.git' },
         capabilities = capabilities,
@@ -333,7 +331,8 @@ return {
               local buf_id = vim.fn.bufadd(item.filename)
               vim.fn.bufload(buf_id)
               local lines = vim.api.nvim_buf_get_lines(buf_id, math.max(0, item.lnum - 6), item.lnum + 14, false)
-              vim.lsp.util.open_floating_preview(lines, 'lua', {
+              local ft = vim.filetype.match({ filename = item.filename, buf = buf_id }) or ''
+              vim.lsp.util.open_floating_preview(lines, ft, {
                 border = 'rounded',
                 title = vim.fn.fnamemodify(item.filename, ':t'),
                 title_pos = 'center',

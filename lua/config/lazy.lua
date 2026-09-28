@@ -26,6 +26,6 @@ require("lazy").setup({
   -- Disable automatic update checker for better performance
   -- Use :Lazy update manually when you want to check for updates
   checker = {
-    enable = false,
+    enabled = false,
   },
 })
