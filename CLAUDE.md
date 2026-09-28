@@ -16,7 +16,7 @@ A Neovim configuration targeting Neovim >= 0.12, managed by lazy.nvim, using Cat
 brew bundle
 
 # Install npm-based LSP servers
-npm install -g emmet-ls
+npm install -g @olrtg/emmet-language-server
 
 # Verify setup inside Neovim
 :checkhealth
@@ -38,23 +38,27 @@ npm install -g emmet-ls
 
 Uses Neovim's native `vim.lsp.config()` and `vim.lsp.enable()` APIs (not the older lspconfig setup pattern). The key mechanism:
 
-- Each server is registered with `vim.lsp.config('server_name', { ... })`
-- A `filetype_to_lsp` table maps filetypes to server names
-- A single `FileType` autocmd looks up the table and calls `vim.lsp.enable()` for matching servers
-- All servers share capabilities from `blink.cmp.get_lsp_capabilities()`
+- nvim-lspconfig supplies each server's defaults (`cmd`, `filetypes`, root markers) via its `lsp/*.lua` files
+- `vim.lsp.config('server_name', { ... })` in `lsp.lua` holds only overrides
+- A single `vim.lsp.enable({ ... })` list turns servers on; each attaches to the filetypes in its config
+- blink.cmp registers completion capabilities for every server itself (`vim.lsp.config('*')` in its plugin file), so don't pass `capabilities` per server
 
-To add a new LSP server: add a `vim.lsp.config()` block and an entry in the `filetype_to_lsp` table.
+To add a new LSP server: add its name to the `vim.lsp.enable()` list, plus a `vim.lsp.config()` block only if it needs overrides.
+
+Vue: vue_ls 3.x needs `@vue/typescript-plugin` loaded into `ts_ls` (resolved from the installed vue-language-server package) and is started with `--tsdk` pointing at the project's `node_modules/typescript/lib`. Homebrew's `typescript` formula is TypeScript 7 (native port, no tsserver API), which neither ts_ls nor vue_ls can use.
 
 ### Formatting
 
-Conform.nvim (`lua/plugins/formatter.lua`) handles format-on-save for all languages except Lua, which uses LSP formatting directly. Do not add LSP format-on-save for non-Lua languages.
+Conform.nvim (`lua/plugins/formatter.lua`) handles all format-on-save. Filetypes without a conform formatter (Lua, YAML, TOML, Terraform) fall back to LSP formatting via `lsp_format = "fallback"`. Do not add separate `BufWritePre` LSP-format autocmds (they would format twice).
+
+Ruff line length: 120 is a fallback only. The ruff LSP uses `configurationPreference = "filesystemFirst"`, and conform's ruff formatters add `--config line-length=120` only when the project has no `ruff.toml`/`.ruff.toml`/`[tool.ruff]`.
 
 ### Python virtual environment detection (lua/config/utils.lua)
 
-`utils.lua` exports `get_python_path()`, `get_venv_info()`, and `has_venv()`. These walk up the directory tree looking for `.venv/`, `venv/`, or `env/` directories (also checks `$VIRTUAL_ENV`). Used by:
-- `lsp.lua` -- Pyright settings (pythonPath, venvPath, venv)
+`utils.lua` exports `get_python_path(start_dir?)`, `get_venv_info(start_dir?)`, and `has_venv()`. These walk up from `start_dir` (default: cwd) looking for `.venv/`, `venv/`, or `env/` directories (`$VIRTUAL_ENV` wins if set). Used by:
+- `lsp.lua` -- Pyright settings (pythonPath, venvPath, venv), resolved per project root in `before_init`
 - `debug.lua` -- debugpy adapter path
-- `neotest.lua` -- pytest python path
+- `neotest.lua` -- pytest python path (resolved per test root)
 - `lualine.lua` -- venv indicator in statusline
 
 ### Python LSP split

@@ -14,74 +14,55 @@ return {
     },
     config = function()
       local utils = require('config.utils')
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      -- Lua LSP
-      vim.lsp.config('lua_ls', {
-        capabilities = capabilities,
-      })
+      -- Server defaults (cmd, filetypes, root markers) come from nvim-lspconfig's lsp/*.lua.
+      -- blink.cmp registers its completion capabilities for every server via vim.lsp.config('*').
+      -- Only overrides live here.
 
       -- Python LSP (Pyright)
-      local pyright_settings = {
-        pyright = {
-          disableOrganizeImports = true,
-        },
-        python = {
-          pythonPath = utils.get_python_path(),
-          analysis = {
-            typeCheckingMode = "basic",
-            autoSearchPaths = true,
-            useLibraryCodeForTypes = true,
-            autoImportCompletions = true,
+      vim.lsp.config('pyright', {
+        settings = {
+          pyright = {
+            disableOrganizeImports = true,
+          },
+          python = {
+            analysis = {
+              typeCheckingMode = "basic",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              autoImportCompletions = true,
+            },
           },
         },
-      }
-
-      -- Add venv info so Pyright resolves venv packages
-      local venv_info = utils.get_venv_info()
-      if venv_info then
-        pyright_settings.python.venvPath = venv_info.venv_path
-        pyright_settings.python.venv = venv_info.venv_name
-      end
-
-      vim.lsp.config('pyright', {
-        capabilities = capabilities,
-        settings = pyright_settings,
+        -- Resolve the venv per project root (not once at startup from cwd)
+        before_init = function(_, config)
+          local root = config.root_dir
+          local python = config.settings.python
+          python.pythonPath = utils.get_python_path(root)
+          local venv_info = utils.get_venv_info(root)
+          if venv_info then
+            python.venvPath = venv_info.venv_path
+            python.venv = venv_info.venv_name
+          end
+        end,
       })
 
       -- Python LSP (Ruff)
       vim.lsp.config('ruff', {
-        capabilities = capabilities,
         init_options = {
           settings = {
-            args = {
-              "--line-length=120",
-            },
-          }
+            -- Project ruff config wins; 120 is only the fallback (matches conform's ruff_format)
+            configurationPreference = "filesystemFirst",
+            lineLength = 120,
+          },
         },
         on_attach = function(client)
           client.server_capabilities.hoverProvider = false
         end,
       })
 
-      -- Docker LSP
-      vim.lsp.config('dockerls', {
-        capabilities = capabilities,
-      })
-
-      -- Bash LSP
-      vim.lsp.config('bashls', {
-        capabilities = capabilities,
-      })
-
-      -- TOML LSP
-      vim.lsp.config('taplo', {
-        capabilities = capabilities,
-      })
-
       -- YAML LSP (GitHub Actions, Kubernetes, Docker Compose)
       vim.lsp.config('yamlls', {
-        capabilities = capabilities,
         settings = {
           yaml = {
             schemaStore = {
@@ -103,16 +84,8 @@ return {
         },
       })
 
-      -- Terraform LSP
-      vim.lsp.config('terraformls', {
-        capabilities = capabilities,
-      })
-
       -- Go LSP (gopls)
       vim.lsp.config('gopls', {
-        filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-        root_markers = { 'go.mod', 'go.sum', '.git' },
-        capabilities = capabilities,
         settings = {
           gopls = {
             usePlaceholders = true,
@@ -138,7 +111,6 @@ return {
 
       -- C/C++ LSP (clangd)
       vim.lsp.config('clangd', {
-        capabilities = capabilities,
         cmd = {
           'clangd',
           '--background-index',
@@ -153,141 +125,97 @@ return {
           completeUnimported = true,
           clangdFileStatus = true,
         },
-        settings = {
-          clangd = {
-            InlayHints = {
-              Designators = true,
-              Enabled = true,
-              ParameterNames = true,
-              DeducedTypes = true,
-            },
-          },
-        },
       })
 
-      -- TypeScript/JavaScript LSP (also handles Vue <script> sections)
+      -- TypeScript/JavaScript LSP (also serves TypeScript inside .vue files for vue_ls)
+      local inlay_hints = {
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      }
+
+      -- vue_ls 3.x needs @vue/typescript-plugin loaded into ts_ls; it ships inside the
+      -- vue-language-server package, so resolve it from the installed binary.
+      local function vue_ts_plugin_path()
+        local bin = vim.fn.exepath('vue-language-server')
+        if bin == '' then return nil end
+        local real = vim.uv.fs_realpath(bin) -- .../@vue/language-server/bin/vue-language-server.js
+        if not real then return nil end
+        local path = vim.fn.fnamemodify(real, ':h:h') .. '/node_modules/@vue/typescript-plugin'
+        return vim.uv.fs_stat(path) and path or nil
+      end
+
+      local ts_plugins = {}
+      local vue_plugin = vue_ts_plugin_path()
+      if vue_plugin then
+        table.insert(ts_plugins, { name = '@vue/typescript-plugin', location = vue_plugin, languages = { 'vue' } })
+      end
+
       vim.lsp.config('ts_ls', {
-        capabilities = capabilities,
         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-        settings = {
-          typescript = {
-            inlayHints = {
-              includeInlayParameterNameHints = 'all',
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-          },
-          javascript = {
-            inlayHints = {
-              includeInlayParameterNameHints = 'all',
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-          },
-        },
-      })
-
-      -- Vue.js LSP (vue_ls)
-      vim.lsp.config('vue_ls', {
-        capabilities = capabilities,
-        filetypes = { 'vue' },
         init_options = {
-          vue = {
-            hybridMode = false,
-          },
+          plugins = ts_plugins,
+        },
+        settings = {
+          typescript = { inlayHints = inlay_hints },
+          javascript = { inlayHints = inlay_hints },
         },
       })
 
-      -- HTML LSP
-      vim.lsp.config('html', {
-        capabilities = capabilities,
-        filetypes = { 'html' },
+      -- Vue LSP: without --tsdk, vue-language-server loads Homebrew's TypeScript 7 (native
+      -- port, no tsserver API) and crashes. Point it at the project's own TypeScript instead.
+      vim.lsp.config('vue_ls', {
+        cmd = function(dispatchers, config)
+          local cmd = { 'vue-language-server', '--stdio' }
+          local tsdk = config.root_dir and vim.fs.joinpath(config.root_dir, 'node_modules/typescript/lib')
+          if tsdk and vim.uv.fs_stat(tsdk) then
+            table.insert(cmd, '--tsdk=' .. tsdk)
+          end
+          return vim.lsp.rpc.start(cmd, dispatchers, { cwd = config.cmd_cwd or config.root_dir })
+        end,
       })
 
       -- CSS LSP
+      local css_settings = {
+        validate = true,
+        lint = {
+          unknownAtRules = "ignore",
+        },
+      }
       vim.lsp.config('cssls', {
-        capabilities = capabilities,
-        filetypes = { 'css', 'scss', 'less' },
         settings = {
-          css = {
-            validate = true,
-            lint = {
-              unknownAtRules = "ignore",
-            },
-          },
-          scss = {
-            validate = true,
-            lint = {
-              unknownAtRules = "ignore",
-            },
-          },
-          less = {
-            validate = true,
-            lint = {
-              unknownAtRules = "ignore",
-            },
-          },
+          css = css_settings,
+          scss = css_settings,
+          less = css_settings,
         },
       })
 
       -- Emmet LSP (HTML/CSS abbreviations)
-      vim.lsp.config('emmet_ls', {
-        capabilities = capabilities,
-        filetypes = { 'html', 'css', 'scss', 'javascriptreact', 'typescriptreact', 'vue' },
+      vim.lsp.config('emmet_language_server', {
+        filetypes = { 'html', 'css', 'scss', 'less', 'javascriptreact', 'typescriptreact', 'vue' },
       })
 
-      -- Enable LSP servers on-demand via FileType autocommands
-      local lsp_enable_group = vim.api.nvim_create_augroup('lsp-enable', { clear = true })
-
-      local filetype_to_lsp = {
-        lua = { 'lua_ls' },
-        python = { 'pyright', 'ruff' },
-        c = { 'clangd' },
-        cpp = { 'clangd' },
-        objc = { 'clangd' },
-        objcpp = { 'clangd' },
-        go = { 'gopls' },
-        gomod = { 'gopls' },
-        gowork = { 'gopls' },
-        gotmpl = { 'gopls' },
-        typescript = { 'ts_ls' },
-        javascript = { 'ts_ls' },
-        javascriptreact = { 'ts_ls', 'emmet_ls' },
-        typescriptreact = { 'ts_ls', 'emmet_ls' },
-        vue = { 'ts_ls', 'vue_ls', 'emmet_ls' },
-        html = { 'html', 'emmet_ls' },
-        css = { 'cssls', 'emmet_ls' },
-        scss = { 'cssls', 'emmet_ls' },
-        less = { 'cssls', 'emmet_ls' },
-        dockerfile = { 'dockerls' },
-        sh = { 'bashls' },
-        bash = { 'bashls' },
-        zsh = { 'bashls' },
-        toml = { 'taplo' },
-        yaml = { 'yamlls' },
-        terraform = { 'terraformls' },
-        tf = { 'terraformls' },
-      }
-
-      vim.api.nvim_create_autocmd('FileType', {
-        group = lsp_enable_group,
-        callback = function(args)
-          local ft = vim.bo[args.buf].filetype
-          local servers = filetype_to_lsp[ft]
-          if servers then
-            for _, server in ipairs(servers) do
-              vim.lsp.enable(server, { bufnr = args.buf })
-            end
-          end
-        end,
+      -- Each server attaches to the filetypes in its config
+      vim.lsp.enable({
+        'lua_ls',
+        'pyright',
+        'ruff',
+        'clangd',
+        'gopls',
+        'ts_ls',
+        'vue_ls',
+        'html',
+        'cssls',
+        'emmet_language_server',
+        'dockerls',
+        'bashls',
+        'taplo',
+        'yamlls',
+        'terraformls',
       })
 
       -- Diagnostic keymaps
@@ -295,7 +223,7 @@ return {
       vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic" })
       vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next diagnostic" })
       vim.keymap.set("n", "<leader>wd", function()
-        vim.diagnostic.setloclist()
+        vim.diagnostic.setqflist()
       end, { desc = "Workspace diagnostics" })
 
       -- LSP attach: buffer-local keymaps + inlay hints
@@ -316,7 +244,7 @@ return {
           map("n", "gd", vim.lsp.buf.definition, "Go to definition")
           map("n", "gr", vim.lsp.buf.references, "Go to references")
           map("n", "K", vim.lsp.buf.hover, "Hover documentation")
-          map("n", "<leader>ca", vim.lsp.buf.code_action, "Code actions")
+          map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "Code actions")
           map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
 
           -- VS Code-like additional keymaps
@@ -346,18 +274,6 @@ return {
             map("n", "<leader>ih", function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }), { bufnr = buf })
             end, "Toggle inlay hints")
-          end
-
-          -- Format-on-save for Lua (conform.nvim handles Python and JS/TS/Vue)
-          if vim.bo[buf].filetype == "lua" then
-            local bufgroup = vim.api.nvim_create_augroup('lsp-format-' .. buf, { clear = true })
-            vim.api.nvim_create_autocmd('BufWritePre', {
-              group = bufgroup,
-              buffer = buf,
-              callback = function()
-                vim.lsp.buf.format({ bufnr = buf, id = client.id })
-              end,
-            })
           end
         end,
       })

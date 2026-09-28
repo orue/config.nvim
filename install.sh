@@ -4,7 +4,7 @@
 # This script will:
 #   1. Install/update Neovim
 #   2. Install all Homebrew dependencies (LSP servers, formatters, tools)
-#   3. Install all npm dependencies (emmet-ls)
+#   3. Install all npm dependencies (emmet-language-server)
 #   4. Set up Neovim plugins
 #
 # Usage: ./install.sh
@@ -125,7 +125,7 @@ echo ""
 
 NPM_PACKAGES=(
     "typescript"
-    "emmet-ls"
+    "@olrtg/emmet-language-server"
 )
 
 for package in "${NPM_PACKAGES[@]}"; do
@@ -150,7 +150,7 @@ LSP_SERVERS=(
     "typescript-language-server:typescript-language-server"
     "typescript:tsc"
     "vscode-html-language-server:vscode-langservers-extracted"
-    "emmet-ls:emmet-ls"
+    "emmet-language-server:@olrtg/emmet-language-server"
     "prettier:prettier"
     "clangd:/opt/homebrew/opt/llvm/bin/clangd"
 )

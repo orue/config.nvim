@@ -34,7 +34,7 @@ If you prefer to install dependencies manually, skip `install.sh` and use the Br
 
 ```bash
 brew bundle
-npm install -g emmet-ls
+npm install -g @olrtg/emmet-language-server
 ```
 
 ## Dependencies
@@ -55,7 +55,7 @@ npm install -g emmet-ls
 | yaml-language-server | YAML |
 | terraform-ls | Terraform |
 | llvm (clangd) | C, C++ |
-| emmet-ls (npm) | HTML, CSS, JSX, Vue |
+| emmet-language-server (npm) | HTML, CSS, JSX, Vue |
 
 ### Formatters and tools
 

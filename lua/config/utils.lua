@@ -22,8 +22,9 @@ local function find_venv(start_dir)
 end
 
 --- Get virtual environment info for Pyright settings
+--- @param start_dir? string Directory to search upward from (default: cwd)
 --- @return { venv_path: string, venv_name: string }|nil
-function M.get_venv_info()
+function M.get_venv_info(start_dir)
   -- 1. Check VIRTUAL_ENV env var
   local env_venv = vim.env.VIRTUAL_ENV
   if env_venv and vim.fn.isdirectory(env_venv) == 1 then
@@ -33,8 +34,8 @@ function M.get_venv_info()
     }
   end
 
-  -- 2. Walk up from cwd looking for venv dirs
-  local venv = find_venv(vim.fn.getcwd())
+  -- 2. Walk up from start_dir looking for venv dirs
+  local venv = find_venv(start_dir or vim.fn.getcwd())
   if venv then
     return {
       venv_path = vim.fn.fnamemodify(venv, ':h'),
@@ -46,9 +47,10 @@ function M.get_venv_info()
 end
 
 --- Get the Python executable path
---- Checks: VIRTUAL_ENV → .venv/venv/env in cwd+parents → system python
+--- Checks: VIRTUAL_ENV → .venv/venv/env in start_dir+parents → system python
+--- @param start_dir? string Directory to search upward from (default: cwd)
 --- @return string Python executable path
-function M.get_python_path()
+function M.get_python_path(start_dir)
   -- 1. Check VIRTUAL_ENV env var
   local env_venv = vim.env.VIRTUAL_ENV
   if env_venv then
@@ -58,8 +60,8 @@ function M.get_python_path()
     end
   end
 
-  -- 2. Walk up from cwd looking for venv dirs
-  local venv = find_venv(vim.fn.getcwd())
+  -- 2. Walk up from start_dir looking for venv dirs
+  local venv = find_venv(start_dir or vim.fn.getcwd())
   if venv then
     return venv .. '/bin/python'
   end

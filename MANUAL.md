@@ -149,7 +149,7 @@ Settings: 2-space indent, 100-char ruler, format on save (Prettier).
 | `Space rf` | Format file |
 | `Space ri` | Organize imports |
 
-Vue files get ts_ls (script sections), vue_ls (templates), and emmet_ls (abbreviations).
+Vue files get ts_ls (script sections), vue_ls (templates), and emmet_language_server (abbreviations).
 
 ### HTML / CSS
 

@@ -41,10 +41,10 @@ brew "tree-sitter-cli"   # Required by nvim-treesitter (main branch) to compile 
 # ============================================================
 # The following language servers need to be installed via npm:
 #
-#   npm install -g emmet-ls
+#   npm install -g @olrtg/emmet-language-server
 #
 # Required npm packages:
-#   - emmet-ls: Emmet abbreviations for HTML/CSS/JSX/Vue
+#   - emmet-language-server: Emmet abbreviations for HTML/CSS/JSX/Vue
 #
 
 # ============================================================

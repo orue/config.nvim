@@ -14,7 +14,10 @@ return {
           require("neotest-python")({
             dap = { justMyCode = false },
             runner = "pytest",
-            python = utils.get_python_path(),
+            -- Resolved per test root, not once at startup from cwd
+            python = function(root)
+              return utils.get_python_path(root)
+            end,
           }),
         },
       })
