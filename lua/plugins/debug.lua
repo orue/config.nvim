@@ -29,7 +29,7 @@ return {
         linehl = 'DapStoppedLine',
         numhl = ''
       })
-      
+
       -- Python DAP configuration
       dap.adapters.python = function(cb, config)
         if config.request == 'attach' then
@@ -99,10 +99,15 @@ return {
       dap.configurations.cpp = dap.configurations.c
 
       -- Go DAP configuration (using Delve)
+      -- `dlv dap` speaks DAP over TCP, not stdio: nvim-dap starts it on a free port and connects
+      local dlv = vim.fn.exepath('dlv')
       dap.adapters.go = {
-        type = 'executable',
-        command = 'dlv',
-        args = { 'dap' },
+        type = 'server',
+        port = '${port}',
+        executable = {
+          command = dlv ~= '' and dlv or 'dlv',
+          args = { 'dap', '-l', '127.0.0.1:${port}' },
+        },
       }
 
       dap.configurations.go = {
@@ -120,7 +125,6 @@ return {
           mode = 'debug',
           request = 'launch',
           program = '${fileDirname}',
-          env = {},
           args = {},
         },
         {
@@ -129,7 +133,6 @@ return {
           mode = 'debug',
           request = 'launch',
           program = '${workspaceFolder}',
-          env = {},
           args = {},
         },
         {
@@ -143,7 +146,7 @@ return {
       }
 
       dapui.setup()
-      
+
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
       end
