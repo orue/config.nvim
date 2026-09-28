@@ -83,6 +83,7 @@ Markdown: Neovim's built-in `$VIMRUNTIME/ftplugin/markdown.lua` starts the Trees
 - One plugin per file in `lua/plugins/`, or a small group of related plugins (e.g., `git.lua` has gitsigns + lazygit)
 - Lazy-load plugins via `event`, `cmd`, `ft`, or `keys` whenever possible. Only catppuccin, oil (directory buffers) and nvim-treesitter (main branch requirement) load at startup; a plugin spec with no trigger loads at startup too, so always give one
 - Remote-plugin providers (python3, ruby, perl, node) are disabled in `options.lua`; the python3 one cost ~100ms on the first Python file
+- trouble.nvim is used only for diagnostics, TODOs and quickfix: its `lsp_references`/`lsp_definitions` views return no results on Nvim 0.12 (latest upstream, Oct 2025), so references stay on `grr` / `<leader>fr`. diffview.nvim (upstream idle since 2024) works but trips one `vim.validate{}` deprecation in `:checkhealth vim.deprecated`
 - Sessions (persistence.nvim) save on exit, never auto-restore; `sessionoptions` in `options.lua` deliberately omits `terminal` and `blank` so terminals (Claude Code, toggleterm) and floats aren't restored
 - LSP keymaps are buffer-local, set on `LspAttach` (not global)
 - Write mappings with `<leader>` (not a literal `<space>`) and use `x` (not `v`) for visual-mode mappings

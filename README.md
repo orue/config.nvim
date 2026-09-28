@@ -129,6 +129,9 @@ pip install debugpy pytest
 | [flash.nvim](https://github.com/folke/flash.nvim) | Fast navigation |
 | [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git hunks and blame |
 | [lazygit.nvim](https://github.com/kdheepak/lazygit.nvim) | LazyGit integration |
+| [diffview.nvim](https://github.com/sindrets/diffview.nvim) | Side-by-side diffs and file history |
+| [trouble.nvim](https://github.com/folke/trouble.nvim) | Panels for diagnostics, TODOs and quickfix |
+| [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | Markdown rendered in the buffer |
 | [nvim-dap](https://github.com/mfussenegger/nvim-dap) + [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) | Debugging (Python, C/C++, Go) |
 | [neotest](https://github.com/nvim-neotest/neotest) + [neotest-golang](https://github.com/fredrikaverpil/neotest-golang) | Test runner (Python, Go) |
 | [persistence.nvim](https://github.com/folke/persistence.nvim) | Save and restore sessions per project |
@@ -173,7 +176,7 @@ Most used:
 - **HTML/CSS** -- Auto-close/rename tags, Emmet, Prettier
 - **Lua** -- lua_ls with Neovim API types (lazydev)
 - **Bash, Docker, YAML, TOML, Terraform** -- language servers (which also format), Treesitter highlighting
-- **Markdown** -- Treesitter highlighting, Prettier, spell check, checkbox keys
+- **Markdown** -- rendered in the buffer, Prettier, spell check, checkbox keys
 
 Vue is not supported: its tooling needs the older TypeScript server, which TypeScript 7 no longer ships.
 

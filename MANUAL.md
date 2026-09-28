@@ -144,6 +144,16 @@ Available in any buffer with a language server attached.
 | `[D` / `]D` | First / last diagnostic |
 | `Space wd` | All diagnostics in the quickfix list |
 
+### Lists (Trouble)
+
+A panel at the bottom you can move through with `j`/`k` and `Enter`; press the key again to close it.
+
+| Key | Action |
+|-----|--------|
+| `Space xx` / `Space xX` | Diagnostics in the project / this file |
+| `Space xt` | TODO / FIXME / NOTE comments |
+| `Space xq` | The quickfix list |
+
 ### Formatting
 
 Format on save is enabled for all supported languages.
@@ -177,6 +187,8 @@ Format on save is enabled for all supported languages.
 | `Space hs` | Stage hunk (visual: selected lines) |
 | `Space hr` | Reset hunk (visual: selected lines) |
 | `Space hb` | Blame line |
+| `Space gd` | Diff view: every changed file side by side (press again or `q` to close) |
+| `Space gh` / `Space gH` | Git history of this file / the whole repo (`q` closes) |
 
 ## Debugging (DAP)
 
@@ -296,12 +308,13 @@ Go tests also run through Neotest (`Space tt`, `Space tf`, `Space ts`, `Space to
 
 ### Markdown
 
-Wraps at 80 columns, spell check on, markup concealed.
+Wraps at 80 columns, spell check on. Headings, lists, checkboxes, code blocks and tables are rendered in the buffer; the line under the cursor and Insert mode show the raw text.
 
 | Key | Action |
 |-----|--------|
 | `Space mt` | Insert TODO checkbox |
 | `Space mc` / `Space mu` | Check / uncheck the checkbox on this line |
+| `Space mr` | Turn rendering off / on |
 | `]]` / `[[` | Next / previous section |
 | `gO` | Outline |
 

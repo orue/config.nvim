@@ -18,6 +18,7 @@ return {
       { "<leader>m", group = "Markdown" },
       { "<leader>e", group = "Edit config" },
       { "<leader>q", group = "Session" },
+      { "<leader>x", group = "Lists (Trouble)" },
     },
   },
   keys = {

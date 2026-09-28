@@ -32,7 +32,7 @@
 | hover mouse | `K` | Show documentation |
 | `Ctrl+Space` | `Ctrl+Space` | Trigger completion |
 | `F8` | `]d` | Next problem |
-| `Ctrl+Shift+M` | `Space wd` | Problems panel (quickfix list) |
+| `Ctrl+Shift+M` | `Space xx` | Problems panel |
 | `Ctrl+Shift+O` | `Space fs` | Go to symbol in file |
 | `Ctrl+T` | `Space ws` | Go to symbol in workspace |
 | `F9` | `Space db` | Toggle breakpoint |
@@ -40,6 +40,7 @@
 | `F10` / `F11` | `Space ds` / `Space di` | Step over / into |
 | `Shift+F11` | `Space do` | Step out |
 | `Ctrl+Shift+G` | `Space gg` | Source control (LazyGit) |
+| Open changes / Timeline | `Space gd` / `Space gh` | Diff of all changes / file history |
 | `Ctrl+Shift+P` | `:` | Command palette (Ex commands) |
 | `Ctrl+Shift+[` / `]` | `zc` / `zo` | Fold / unfold (`za` toggles) |
 | `Ctrl+H` (replace) | `:%s/old/new/g` | Replace in file, with a live preview |
