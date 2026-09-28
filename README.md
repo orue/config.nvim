@@ -153,6 +153,7 @@ pip install debugpy pytest
 
 Leader key is `Space`; press it and wait to see what's available.
 
+- [Interactive manual](https://claude.ai/artifact/AJGiaGuP4QvdgxzvUPJfsG) — eight lessons with practice steps, progress tracking and a searchable cheatsheet
 - [MANUAL.md](MANUAL.md) — complete reference: every key, per-language keys, workflows, troubleshooting
 - [KEYBINDINGS.md](KEYBINDINGS.md) — VS Code → Neovim transition guide and core Vim editing
 
