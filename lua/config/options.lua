@@ -25,6 +25,9 @@ opt.breakindent = true -- wrapped lines keep their indentation
 opt.undofile = true        -- undo history survives closing the file
 opt.confirm = true         -- :q with unsaved changes asks to save instead of erroring
 opt.inccommand = "split"   -- live preview of :s substitutions
+-- What a saved session restores (persistence.nvim). No "terminal"/"blank": the Claude Code
+-- panel, toggleterm and empty/float windows are not brought back
+opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 
 -- Folding: Treesitter folds are enabled per buffer in lua/plugins/treesitter.lua;
 -- everything starts unfolded, fold text keeps syntax colors

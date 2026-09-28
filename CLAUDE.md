@@ -61,7 +61,7 @@ Ruff line length: 120 is a fallback only. The ruff LSP uses `configurationPrefer
 `utils.lua` exports `get_python_path(start_dir?)`, `get_venv_info(start_dir?)`, `venv_name(start_dir?)` (cached per directory, safe for the statusline), and `has_venv()`. These walk up from `start_dir` (default: cwd) looking for `.venv/`, `venv/`, or `env/` directories (`$VIRTUAL_ENV` wins if set). Used by:
 - `lsp.lua` -- Pyright settings (pythonPath, venvPath, venv), resolved per project root in `before_init`
 - `debug.lua` -- debugpy adapter path
-- `neotest.lua` -- pytest python path (resolved per test root)
+- `neotest.lua` -- pytest python path (resolved per test root); Go tests use neotest-golang with gotestsum
 - `lualine.lua` -- venv indicator in statusline (looked up from the buffer's directory, like Pyright)
 
 ### Python LSP split
@@ -83,6 +83,7 @@ Markdown: Neovim's built-in `$VIMRUNTIME/ftplugin/markdown.lua` starts the Trees
 - One plugin per file in `lua/plugins/`, or a small group of related plugins (e.g., `git.lua` has gitsigns + lazygit)
 - Lazy-load plugins via `event`, `cmd`, `ft`, or `keys` whenever possible. Only catppuccin, oil (directory buffers) and nvim-treesitter (main branch requirement) load at startup; a plugin spec with no trigger loads at startup too, so always give one
 - Remote-plugin providers (python3, ruby, perl, node) are disabled in `options.lua`; the python3 one cost ~100ms on the first Python file
+- Sessions (persistence.nvim) save on exit, never auto-restore; `sessionoptions` in `options.lua` deliberately omits `terminal` and `blank` so terminals (Claude Code, toggleterm) and floats aren't restored
 - LSP keymaps are buffer-local, set on `LspAttach` (not global)
 - Write mappings with `<leader>` (not a literal `<space>`) and use `x` (not `v`) for visual-mode mappings
 - Catppuccin: flavour is Macchiato; `auto_integrations` covers installed plugins (only `noice` is listed explicitly); custom colors go in `custom_highlights` in `colorscheme.lua`, not in ftplugins

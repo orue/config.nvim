@@ -193,13 +193,27 @@ The debug UI opens when a session starts and closes when it ends. The first Go d
 
 ## Testing (Neotest)
 
-Supported: Python (pytest).
+Supported: Python (pytest) and Go (gotestsum). Failed tests are marked in the file, with the failure message on the failing line.
 
 | Key | Action |
 |-----|--------|
 | `Space tt` | Run nearest test |
 | `Space tf` | Run all tests in file |
 | `Space ts` | Toggle test summary |
+| `Space to` | Show the output of the test under the cursor |
+
+## Sessions
+
+Neovim saves your open files, splits and working directory for each project (and git branch) when you quit. It never restores on its own: press `s` on the dashboard, or use the keys below.
+
+| Key | Action |
+|-----|--------|
+| `Space qs` | Restore the session for this directory |
+| `Space qS` | Pick a saved session from a list |
+| `Space ql` | Restore the last session, wherever it was |
+| `Space qd` | Don't save a session when quitting this time |
+
+Terminals (including the Claude Code panel) aren't saved in sessions.
 
 ## Docstrings (Neogen)
 
@@ -260,6 +274,8 @@ Tab indent (width 4), 120-char ruler, gopls + goimports.
 | `Space rvt` | Run all tests with the race detector |
 | `Space rab` | Run benchmarks |
 
+Go tests also run through Neotest (`Space tt`, `Space tf`, `Space ts`, `Space to`), like Python.
+
 ### C / C++
 
 4-space indent, 120-char ruler, clangd + clang-format.
@@ -299,7 +315,7 @@ YAML, TOML, Terraform (2-space indent), Dockerfile (4-space), Bash, and Lua have
 
 ### Dashboard
 
-Shown when Neovim starts without a file. Quick actions: new file (`e`), new project (`n`), find file (`f`), recent files (`r`), grep (`g`), browse (`b`), config (`c`), quit (`q`). Recent projects (by git root) are on `1`–`5`.
+Shown when Neovim starts without a file. Quick actions: new file (`e`), new project (`n`), restore session (`s`), find file (`f`), recent files (`r`), grep (`g`), browse (`b`), config (`c`), quit (`q`). Recent projects (by git root) are on `1`–`5`.
 
 ## Common workflows
 

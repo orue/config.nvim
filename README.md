@@ -69,6 +69,7 @@ npm install -g @olrtg/emmet-language-server
 | shfmt, shellcheck | Shell formatting and linting (through bash-language-server) |
 | terraform | `terraform fmt` (through terraform-ls) |
 | delve | Go debugger |
+| gotestsum | Go test runner (Neotest) |
 | lldb-dap | C/C++ debugger (Xcode Command Line Tools) |
 | ripgrep | Fast search (Telescope) |
 | lazygit | Git TUI |
@@ -129,7 +130,8 @@ pip install debugpy pytest
 | [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git hunks and blame |
 | [lazygit.nvim](https://github.com/kdheepak/lazygit.nvim) | LazyGit integration |
 | [nvim-dap](https://github.com/mfussenegger/nvim-dap) + [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) | Debugging (Python, C/C++, Go) |
-| [neotest](https://github.com/nvim-neotest/neotest) | Test runner (Python) |
+| [neotest](https://github.com/nvim-neotest/neotest) + [neotest-golang](https://github.com/fredrikaverpil/neotest-golang) | Test runner (Python, Go) |
+| [persistence.nvim](https://github.com/folke/persistence.nvim) | Save and restore sessions per project |
 | [neogen](https://github.com/danymat/neogen) | Docstring generation |
 | [claudecode.nvim](https://github.com/coder/claudecode.nvim) | Claude Code integration |
 | [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | Statusline |
@@ -166,7 +168,7 @@ Most used:
 
 - **Python** -- Pyright, Ruff (lint, format, imports), debugpy, pytest, per-project venv detection
 - **JavaScript/TypeScript/React** -- TypeScript 7 native LSP (`tsc`), ESLint (when the project has a config), inlay hints, Prettier, JSX-aware commenting, Emmet
-- **Go** -- gopls, goimports, Delve debugging, test/benchmark keys
+- **Go** -- gopls, goimports, Delve debugging, Neotest (gotestsum), test/benchmark keys
 - **C/C++** -- clangd, lldb-dap debugging, clang-format
 - **HTML/CSS** -- Auto-close/rename tags, Emmet, Prettier
 - **Lua** -- lua_ls with Neovim API types (lazydev)

@@ -164,6 +164,7 @@ TOOLS=(
     "gopls:gopls"
     "goimports:goimports"
     "dlv:delve"
+    "gotestsum:gotestsum"
     "clangd:clangd (Xcode Command Line Tools)"
     "prettier:prettier"
     "shellcheck:shellcheck"

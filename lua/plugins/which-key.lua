@@ -17,6 +17,7 @@ return {
       { "<leader>a", group = "AI/Claude Code" },
       { "<leader>m", group = "Markdown" },
       { "<leader>e", group = "Edit config" },
+      { "<leader>q", group = "Session" },
     },
   },
   keys = {

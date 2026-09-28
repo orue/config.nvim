@@ -25,6 +25,7 @@ brew "go"
 brew "gopls"             # Go LSP
 brew "goimports"         # Go formatter (conform.nvim)
 brew "delve"             # Go debugger (nvim-dap)
+brew "gotestsum"         # Go test runner used by neotest-golang
 
 # Formatters & Linters
 brew "prettier"          # JS/TS/HTML/CSS/JSON/Markdown formatter

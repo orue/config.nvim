@@ -5,6 +5,7 @@ return {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
       "nvim-neotest/neotest-python",
+      { "fredrikaverpil/neotest-golang", version = "*" }, -- needs the Go parser from nvim-treesitter's main branch
     },
     config = function()
       local utils = require('config.utils')
@@ -19,6 +20,10 @@ return {
               return utils.get_python_path(root)
             end,
           }),
+          require("neotest-golang")({
+            -- gotestsum writes results to a file, avoiding garbled `go test -json` stdout
+            runner = vim.fn.executable("gotestsum") == 1 and "gotestsum" or "go",
+          }),
         },
       })
     end,
@@ -26,6 +31,7 @@ return {
       { "<leader>tt", function() require("neotest").run.run() end, desc = "Run nearest test" },
       { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run file tests" },
       { "<leader>ts", function() require("neotest").summary.toggle() end, desc = "Toggle test summary" },
+      { "<leader>to", function() require("neotest").output.open({ enter = true }) end, desc = "Show test output" },
     },
   },
 }
