@@ -1,6 +1,18 @@
 return {
   'nvim-telescope/telescope.nvim',
   tag = '0.1.8',
+  cmd = 'Telescope',
+  keys = {
+    { "<leader>fd", function() require('telescope.builtin').find_files() end, desc = "Find files" },
+    { "<leader>fb", function() require('telescope.builtin').buffers() end, desc = "Find buffers" },
+    { "<leader>fh", function() require('telescope.builtin').help_tags() end, desc = "Help tags" },
+    { "<leader>fr", function() require('telescope.builtin').lsp_references() end, desc = "LSP references" },
+    { "<leader>fs", function() require('telescope.builtin').lsp_document_symbols() end, desc = "Document symbols" },
+    { "<leader>fo", function() require('telescope.builtin').oldfiles() end, desc = "Recent files" },
+    { "<leader>en", function() require('telescope.builtin').find_files({ cwd = vim.fn.stdpath("config") }) end, desc = "Edit neovim config" },
+    -- Multi-grep with custom picker
+    { "<leader>fg", function() require("plugins.telescope.multigrep").live_multigrep() end, desc = "Multi grep" },
+  },
   dependencies = {
     'nvim-lua/plenary.nvim',
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
@@ -72,22 +84,5 @@ return {
       }
     }
     require('telescope').load_extension('fzf')
-
-    vim.keymap.set("n", "<space>fd", require('telescope.builtin').find_files, { desc = "Find files" })
-    vim.keymap.set("n", "<space>fb", require('telescope.builtin').buffers, { desc = "Find buffers" })
-    vim.keymap.set("n", "<space>fh", require('telescope.builtin').help_tags, { desc = "Help tags" })
-    vim.keymap.set("n", "<space>fr", require('telescope.builtin').lsp_references, { desc = "LSP references" })
-    vim.keymap.set("n", "<space>fs", require('telescope.builtin').lsp_document_symbols, { desc = "Document symbols" })
-    vim.keymap.set("n", "<space>fo", require('telescope.builtin').oldfiles, { desc = "Recent files" })
-    vim.keymap.set("n", "<space>en", function()
-      require('telescope.builtin').find_files {
-        cwd = vim.fn.stdpath("config")
-      }
-    end, { desc = "Edit neovim config" })
-
-    -- Multi-grep with custom picker
-    vim.keymap.set("n", "<leader>fg", function()
-      require("plugins.telescope.multigrep").live_multigrep()
-    end, { desc = "Multi grep" })
   end
 }

@@ -20,21 +20,9 @@ return {
       "                                                                                        ",
     }
 
-    -- Cache for recent projects (memoization)
-    local recent_projects_cache = nil
-    local cache_timestamp = 0
-    local cache_ttl = 60  -- 1 minute in seconds
-
-    -- Function to get recent directories with caching
+    -- Recent projects: git roots (or parent dirs) of recently opened files.
+    -- Built once when the dashboard is set up.
     local function get_recent_projects()
-      local current_time = os.time()
-
-      -- Return cached result if still valid
-      if recent_projects_cache and (current_time - cache_timestamp) < cache_ttl then
-        return recent_projects_cache
-      end
-
-      -- Recalculate projects
       local oldfiles = vim.v.oldfiles or {}
       local seen_dirs = {}
       local projects = {}
@@ -43,8 +31,8 @@ return {
       for _, file in ipairs(oldfiles) do
         if #projects >= 5 then break end
 
-        -- Get directory from file
-        local dir = vim.fn.fnamemodify(file, ":h")
+        -- Group files by their git root so one project shows once
+        local dir = vim.fs.root(file, ".git") or vim.fn.fnamemodify(file, ":h")
 
         -- Skip if we've seen this directory or if it doesn't exist
         if not seen_dirs[dir] and vim.fn.isdirectory(dir) == 1 then
@@ -66,10 +54,6 @@ return {
           })
         end
       end
-
-      -- Update cache
-      recent_projects_cache = projects
-      cache_timestamp = current_time
 
       return projects
     end
@@ -97,7 +81,7 @@ return {
           local button = dashboard.button(
             tostring(i),
             "  " .. project.name .. " → " .. project.display,
-            ":cd " .. project.path .. " | Oil <CR>"
+            ":cd " .. vim.fn.fnameescape(project.path) .. " | Oil <CR>"
           )
           button.opts.width = 80
           button.opts.cursor = 5
@@ -116,7 +100,7 @@ return {
       dashboard.button("r", "  Recent files                 ", ":Telescope oldfiles <CR>"),
       dashboard.button("g", "  Find text                    ", ":Telescope live_grep <CR>"),
       dashboard.button("b", "  Browse files                 ", ":Oil <CR>"),
-      dashboard.button("c", "  Configuration                ", ":e ~/.config/nvim/init.lua <CR>"),
+      dashboard.button("c", "  Configuration                ", ":e " .. vim.fn.fnameescape(vim.fn.stdpath("config") .. "/init.lua") .. " <CR>"),
       dashboard.button("q", "  Quit                         ", ":qa<CR>"),
     }
 
@@ -179,19 +163,5 @@ return {
 
     -- Send config to alpha
     alpha.setup(dashboard.config)
-
-    -- Auto open alpha when last buffer is closed
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "BDeletePost*",
-      callback = function(event)
-        local fallback_name = vim.api.nvim_buf_get_name(event.buf)
-        local fallback_ft = vim.bo[event.buf].filetype
-        local fallback_on_empty = fallback_name == "" and fallback_ft == ""
-
-        if fallback_on_empty then
-          vim.cmd("Alpha")
-        end
-      end,
-    })
   end,
 }

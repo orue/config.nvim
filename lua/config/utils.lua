@@ -77,10 +77,29 @@ function M.get_python_path(start_dir)
   return 'python3'
 end
 
+-- venv lookups per directory; false = none found
+local venv_name_cache = {}
+
+--- Name of the active venv directory (e.g. ".venv"), cached per directory so it
+--- is cheap enough to call on every statusline redraw
+--- @param start_dir? string Directory to search upward from (default: cwd)
+--- @return string|nil
+function M.venv_name(start_dir)
+  if vim.env.VIRTUAL_ENV then
+    return vim.fn.fnamemodify(vim.env.VIRTUAL_ENV, ':t')
+  end
+  local dir = start_dir or vim.fn.getcwd()
+  if venv_name_cache[dir] == nil then
+    local venv = find_venv(dir)
+    venv_name_cache[dir] = venv and vim.fn.fnamemodify(venv, ':t') or false
+  end
+  return venv_name_cache[dir] or nil
+end
+
 --- Check if a virtual environment exists (cwd or parents)
 --- @return boolean
 function M.has_venv()
-  return find_venv(vim.fn.getcwd()) ~= nil or vim.env.VIRTUAL_ENV ~= nil
+  return M.venv_name() ~= nil
 end
 
 return M

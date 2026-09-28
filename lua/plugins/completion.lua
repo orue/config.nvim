@@ -4,6 +4,8 @@ return {
     dependencies = 'rafamadriz/friendly-snippets',
 
     version = '1.*',
+    -- Also loaded as an nvim-lspconfig dependency when a file opens
+    event = { 'InsertEnter', 'CmdlineEnter' },
 
     opts = {
       keymap = {
@@ -83,7 +85,10 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        per_filetype = {
+          lua = { inherit_defaults = true, 'lazydev' },
+        },
         providers = {
           lazydev = {
             name = 'LazyDev',

@@ -1,6 +1,7 @@
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
+  event = "VeryLazy",
   config = function()
     local utils = require('config.utils')
     local colors = require("catppuccin.palettes").get_palette("macchiato")
@@ -48,10 +49,9 @@ return {
           },
           {
             function()
-              if vim.bo.filetype == "python" and utils.has_venv() then
-                return "(.venv)"
-              end
-              return ""
+              -- Same lookup as Pyright: from the file's directory, not cwd
+              local venv = vim.bo.filetype == "python" and utils.venv_name(vim.fn.expand("%:p:h"))
+              return venv and "(" .. venv .. ")" or ""
             end,
             color = { fg = colors.teal }
           },

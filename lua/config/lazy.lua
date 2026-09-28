@@ -28,4 +28,21 @@ require("lazy").setup({
   checker = {
     enabled = false,
   },
+  -- Don't notify on every config file save
+  change_detection = {
+    notify = false,
+  },
+  performance = {
+    rtp = {
+      -- Built-in runtime plugins this config doesn't use (netrw is replaced by oil)
+      disabled_plugins = {
+        "gzip",
+        "tarPlugin",
+        "zipPlugin",
+        "tohtml",
+        "tutor",
+        "netrwPlugin",
+      },
+    },
+  },
 })

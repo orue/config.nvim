@@ -29,7 +29,7 @@ function M.create_new_project()
       end
 
       -- Change to the new directory and open Oil
-      vim.cmd("cd " .. project_path)
+      vim.cmd.cd(project_path)
       vim.cmd("Oil")
       vim.notify("Created project: " .. project_name, vim.log.levels.INFO)
     end)

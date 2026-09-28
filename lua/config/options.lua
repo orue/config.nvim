@@ -2,6 +2,13 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Disable unused remote-plugin providers. The Python one alone costs ~100ms the
+-- first time a Python file opens (it spawns python3 to look for pynvim).
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_node_provider = 0
+
 local opt = vim.opt
 
 -- Line number
@@ -10,7 +17,10 @@ opt.relativenumber = true
 
 opt.shiftwidth = 2
 opt.wrap = true
-opt.clipboard = "unnamedplus"
+-- Deferred: clipboard provider detection shouldn't block startup
+vim.schedule(function()
+  opt.clipboard = "unnamedplus"
+end)
 
 opt.cursorline = true
 opt.termguicolors = true

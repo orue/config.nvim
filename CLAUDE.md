@@ -55,11 +55,11 @@ Ruff line length: 120 is a fallback only. The ruff LSP uses `configurationPrefer
 
 ### Python virtual environment detection (lua/config/utils.lua)
 
-`utils.lua` exports `get_python_path(start_dir?)`, `get_venv_info(start_dir?)`, and `has_venv()`. These walk up from `start_dir` (default: cwd) looking for `.venv/`, `venv/`, or `env/` directories (`$VIRTUAL_ENV` wins if set). Used by:
+`utils.lua` exports `get_python_path(start_dir?)`, `get_venv_info(start_dir?)`, `venv_name(start_dir?)` (cached per directory, safe for the statusline), and `has_venv()`. These walk up from `start_dir` (default: cwd) looking for `.venv/`, `venv/`, or `env/` directories (`$VIRTUAL_ENV` wins if set). Used by:
 - `lsp.lua` -- Pyright settings (pythonPath, venvPath, venv), resolved per project root in `before_init`
 - `debug.lua` -- debugpy adapter path
 - `neotest.lua` -- pytest python path (resolved per test root)
-- `lualine.lua` -- venv indicator in statusline
+- `lualine.lua` -- venv indicator in statusline (looked up from the buffer's directory, like Pyright)
 
 ### Python LSP split
 
@@ -78,7 +78,8 @@ Neovim 0.12's built-in `$VIMRUNTIME/ftplugin/markdown.lua` calls `vim.treesitter
 ## Conventions
 
 - One plugin per file in `lua/plugins/`, or a small group of related plugins (e.g., `git.lua` has gitsigns + lazygit)
-- Lazy-load plugins via `event`, `cmd`, `ft`, or `keys` whenever possible
+- Lazy-load plugins via `event`, `cmd`, `ft`, or `keys` whenever possible. Only catppuccin, oil (directory buffers) and nvim-treesitter (main branch requirement) load at startup; a plugin spec with no trigger loads at startup too, so always give one
+- Remote-plugin providers (python3, ruby, perl, node) are disabled in `options.lua`; the python3 one cost ~100ms on the first Python file
 - LSP keymaps are buffer-local, set on `LspAttach` (not global)
 - Python packages (debugpy, pytest) are per-project in virtualenvs, never global
 - Hardcoded paths should use `vim.fn.exepath()` with a fallback

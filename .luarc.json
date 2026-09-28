@@ -4,10 +4,6 @@
     "version": "LuaJIT"
   },
   "workspace": {
-    "library": [
-      "$VIMRUNTIME/lua",
-      "$VIMRUNTIME/lua/vim/lsp"
-    ],
     "checkThirdParty": false
   },
   "diagnostics": {

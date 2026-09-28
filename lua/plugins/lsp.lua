@@ -1,16 +1,19 @@
 return {
   {
+    -- Lua LSP types for the Neovim API; only needed in Lua files
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       'saghen/blink.cmp',
-      {
-        "folke/lazydev.nvim",
-        opts = {
-          library = {
-            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-          },
-        },
-      },
     },
     config = function()
       local utils = require('config.utils')
