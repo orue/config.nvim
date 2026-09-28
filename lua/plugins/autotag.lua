@@ -10,7 +10,6 @@ return {
     },
     per_filetype = {
       ["html"] = { enable_close = true },
-      ["vue"] = { enable_close = true },
       ["javascriptreact"] = { enable_close = true },
       ["typescriptreact"] = { enable_close = true },
     },

@@ -127,56 +127,16 @@ return {
         },
       })
 
-      -- TypeScript/JavaScript LSP (also serves TypeScript inside .vue files for vue_ls)
-      local inlay_hints = {
-        includeInlayParameterNameHints = 'all',
-        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayVariableTypeHints = true,
-        includeInlayPropertyDeclarationTypeHints = true,
-        includeInlayFunctionLikeReturnTypeHints = true,
-        includeInlayEnumMemberValueHints = true,
-      }
-
-      -- vue_ls 3.x needs @vue/typescript-plugin loaded into ts_ls; it ships inside the
-      -- vue-language-server package, so resolve it from the installed binary.
-      local function vue_ts_plugin_path()
-        local bin = vim.fn.exepath('vue-language-server')
-        if bin == '' then return nil end
-        local real = vim.uv.fs_realpath(bin) -- .../@vue/language-server/bin/vue-language-server.js
-        if not real then return nil end
-        local path = vim.fn.fnamemodify(real, ':h:h') .. '/node_modules/@vue/typescript-plugin'
-        return vim.uv.fs_stat(path) and path or nil
-      end
-
-      local ts_plugins = {}
-      local vue_plugin = vue_ts_plugin_path()
-      if vue_plugin then
-        table.insert(ts_plugins, { name = '@vue/typescript-plugin', location = vue_plugin, languages = { 'vue' } })
-      end
-
-      vim.lsp.config('ts_ls', {
-        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-        init_options = {
-          plugins = ts_plugins,
-        },
+      -- TypeScript/JavaScript/React LSP: TypeScript 7's native server (`tsc --lsp`).
+      -- lspconfig prefers the project's node_modules/.bin/tsc when it is 7+, else the global tsc.
+      vim.lsp.config('tsc', {
         settings = {
-          typescript = { inlayHints = inlay_hints },
-          javascript = { inlayHints = inlay_hints },
+          ['js/ts'] = {
+            inlayHints = {
+              parameterNames = { enabled = 'all', suppressWhenArgumentMatchesName = true },
+            },
+          },
         },
-      })
-
-      -- Vue LSP: without --tsdk, vue-language-server loads Homebrew's TypeScript 7 (native
-      -- port, no tsserver API) and crashes. Point it at the project's own TypeScript instead.
-      vim.lsp.config('vue_ls', {
-        cmd = function(dispatchers, config)
-          local cmd = { 'vue-language-server', '--stdio' }
-          local tsdk = config.root_dir and vim.fs.joinpath(config.root_dir, 'node_modules/typescript/lib')
-          if tsdk and vim.uv.fs_stat(tsdk) then
-            table.insert(cmd, '--tsdk=' .. tsdk)
-          end
-          return vim.lsp.rpc.start(cmd, dispatchers, { cwd = config.cmd_cwd or config.root_dir })
-        end,
       })
 
       -- CSS LSP
@@ -196,7 +156,7 @@ return {
 
       -- Emmet LSP (HTML/CSS abbreviations)
       vim.lsp.config('emmet_language_server', {
-        filetypes = { 'html', 'css', 'scss', 'less', 'javascriptreact', 'typescriptreact', 'vue' },
+        filetypes = { 'html', 'css', 'scss', 'less', 'javascriptreact', 'typescriptreact' },
       })
 
       -- Each server attaches to the filetypes in its config
@@ -206,8 +166,8 @@ return {
         'ruff',
         'clangd',
         'gopls',
-        'ts_ls',
-        'vue_ls',
+        'tsc',
+        'eslint', -- only attaches in projects with an ESLint config
         'html',
         'cssls',
         'emmet_language_server',

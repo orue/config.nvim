@@ -9,8 +9,7 @@ brew "python3"           # Python runtime
 brew "lua-language-server"
 brew "pyright"
 brew "ruff"
-brew "typescript-language-server"  # TypeScript/JavaScript LSP
-brew "vue-language-server"  # Vue.js LSP (Volar)
+brew "typescript"        # TypeScript 7: `tsc --lsp` is the JS/TS/React language server
 brew "vscode-langservers-extracted"  # HTML, CSS, JSON, ESLint LSPs
 brew "dockerfile-language-server"
 brew "bash-language-server"
@@ -44,7 +43,7 @@ brew "tree-sitter-cli"   # Required by nvim-treesitter (main branch) to compile 
 #   npm install -g @olrtg/emmet-language-server
 #
 # Required npm packages:
-#   - emmet-language-server: Emmet abbreviations for HTML/CSS/JSX/Vue
+#   - emmet-language-server: Emmet abbreviations for HTML/CSS/JSX/TSX
 #
 
 # ============================================================

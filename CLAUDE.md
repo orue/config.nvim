@@ -45,7 +45,7 @@ Uses Neovim's native `vim.lsp.config()` and `vim.lsp.enable()` APIs (not the old
 
 To add a new LSP server: add its name to the `vim.lsp.enable()` list, plus a `vim.lsp.config()` block only if it needs overrides.
 
-Vue: vue_ls 3.x needs `@vue/typescript-plugin` loaded into `ts_ls` (resolved from the installed vue-language-server package) and is started with `--tsdk` pointing at the project's `node_modules/typescript/lib`. Homebrew's `typescript` formula is TypeScript 7 (native port, no tsserver API), which neither ts_ls nor vue_ls can use.
+JS/TS/React use `tsc`, TypeScript 7's native language server (`tsc --lsp`), not `ts_ls`: Homebrew's `typescript` formula is TypeScript 7, which no longer ships the tsserver API that ts_ls needs. lspconfig's `tsc` config prefers the project's `node_modules/.bin/tsc` when it is 7+, else the global one. `eslint` attaches only in projects with an ESLint config. Vue is intentionally unsupported (its tooling requires ts_ls/tsserver).
 
 ### Formatting
 

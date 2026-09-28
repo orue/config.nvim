@@ -124,7 +124,6 @@ print_info "Installing global npm packages"
 echo ""
 
 NPM_PACKAGES=(
-    "typescript"
     "@olrtg/emmet-language-server"
 )
 
@@ -147,8 +146,7 @@ LSP_SERVERS=(
     "lua-language-server:lua-language-server"
     "pyright:pyright-langserver"
     "ruff:ruff"
-    "typescript-language-server:typescript-language-server"
-    "typescript:tsc"
+    "tsc:typescript"
     "vscode-html-language-server:vscode-langservers-extracted"
     "emmet-language-server:@olrtg/emmet-language-server"
     "prettier:prettier"
@@ -220,7 +218,7 @@ echo "   pip install debugpy pytest"
 echo ""
 echo "Installed LSP Servers:"
 echo "  • Lua, Python, C/C++"
-echo "  • TypeScript/JavaScript, Vue.js"
+echo "  • TypeScript/JavaScript, React (JSX/TSX), ESLint"
 echo "  • HTML, CSS, Emmet"
 echo "  • Markdown, Docker, Bash, YAML, TOML, Terraform"
 echo ""

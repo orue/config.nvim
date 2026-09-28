@@ -81,7 +81,7 @@ Examples:
 
 ### Format on save
 
-Enabled for all supported languages. Formatters: Ruff (Python), Prettier (JS/TS/Vue/HTML/CSS), clang-format (C/C++), goimports (Go), lua_ls (Lua).
+Enabled for all supported languages. Formatters: Ruff (Python), Prettier (JS/TS/JSX/TSX/HTML/CSS), clang-format (C/C++), goimports (Go), lua_ls (Lua).
 
 ## Git
 
@@ -140,7 +140,7 @@ Settings: 4-space indent, 120-char ruler, format on save (Ruff).
 
 Virtual environments are detected automatically. The statusline shows the active venv.
 
-### JavaScript / TypeScript / Vue
+### JavaScript / TypeScript / React
 
 Settings: 2-space indent, 100-char ruler, format on save (Prettier).
 
@@ -149,7 +149,7 @@ Settings: 2-space indent, 100-char ruler, format on save (Prettier).
 | `Space rf` | Format file |
 | `Space ri` | Organize imports |
 
-Vue files get ts_ls (script sections), vue_ls (templates), and emmet_language_server (abbreviations).
+JS/TS/JSX/TSX files get tsc (TypeScript 7's native LSP), ESLint when the project has an ESLint config, and emmet_language_server in JSX/TSX. `gcc` inside JSX comments with `{/* */}`.
 
 ### HTML / CSS
 
@@ -159,7 +159,7 @@ Settings: 2-space indent, 120-char ruler, format on save (Prettier).
 |-----|--------|
 | `Space rf` | Format file |
 
-Features: auto-close tags, auto-rename tags, Emmet abbreviations (also in JSX, TSX, Vue).
+Features: auto-close tags, auto-rename tags, Emmet abbreviations (also in JSX, TSX).
 
 ### C / C++
 

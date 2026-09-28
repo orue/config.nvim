@@ -31,8 +31,6 @@ return {
       javascriptreact = { "prettier" },
       typescript = { "prettier" },
       typescriptreact = { "prettier" },
-      -- Vue.js
-      vue = { "prettier" },
       -- HTML
       html = { "prettier" },
       -- CSS

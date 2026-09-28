@@ -46,8 +46,7 @@ npm install -g @olrtg/emmet-language-server
 | lua-language-server | Lua |
 | pyright | Python (type checking) |
 | ruff | Python (linting, formatting) |
-| typescript-language-server | TypeScript, JavaScript |
-| vue-language-server | Vue.js |
+| typescript (`tsc --lsp`, TS 7) | TypeScript, JavaScript, React |
 | vscode-langservers-extracted | HTML, CSS, JSON, ESLint |
 | dockerfile-language-server | Dockerfile |
 | bash-language-server | Bash |
@@ -55,13 +54,13 @@ npm install -g @olrtg/emmet-language-server
 | yaml-language-server | YAML |
 | terraform-ls | Terraform |
 | llvm (clangd) | C, C++ |
-| emmet-language-server (npm) | HTML, CSS, JSX, Vue |
+| emmet-language-server (npm) | HTML, CSS, JSX, TSX |
 
 ### Formatters and tools
 
 | Tool | Purpose |
 |------|---------|
-| prettier | JS, TS, Vue, HTML, CSS, JSON, Markdown |
+| prettier | JS, TS, JSX, TSX, HTML, CSS, JSON, Markdown |
 | ruff | Python |
 | ripgrep | Fast search (required by Telescope) |
 | lazygit | Git TUI |
@@ -140,8 +139,7 @@ See [MANUAL.md](MANUAL.md) for all keybindings and workflows. See [KEYBINDINGS.m
 ## Language support
 
 - **Python** -- Pyright, Ruff, debugpy, pytest, venv auto-detection
-- **JavaScript/TypeScript** -- ts_ls, inlay hints, Prettier
-- **Vue.js** -- vue_ls, template support, Prettier
+- **JavaScript/TypeScript/React** -- TypeScript 7 native LSP (`tsc`), ESLint (when the project has a config), inlay hints, Prettier, JSX-aware commenting
 - **HTML/CSS** -- Auto-close tags, Emmet, Prettier
 - **C/C++** -- clangd, lldb debugger, clang-format
 - **Go** -- gopls, goimports
