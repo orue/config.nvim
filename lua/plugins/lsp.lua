@@ -211,7 +211,7 @@ return {
 
           -- VS Code-like additional keymaps
           map("n", "gD", vim.lsp.buf.type_definition, "Type definition")
-          map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+          -- Implementation: built-in gri (gi stays Vim's "resume Insert where you last typed")
           map("n", "gO", vim.lsp.buf.document_symbol, "Document symbols")
           map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, "Workspace symbols")
           map("n", "gp", function()

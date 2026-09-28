@@ -40,6 +40,7 @@ New to Vim coming from VS Code? Start with [KEYBINDINGS.md](KEYBINDINGS.md).
 | Key | Mode | Action |
 |-----|------|--------|
 | `Alt+j` / `Alt+k` | Normal, Visual | Move line(s) down / up |
+| `gi` | Normal | Go back to where you last typed and resume Insert mode |
 | `<` / `>` (or `←` / `→`) | Visual | Indent left / right (keeps selection) |
 | `gcc` / `gc{motion}` | Normal | Toggle line comment (`{/* */}` inside JSX) |
 | `gbc` / `gb{motion}` | Normal | Toggle block comment |
@@ -124,7 +125,7 @@ Available in any buffer with a language server attached.
 | `gd` | Go to definition |
 | `gp` | Peek definition (floating preview) |
 | `grr` | References (Neovim built-in; also `grn` rename, `gra` code action, `gri` implementation, `grt` type definition) |
-| `gi` | Implementation |
+| `gri` | Implementation (Neovim built-in) |
 | `gD` | Type definition |
 | `gO` | Document symbols |
 | `K` | Hover documentation |
