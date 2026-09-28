@@ -188,6 +188,11 @@ Supported: Python (debugpy), C/C++ (lldb-dap), Go (Delve).
 | `Space ds` | Step over |
 | `Space di` | Step into |
 | `Space dt` | Terminate |
+| `Space do` | Step out of the current function |
+| `Space dC` | Run to the cursor line |
+| `Space dB` | Conditional breakpoint (asks for a condition, e.g. `i == 3`) |
+| `Space de` | Evaluate the expression under the cursor (visual: the selection) |
+| `Space du` | Show / hide the debug panels |
 
 The debug UI opens when a session starts and closes when it ends. The first Go debug run in a project can take a while: Delve builds an unoptimized binary.
 

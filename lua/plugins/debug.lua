@@ -166,6 +166,19 @@ return {
       { "<leader>ds", function() require("dap").step_over() end, desc = "Step over" },
       { "<leader>di", function() require("dap").step_into() end, desc = "Step into" },
       { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
+      { "<leader>do", function() require("dap").step_out() end, desc = "Step out" },
+      { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
+      {
+        "<leader>dB",
+        function()
+          vim.ui.input({ prompt = "Breakpoint condition: " }, function(cond)
+            if cond and cond ~= "" then require("dap").set_breakpoint(cond) end
+          end)
+        end,
+        desc = "Conditional breakpoint",
+      },
+      { "<leader>de", function() require("dapui").eval() end, mode = { "n", "x" }, desc = "Evaluate expression" },
+      { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle debug panels" },
     },
   },
 }

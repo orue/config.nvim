@@ -38,6 +38,7 @@
 | `F9` | `Space db` | Toggle breakpoint |
 | `F5` | `Space dc` | Start / continue debugging |
 | `F10` / `F11` | `Space ds` / `Space di` | Step over / into |
+| `Shift+F11` | `Space do` | Step out |
 | `Ctrl+Shift+G` | `Space gg` | Source control (LazyGit) |
 | `Ctrl+Shift+P` | `:` | Command palette (Ex commands) |
 | `Ctrl+Shift+[` / `]` | `zc` / `zo` | Fold / unfold (`za` toggles) |
