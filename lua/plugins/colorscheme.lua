@@ -7,38 +7,25 @@ return {
   priority = 1000, -- Load before other plugins
   config = function()
     require("catppuccin").setup({
-      -- Unlisted options (styles, lsp_styles, dim_inactive, ...) use catppuccin's defaults
+      -- Unlisted options (lsp_styles, dim_inactive, ...) use catppuccin's defaults
       flavour = "macchiato", -- latte, frappe, macchiato, mocha
+      -- No italic in code: only comments stay italic. `miscs` covers the groups
+      -- catppuccin hardcodes as italic (@module, @tag.attribute, bash builtins)
+      styles = {
+        comments = { "italic" },
+        conditionals = {},
+        miscs = {},
+      },
       transparent_background = true,
       show_end_of_buffer = false,
       term_colors = true,
       custom_highlights = function(colors)
         return {
-          -- Disable italic for imported module/library names in Python
-          ["@variable.member.python"] = { fg = colors.teal, style = {} },
-          ["@module.python"] = { fg = colors.teal, style = {} },
-          -- Disable italic for all Go syntax except comments
-          ["@function.go"] = { fg = colors.blue, style = {} },
-          ["@function.call.go"] = { fg = colors.blue, style = {} },
-          ["@function.builtin.go"] = { fg = colors.blue, style = {} },
-          ["@keyword.go"] = { style = {} },
-          ["@keyword.conditional.go"] = { style = {} },
-          ["@keyword.repeat.go"] = { style = {} },
-          ["@type.go"] = { style = {} },
-          ["@variable.go"] = { style = {} },
-          ["@property.go"] = { style = {} },
-          ["@string.go"] = { style = {} },
-          ["@number.go"] = { style = {} },
-          ["@boolean.go"] = { style = {} },
-          ["@operator.go"] = { style = {} },
-          ["@punctuation.go"] = { style = {} },
-          ["@constant.go"] = { style = {} },
-          ["@lsp.type.variable.go"] = { fg = colors.text, style = {} },
-          ["@lsp.type.parameter.go"] = { fg = colors.peach, style = {} },
-          -- Disable italic for Go imports and packages
-          ["@module.go"] = { style = {} },
-          ["@module.builtin.go"] = { style = {} },
-          ["@lsp.type.namespace.go"] = { style = {} },
+          -- Keep teal for Python module/member names (catppuccin's default is yellow)
+          ["@variable.member.python"] = { fg = colors.teal },
+          ["@module.python"] = { fg = colors.teal },
+          ["@lsp.type.variable.go"] = { fg = colors.text },
+          ["@lsp.type.parameter.go"] = { fg = colors.peach },
           -- Thin transparent colorcolumn
           ColorColumn = { bg = colors.surface0 },
           -- Whitespace characters (tab, trailing spaces, etc.)
@@ -82,7 +69,7 @@ return {
           LspSignatureActiveParameter = { style = {} },
 
           -- Semantic Token Modifiers
-          ["@lsp.mod.readonly"] = { style = { "italic" } },
+          ["@lsp.mod.readonly"] = { style = {} },
           ["@lsp.mod.deprecated"] = { style = { "strikethrough" } },
           ["@lsp.mod.static"] = { fg = colors.mauve },
 
