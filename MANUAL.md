@@ -164,6 +164,7 @@ Format on save is enabled for all supported languages.
 | JS, TS, JSX, TSX, HTML, CSS, JSON, GraphQL, Markdown | Prettier |
 | C / C++ | clang-format |
 | Go | goimports |
+| Rust | rustfmt (also sorts `use` statements) |
 | Lua, YAML, TOML, Terraform, shell | The language server (fallback) |
 
 `Space rf` formats manually. `:ConformInfo` shows which formatter applies.
@@ -192,7 +193,7 @@ Format on save is enabled for all supported languages.
 
 ## Debugging (DAP)
 
-Supported: Python (debugpy), C/C++ (lldb-dap), Go (Delve).
+Supported: Python (debugpy), C/C++ (lldb-dap), Go (Delve), Rust (lldb-dap).
 
 | Key | Action |
 |-----|--------|
@@ -207,11 +208,11 @@ Supported: Python (debugpy), C/C++ (lldb-dap), Go (Delve).
 | `Space de` | Evaluate the expression under the cursor (visual: the selection) |
 | `Space du` | Show / hide the debug panels |
 
-The debug UI opens when a session starts and closes when it ends. The first Go debug run in a project can take a while: Delve builds an unoptimized binary.
+The debug UI opens when a session starts and closes when it ends. The first Go debug run in a project can take a while: Delve builds an unoptimized binary. For Rust, run `cargo build` first; `Space dc` then asks for the binary (it suggests `target/debug/`), and `Vec`, `String`, `Option` and friends show their contents.
 
 ## Testing (Neotest)
 
-Supported: Python (pytest) and Go (gotestsum). Failed tests are marked in the file, with the failure message on the failing line.
+Supported: Python (pytest) and Go (gotestsum). Failed tests are marked in the file, with the failure message on the failing line. Rust tests run through cargo instead: see the Rust keys below (`Space ru` runs the test under the cursor).
 
 | Key | Action |
 |-----|--------|
@@ -294,6 +295,22 @@ Tab indent (width 4), 120-char ruler, gopls + goimports.
 
 Go tests also run through Neotest (`Space tt`, `Space tf`, `Space ts`, `Space to`), like Python.
 
+### Rust
+
+4-space indent, 100-char ruler (rustfmt's width), rust-analyzer + rustfmt. Clippy lints show as diagnostics each time you save. Inlay hints show types, parameter names, closure return types and lifetimes (`Space ih` toggles).
+
+| Key | Action |
+|-----|--------|
+| `Space ru` | Run the test under the cursor (inside a `mod tests`, runs the whole module) |
+| `Space rt` | Run tests (current package) |
+| `Space re` | Run all tests in the workspace |
+| `Space rr` | `cargo run` |
+| `Space rab` | Run benchmarks |
+| `Space rx` | Expand the macro under the cursor (shown in a float) |
+| `Space ro` | Open this package's `Cargo.toml` |
+
+`:LspCargoReload` reloads the workspace after editing `Cargo.toml` by hand. Debug with `Space dc` after `cargo build` (see Debugging).
+
 ### C / C++
 
 4-space indent, 120-char ruler, clangd + clang-format.
@@ -340,6 +357,9 @@ Shown when Neovim starts without a file. Quick actions: new file (`e`), new proj
 
 **New Python project:**
 Create a venv, activate it, `pip install debugpy pytest`, open Neovim. The LSP, debugger and test runner find the venv automatically.
+
+**New Rust project:**
+`cargo new myapp`, open Neovim in it. rust-analyzer indexes the crate (watch the statusline), then `Space rr` runs it and `Space ru` runs the test under the cursor.
 
 **Debugging:**
 Set breakpoints (`Space db`), start (`Space dc`), step (`Space ds` / `Space di`), inspect variables in the UI, stop (`Space dt`).

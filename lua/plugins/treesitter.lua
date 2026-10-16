@@ -38,6 +38,7 @@ return {
         "go",
         "gomod",
         "gowork",
+        "rust",
       }
 
       require("nvim-treesitter").setup()

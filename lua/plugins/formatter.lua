@@ -24,6 +24,8 @@ return {
     formatters = {
       ruff_format = { prepend_args = ruff_line_length },
       ruff_organize_imports = { prepend_args = ruff_line_length },
+      -- Edition comes from Cargo.toml; this is only for files outside a crate
+      rustfmt = { options = { default_edition = "2024" } },
     },
     formatters_by_ft = {
       -- JavaScript/TypeScript
@@ -52,6 +54,8 @@ return {
       cpp = { "clang-format" },
       -- Go
       go = { "goimports" },
+      -- Rust (also sorts `use` statements)
+      rust = { "rustfmt" },
     },
     -- Filetypes without a formatter above (Lua, YAML, TOML, Terraform) fall back to LSP formatting
     format_on_save = {

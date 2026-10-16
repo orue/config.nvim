@@ -98,6 +98,32 @@ return {
       -- C++ uses the same configuration as C
       dap.configurations.cpp = dap.configurations.c
 
+      -- Rust DAP configuration (lldb-dap, same adapter as C/C++)
+      dap.configurations.rust = {
+        {
+          name = 'Launch',
+          type = 'lldb',
+          request = 'launch',
+          program = function()
+            -- Build first (cargo build), then pick the binary
+            local root = vim.fs.root(0, 'Cargo.toml') or vim.fn.getcwd()
+            return vim.fn.input('Path to executable: ', root .. '/target/debug/', 'file')
+          end,
+          cwd = '${workspaceFolder}',
+          stopOnEntry = false,
+          args = {},
+          -- Rust pretty-printers (Vec, String, Option...), like rust-lldb; resolved when a session starts
+          initCommands = function()
+            local sysroot = vim.trim(vim.fn.system({ 'rustc', '--print', 'sysroot' }))
+            local lookup = sysroot .. '/lib/rustlib/etc/lldb_lookup.py'
+            if vim.v.shell_error ~= 0 or vim.fn.filereadable(lookup) == 0 then
+              return {}
+            end
+            return { 'command script import "' .. lookup .. '"' }
+          end,
+        },
+      }
+
       -- Go DAP configuration (using Delve)
       -- `dlv dap` speaks DAP over TCP, not stdio: nvim-dap starts it on a free port and connects
       local dlv = vim.fn.exepath('dlv')

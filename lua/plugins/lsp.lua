@@ -112,6 +112,20 @@ return {
         },
       })
 
+      -- Rust LSP (rust-analyzer); lspconfig passes these settings as initializationOptions
+      vim.lsp.config('rust_analyzer', {
+        settings = {
+          ['rust-analyzer'] = {
+            -- Clippy lints on save (a superset of `cargo check`)
+            check = { command = 'clippy' },
+            inlayHints = {
+              closureReturnTypeHints = { enable = 'with_block' },
+              lifetimeElisionHints = { enable = 'skip_trivial' },
+            },
+          },
+        },
+      })
+
       -- C/C++ LSP (clangd)
       vim.lsp.config('clangd', {
         cmd = {
@@ -169,6 +183,7 @@ return {
         'ruff',
         'clangd',
         'gopls',
+        'rust_analyzer',
         'tsc',
         'eslint', -- only attaches in projects with an ESLint config
         'html',

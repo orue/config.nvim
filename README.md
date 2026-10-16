@@ -50,6 +50,7 @@ npm install -g @olrtg/emmet-language-server
 | typescript (`tsc --lsp`, TypeScript 7) | JavaScript, TypeScript, React | Homebrew |
 | vscode-langservers-extracted | HTML, CSS, JSON, ESLint | Homebrew |
 | gopls | Go | Homebrew |
+| rust-analyzer | Rust | Homebrew |
 | clangd | C, C++ | Xcode Command Line Tools |
 | dockerfile-language-server | Dockerfile | Homebrew |
 | bash-language-server | Bash | Homebrew |
@@ -66,11 +67,12 @@ npm install -g @olrtg/emmet-language-server
 | ruff | Formats Python |
 | clang-format | Formats C/C++ |
 | goimports | Formats Go |
+| rust (`rustfmt`, `cargo`, `clippy`) | Rust toolchain; formats Rust, Clippy lints through rust-analyzer |
 | shfmt, shellcheck | Shell formatting and linting (through bash-language-server) |
 | terraform | `terraform fmt` (through terraform-ls) |
 | delve | Go debugger |
 | gotestsum | Go test runner (Neotest) |
-| lldb-dap | C/C++ debugger (Xcode Command Line Tools) |
+| lldb-dap | C/C++ and Rust debugger (Xcode Command Line Tools) |
 | ripgrep | Fast search (Telescope) |
 | lazygit | Git TUI |
 | tree-sitter-cli | Compiles Treesitter parsers |
@@ -132,7 +134,7 @@ pip install debugpy pytest
 | [diffview.nvim](https://github.com/sindrets/diffview.nvim) | Side-by-side diffs and file history |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | Panels for diagnostics, TODOs and quickfix |
 | [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | Markdown rendered in the buffer |
-| [nvim-dap](https://github.com/mfussenegger/nvim-dap) + [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) | Debugging (Python, C/C++, Go) |
+| [nvim-dap](https://github.com/mfussenegger/nvim-dap) + [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) | Debugging (Python, C/C++, Go, Rust) |
 | [neotest](https://github.com/nvim-neotest/neotest) + [neotest-golang](https://github.com/fredrikaverpil/neotest-golang) | Test runner (Python, Go) |
 | [persistence.nvim](https://github.com/folke/persistence.nvim) | Save and restore sessions per project |
 | [neogen](https://github.com/danymat/neogen) | Docstring generation |
@@ -173,6 +175,7 @@ Most used:
 - **Python** -- Pyright, Ruff (lint, format, imports), debugpy, pytest, per-project venv detection
 - **JavaScript/TypeScript/React** -- TypeScript 7 native LSP (`tsc`), ESLint (when the project has a config), inlay hints, Prettier, JSX-aware commenting, Emmet
 - **Go** -- gopls, goimports, Delve debugging, Neotest (gotestsum), test/benchmark keys
+- **Rust** -- rust-analyzer (Clippy on save, inlay hints), rustfmt, lldb-dap debugging with Rust pretty-printers, run test under cursor, macro expansion
 - **C/C++** -- clangd, lldb-dap debugging, clang-format
 - **HTML/CSS** -- Auto-close/rename tags, Emmet, Prettier
 - **Lua** -- lua_ls with Neovim API types (lazydev)

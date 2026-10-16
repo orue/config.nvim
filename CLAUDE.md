@@ -48,6 +48,8 @@ Uses Neovim's native `vim.lsp.config()` and `vim.lsp.enable()` APIs (not the old
 
 To add a new LSP server: add its name to the `vim.lsp.enable()` list, plus a `vim.lsp.config()` block only if it needs overrides.
 
+Rust uses the native `rust_analyzer` config too, not rustaceanvim (which starts rust-analyzer itself, outside `vim.lsp.enable()`). Its override turns on Clippy for check-on-save. Rust has no Neotest adapter: neotest-rust is archived (2025) and rustaceanvim's adapter needs rustaceanvim. `after/ftplugin/rust.lua` instead uses rust-analyzer's `experimental/runnables` for "run test under cursor", plus `rust-analyzer/expandMacro` and `experimental/openCargoToml`. Homebrew's `rust` formula ships the std sources rust-analyzer needs (no rustup required); debugging reuses the `lldb` adapter (lldb-dap) and imports the toolchain's `lldb_lookup.py` pretty-printers.
+
 JS/TS/React use `tsc`, TypeScript 7's native language server (`tsc --lsp`), not `ts_ls`: Homebrew's `typescript` formula is TypeScript 7, which no longer ships the tsserver API that ts_ls needs. lspconfig's `tsc` config prefers the project's `node_modules/.bin/tsc` when it is 7+, else the global one. `eslint` attaches only in projects with an ESLint config. Vue is intentionally unsupported (its tooling requires ts_ls/tsserver).
 
 ### Formatting

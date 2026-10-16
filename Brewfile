@@ -27,6 +27,10 @@ brew "goimports"         # Go formatter (conform.nvim)
 brew "delve"             # Go debugger (nvim-dap)
 brew "gotestsum"         # Go test runner used by neotest-golang
 
+# Rust toolchain (includes the std sources rust-analyzer needs; debugging uses lldb-dap)
+brew "rust"              # rustc, cargo, rustfmt (conform.nvim), clippy (rust-analyzer checks)
+brew "rust-analyzer"     # Rust LSP
+
 # Formatters & Linters
 brew "prettier"          # JS/TS/HTML/CSS/JSON/Markdown formatter
 brew "clang-format"      # C/C++ formatter
